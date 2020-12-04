@@ -10,13 +10,22 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTitle = 'XonorK';
-
+    checkLogin(context);
       return Scaffold(
       appBar: AppBar(
         title: Text(appTitle),
       ),
       body: LoginForm(),
       );
+  }
+  void checkLogin (context) async{
+    SharedPreferences key = await SharedPreferences.getInstance();
+    key.getString('token');
+    print(key.getString('token'));
+    if(key.getString('token') != null)
+    {
+      Navigator.pushReplacementNamed(context, '/thisweek');
+    }
   }
 
 }
@@ -36,7 +45,6 @@ class _LoginForm extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    checkKey();
     return Form(
       key: _formKey,
       child: Column(
@@ -141,13 +149,5 @@ class _LoginForm extends State<LoginForm> {
     }
   }
 
-  void checkKey () async{
-    SharedPreferences key = await SharedPreferences.getInstance();
-    key.getString('token');
-    print(key.getString('token'));
-    if(key.getString('token') != null)
-    {
-      Navigator.pushReplacementNamed(context, '/thisweek');
-    }
-  }
+
 }
