@@ -18,6 +18,7 @@ class Login extends StatelessWidget {
       body: LoginForm(),
       );
   }
+
 }
 
 // Create a Form widget.
@@ -35,6 +36,7 @@ class _LoginForm extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    checkKey();
     return Form(
       key: _formKey,
       child: Column(
@@ -135,6 +137,16 @@ class _LoginForm extends State<LoginForm> {
     if(responseData["access_token"] != null){
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(responseData["access_token"]));
+      Navigator.pushReplacementNamed(context, '/thisweek');
+    }
+  }
+
+  void checkKey () async{
+    SharedPreferences key = await SharedPreferences.getInstance();
+    key.getString('token');
+    print(key.getString('token'));
+    if(key.getString('token') != null)
+    {
       Navigator.pushReplacementNamed(context, '/thisweek');
     }
   }
