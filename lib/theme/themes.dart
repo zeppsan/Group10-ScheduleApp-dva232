@@ -46,9 +46,9 @@ class AppTheme{
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Colors.black38,
         selectedIconTheme: IconThemeData(color: Colors.blue[900]),
-        selectedLabelStyle: TextStyle(color:Colors.indigo[900]),
+        selectedLabelStyle: TextStyle(color:Colors.indigo),
         unselectedIconTheme: IconThemeData(color: Colors.blue),
-        unselectedLabelStyle: TextStyle(color: Colors.indigo)
+        unselectedLabelStyle: TextStyle(color: Colors.indigo[900])
       )
   );
 }

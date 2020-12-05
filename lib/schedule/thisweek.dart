@@ -11,7 +11,7 @@ class Thisweek extends StatelessWidget {
       body: Container(
 
       ),
-      bottomNavigationBar: NaviagtionBarLoggedIn(),
+      bottomNavigationBar: NavigationBarLoggedIn(),
     );
   }
 }

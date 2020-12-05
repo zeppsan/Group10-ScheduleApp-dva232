@@ -9,7 +9,7 @@ class Map extends StatelessWidget {
       appBar: AppBar(
         title: Text("Map"),
       ),
-      bottomNavigationBar: NaviagtionBarLoggedIn(),
+      bottomNavigationBar: NavigationBarLoggedIn(),
     );
   }
 }

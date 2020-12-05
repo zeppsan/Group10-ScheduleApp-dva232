@@ -11,7 +11,7 @@ class Settings extends StatelessWidget {
       appBar: AppBar(
         title: Text('Settings'),
       ),
-      bottomNavigationBar: NaviagtionBarLoggedIn(),
+      bottomNavigationBar: NavigationBarLoggedIn(),
       body: Column(
         children: [
           FlatButton.icon(

@@ -21,7 +21,7 @@ class Schedule extends StatelessWidget {
           ScheduleWidget(),
         ],
       ),
-      bottomNavigationBar: NaviagtionBarLoggedIn(),
+      bottomNavigationBar: NavigationBarLoggedIn(),
     );
   }
   void CheckLogin(context) async {
