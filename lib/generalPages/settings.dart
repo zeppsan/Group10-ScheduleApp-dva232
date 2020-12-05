@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:stacked_themes/stacked_themes.dart';
 import '../appComponents/bottomNavigationLoggedIn.dart';
 
 class Settings extends StatelessWidget {
@@ -22,6 +22,12 @@ class Settings extends StatelessWidget {
               },
               icon: Icon(Icons.sensor_door_outlined),
               label: Text('Logout'),
+          ),
+          RaisedButton(
+            child: Text("Change Theme"),
+            onPressed: () {
+              getThemeManager(context).toggleDarkLightTheme();
+            },
           ),
         ],
       ),
