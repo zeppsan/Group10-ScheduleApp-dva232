@@ -8,6 +8,7 @@ import 'package:schedule_dva232/schedule/scheduleSettings.dart';
 import 'package:schedule_dva232/schedule/thisweek.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 import 'package:schedule_dva232/theme/themes.dart';
+import 'package:schedule_dva232/generalPages/settings.dart';
 
 Future main() async {
   await ThemeManager.initialise();
@@ -34,6 +35,7 @@ class App extends StatelessWidget{
             '/addCourse': (context) => AddCourse(),
             '/thisweek': (context) => Thisweek(),
             '/map': (context) => Map(),
+            '/settings': (context) => Settings(),
           },
       ),
     );
