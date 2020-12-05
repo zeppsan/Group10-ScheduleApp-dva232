@@ -6,6 +6,7 @@ import 'package:schedule_dva232/schedule/addCourse.dart';
 import 'package:schedule_dva232/schedule/schedule.dart';
 import 'package:schedule_dva232/schedule/scheduleSettings.dart';
 import 'package:schedule_dva232/schedule/thisweek.dart';
+import 'package:schedule_dva232/generalPages/settings.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -18,6 +19,7 @@ void main() {
       '/addCourse': (context) => AddCourse(),
       '/thisweek': (context) => Thisweek(),
       '/map': (context) => Map(),
+      '/settings': (context) => Settings(),
     },
   ));
 }

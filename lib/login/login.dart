@@ -140,11 +140,11 @@ class _LoginForm extends State<LoginForm> {
     print("${response.body}");
 
     Map responseData = jsonDecode(response.body);
-    print(responseData["access_token"]);
+    print(responseData['access_token']);
 
-    if(responseData["access_token"] != null){
+    if(responseData['access_token'] != null){
       SharedPreferences localStorage = await SharedPreferences.getInstance();
-      localStorage.setString('token', json.encode(responseData["access_token"]));
+      localStorage.setString('token', responseData['access_token']);
       Navigator.pushReplacementNamed(context, '/thisweek');
     }
   }
