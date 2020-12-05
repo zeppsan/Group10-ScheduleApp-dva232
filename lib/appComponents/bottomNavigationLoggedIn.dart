@@ -5,18 +5,18 @@ class NaviagtionBarLoggedIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-
+      //backgroundColor: Colors.blue,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+          icon: Icon(Icons.home, color: Colors.white,),
           label: 'This week',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.schedule),
-          label: 'Schedule',
+          icon: Icon(Icons.schedule, color: Colors.white,),
+          label: 'Schedule', 
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.map),
+          icon: Icon(Icons.map, color: Colors.white),
           label: 'Map',
         ),
       ],
