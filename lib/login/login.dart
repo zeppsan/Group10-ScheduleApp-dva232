@@ -136,18 +136,28 @@ class _LoginForm extends State<LoginForm> {
         headers: {"Content-Type": "application/json"},
         body: body
     );
-    print("${response.statusCode}");
-    print("${response.body}");
 
-    Map responseData = jsonDecode(response.body);
-    print(responseData['access_token']);
+    if(response.statusCode == 200) {
+      print("${response.statusCode}");
+      print("${response.body}");
 
-    if(responseData['access_token'] != null){
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      localStorage.setString('token', responseData['access_token']);
-      Navigator.pushReplacementNamed(context, '/thisweek');
+      Map responseData = jsonDecode(response.body);
+      print(responseData['access_token']);
+
+      if (responseData['access_token'] != null) {
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        localStorage.setString('token', responseData['access_token']);
+        Navigator.pushReplacementNamed(context, '/thisweek');
+      }
     }
+    else if(response.statusCode == 401){
+        //TODO: Error message to user
+        print("Account not found. Unaouthroized");
+      }
+    else if(response.statusCode == 422){
+        //TODO: Error message to user
+        print("Not valid email/password");
+      }
+
   }
-
-
 }
