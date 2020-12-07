@@ -12,7 +12,7 @@ import 'dart:convert';
 
 class CourseParser{
 
-  Map<DateTime, List<dynamic>> events = Map<DateTime, List<dynamic>>();
+  Map<DateTime, List<Lecture>> events = Map<DateTime, List<Lecture>>();
 
   List<dynamic> rawData;
 
@@ -30,15 +30,34 @@ class CourseParser{
       await print(lectureTime);
       DateTime lectureDateTime = await DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime));
       if(events[lectureDateTime] == null){
-        events[lectureDateTime] = await List<dynamic>();
-        events[lectureDateTime].add(await Text(lectureInformation.toString()));
+        events[lectureDateTime] = await List<Lecture>();
+        events[lectureDateTime].add(await Lecture(lectureInformation['summary'], lectureInformation['dateStart'], lectureInformation['dateEnd']));
       } else {
-        events[lectureDateTime].add( await Text(lectureInformation.toString()));
+        events[lectureDateTime].add(await Lecture( lectureInformation['summary'], lectureInformation['dateStart'], lectureInformation['dateEnd']));
       }
     });
-    print("DONE WITH THE PARSING");
-    await events.keys.forEach((element) async {
-      await print("Element was = ${events[element][0].toString()}");
-    });
   }
+}
+
+class Lecture{
+
+  String summary;
+  int startTime;
+  int endTime;
+
+  Lecture(summary, startTime, endTime){
+    this.summary = summary;
+    this.startTime = startTime;
+    this.endTime = endTime;
+  }
+
+  String getTime(int dateTime){
+    String resultString = "";
+    DateTime date = DateTime.fromMicrosecondsSinceEpoch(dateTime * 1000);
+    String minute = (date.minute.toString().length < 2)? "0${date.minute.toString()}": "${date.minute.toString()}";
+    resultString = "${date.hour.toString()}:${minute}";
+    return resultString;
+  }
+
+
 }
