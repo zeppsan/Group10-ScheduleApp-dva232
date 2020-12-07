@@ -117,7 +117,6 @@ class _RegisterForm extends State<RegisterForm> {
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: ElevatedButton(
               onPressed: (){
-                //TODO: fix back to login
                 Navigator.pop(context);
               },
               child: Text("Back to login"),
@@ -129,10 +128,10 @@ class _RegisterForm extends State<RegisterForm> {
   }
 
   void postRequest ({var name, var email, var password, var passwordConfirmation}) async {
-  print(name);
-  print(email);
-  print(password);
-  print(passwordConfirmation);
+    print(name);
+    print(email);
+    print(password);
+    print(passwordConfirmation);
     var url ='https://qvarnstrom.tech/api/auth/register';
 
     Map data = {
@@ -141,13 +140,23 @@ class _RegisterForm extends State<RegisterForm> {
       'password': '$password',
       'password_confirmation': '$passwordConfirmation'
     };
-    //encode Map to JSON
+
     var body = json.encode(data);
 
     var response = await http.post(url,
         headers: {"Content-Type": "application/json"},
         body: body
     );
+
+    if(response.statusCode == 400){
+      //TODO: Error message to user
+      print("Email taken");
+    }
+    else if(response.statusCode == 201){
+      //TODO: Message to user
+      print("Registration complete");
+    }
+
     print("${response.statusCode}");
     print("${response.body}");
   }
