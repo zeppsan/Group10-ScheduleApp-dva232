@@ -3,7 +3,6 @@ import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 import '../appComponents/bottomNavigationLoggedIn.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatelessWidget {
   @override
@@ -40,6 +39,12 @@ class Settings extends StatelessWidget {
               icon: Icon(Icons.remove_circle),
               label: Text('Remove User Localstorage (temp)'),
           ),
+          RaisedButton(
+            child: Text("Return to main, without signing out"),
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/');
+            },
+          )
         ],
       ),
     );
