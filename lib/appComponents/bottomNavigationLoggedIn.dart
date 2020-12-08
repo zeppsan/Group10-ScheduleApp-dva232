@@ -10,15 +10,15 @@ class NavigationBarLoggedIn extends StatelessWidget {
       currentIndex: _selectedItem,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+          icon: Icon(Icons.home_outlined),
           label: 'This week',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.schedule),
+          icon: Icon(Icons.calendar_today_outlined),
           label: 'Schedule',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.map),
+          icon: Icon(Icons.map_outlined),
           label: 'Map',
         ),
         BottomNavigationBarItem(
