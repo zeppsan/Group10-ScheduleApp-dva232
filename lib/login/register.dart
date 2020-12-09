@@ -32,107 +32,133 @@ class _RegisterForm extends State<RegisterForm> {
   var email;
   var password;
   var passwordConfirmation;
+  bool _passwordVisible;
+
+  @override
+  void initState() {
+    _passwordVisible = false;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-          Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              //Email input
-              TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: "Enter email",
-                ),
-                validator: (emailValue) {
-                  if (emailValue.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  else if(isEmail(emailValue.toLowerCase()) == false) {
-                    return 'Please enter an valid email';
-                  }
-                  email = emailValue;
-                  return null;
-                },
+    return Form(
+    key: _formKey,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        //Email input
+        TextFormField(
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+            labelText: "Enter email",
+          ),
+          validator: (emailValue) {
+            if (emailValue.isEmpty) {
+              return 'Please enter some text';
+            }
+            else if(isEmail(emailValue.toLowerCase()) == false) {
+              return 'Please enter an valid email';
+            }
+            email = emailValue;
+            return null;
+          },
+        ),
+        TextFormField(
+          decoration: InputDecoration(
+            labelText: "Enter name",
+          ),
+          keyboardType: TextInputType.text,
+          validator: (nameValue) {
+            if (nameValue.isEmpty) {
+              return 'Please enter some text';
+            }
+            name = nameValue;
+            return null;
+          },
+        ),
+        //Password
+        TextFormField(
+          decoration: InputDecoration(
+            labelText: "Enter password",
+            suffixIcon: IconButton(
+              icon: Icon(
+                //If _passwordVisible is true show the visibility icon else visibility_off
+                _passwordVisible ? Icons.visibility : Icons.visibility_off,
               ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: "Enter name",
-                ),
-                keyboardType: TextInputType.text,
-                validator: (nameValue) {
-                  if (nameValue.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  name = nameValue;
-                  return null;
-                },
+              onPressed: (){
+                //Redraw the page and switch the password visibility state
+                setState(() {
+                  _passwordVisible = !_passwordVisible;
+                });
+              },
+            ),
+          ),
+          keyboardType: TextInputType.text,
+          obscureText: !_passwordVisible,
+          validator: (passwordValue) {
+            if (passwordValue.isEmpty) {
+              return 'Please enter some text';
+            }
+            else if(passwordValue.length < 6){
+              return 'Too short password. Min 6 characters';
+            }
+            password = passwordValue;
+            return null;
+          },
+        ),
+        TextFormField(
+          decoration: InputDecoration(
+            labelText: "Enter password",
+            suffixIcon: IconButton(
+              icon: Icon(
+                //If _passwordVisible is true show the visibility icon else visibility_off
+                _passwordVisible ? Icons.visibility : Icons.visibility_off,
               ),
-              //Password
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: "Enter password",
-                ),
-                keyboardType: TextInputType.text,
-                obscureText: true,
-                validator: (passwordValue) {
-                  if (passwordValue.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  else if(passwordValue.length < 6){
-                    return 'Too short password. Min 6 characters';
-                  }
-                  password = passwordValue;
-                  return null;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: "Enter password again",
-                ),
-                keyboardType: TextInputType.text,
-                obscureText: true,
-                validator: (passwordConfirmationValue) {
-                  if (passwordConfirmationValue.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  else if(passwordConfirmationValue.length < 6){
-                    return 'Too short password. Min 6 characters';
-                  }
-                  else if (password != passwordConfirmation){
-                    return 'Passwords do not match';
-                  }
-                  passwordConfirmation = passwordConfirmationValue;
-                  return null;
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Validate returns true if the form is valid, or false
-                    if (_formKey.currentState.validate()) {
-                      // If the form is valid, display a Snackbar.
+              onPressed: (){
+                //Redraw the page and switch the password visibility state
+                setState(() {
+                  _passwordVisible = !_passwordVisible;
+                });
+              },
+            ),
+          ),
+          keyboardType: TextInputType.text,
+          obscureText: !_passwordVisible,
+          validator: (passwordConfirmationValue) {
+            if (passwordConfirmationValue.isEmpty) {
+              return 'Please enter some text';
+            }
+            else if(passwordConfirmationValue.length < 6){
+              return 'Too short password. Min 6 characters';
+            }
+            else if (password != passwordConfirmation){
+              return 'Passwords do not match';
+            }
+            passwordConfirmation = passwordConfirmationValue;
+            return null;
+          },
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: ElevatedButton(
+            onPressed: () {
+              // Validate returns true if the form is valid, or false
+              if (_formKey.currentState.validate()) {
+                // If the form is valid, display a Snackbar.
 
-                      if(password == passwordConfirmation) {
-                        //Register func to add data to backend
-                        postRequest(name: name, email: email, password: password, passwordConfirmation: passwordConfirmation);
-                      }
-                    }
+                if(password == passwordConfirmation) {
+                  //Register func to add data to backend
+                  postRequest(name: name, email: email, password: password, passwordConfirmation: passwordConfirmation);
+                }
+              }
 
-                  },
-                  child: Text('Register'),
-                ),
-              ),
-            ],
+            },
+            child: Text('Register'),
           ),
         ),
       ],
-    );
+    ),
+        );
   }
 
   void postRequest ({var name, var email, var password, var passwordConfirmation}) async {

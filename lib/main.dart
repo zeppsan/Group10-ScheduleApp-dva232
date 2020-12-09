@@ -9,6 +9,7 @@ import 'package:schedule_dva232/schedule/thisweek.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 import 'package:schedule_dva232/theme/themes.dart';
 import 'package:schedule_dva232/generalPages/settings.dart';
+import 'package:schedule_dva232/login/loginMain.dart';
 
 Future main() async {
   await ThemeManager.initialise();
@@ -28,7 +29,7 @@ class App extends StatelessWidget{
         themeMode: themeMode,
         initialRoute: '/',
         routes: {
-            '/': (context) => Login(),
+            '/': (context) => LoginMain(),
             '/register': (context) => Register(),
             '/schedule': (context) => Schedule(),
             '/scheduleSettings': (context) => ScheduleSettings(),
