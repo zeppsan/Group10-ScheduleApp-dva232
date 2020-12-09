@@ -23,7 +23,7 @@ class Settings extends StatelessWidget {
               icon: Icon(Icons.sensor_door_outlined),
               label: Text('Logout'),
           ),
-          RaisedButton(
+          ElevatedButton(
             child: Text("Change Theme"),
             onPressed: () {
               getThemeManager(context).toggleDarkLightTheme();
@@ -39,7 +39,7 @@ class Settings extends StatelessWidget {
               icon: Icon(Icons.remove_circle),
               label: Text('Remove User Localstorage (temp)'),
           ),
-          RaisedButton(
+          ElevatedButton(
             child: Text("Return to main, without signing out"),
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/');
