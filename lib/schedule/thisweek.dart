@@ -15,18 +15,13 @@ class Thisweek extends StatelessWidget {
     );
   }
 }
-
 //Make card list for each day cards are lectures or lessons in the schedule for that day.
-// show next 3 upcoming days, today tomorrow {monday, tuesday, wednesday, thursday, friday} depending on what day is the third.
-// set up the cards in 3 different rows, for each day, make each row container scrollable so you can scroll through each day
-// of cards in separate lists of cards for each day.
+//Fill in data for each day
 
 class fiveTopDays extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => _fiveTopDaysState();
 }
-//var day = DateFormat('EEEE').format(DateTime.now());
-
 
 class _fiveTopDaysState extends State<fiveTopDays>{
   @override
@@ -38,25 +33,43 @@ class _fiveTopDaysState extends State<fiveTopDays>{
           var daynr = DateTime.now().weekday;
           var day;
           var calcday = daynr + pos;
-          if (calcday == 6)
-            calcday = pos - daynr - 1;
 
-          switch (calcday) {
-            case 1:
-              day = "Monday";
-              break;
-            case 2:
-              day = "Tuesday";
-              break;
-            case 3:
-              day = "Wednesday";
-              break;
-            case 4:
-              day = "Thursday";
-              break;
-            case 5:
-              day = "Friday";
-          };
+          if (daynr == calcday)
+            day = "Today";
+          else if (daynr+1 == calcday)
+            day ="Tomorrow";
+          else {
+            switch (calcday) {
+              /*case 1:
+                day = "Monday";
+                break;
+              case 2:
+                day = "Tuesday";
+                break;*/
+              case 3:
+                day = "Wednesday";
+                break;
+              case 4:
+                day = "Thursday";
+                break;
+              case 5:
+                day = "Friday";
+                break;
+              case 6:
+                day = "Monday";
+                break;
+              case 7:
+                day = "Tuesday";
+                break;
+              case 8:
+                day = "Wednesday";
+                break;
+              case 9:
+                day = "Thursday";
+                break;
+            };
+          }
+
         return Column(children: [
           Text(day, style: TextStyle(
             fontSize: 20,
