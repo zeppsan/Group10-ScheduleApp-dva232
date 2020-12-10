@@ -131,7 +131,7 @@ class _RegisterForm extends State<RegisterForm> {
             else if(passwordConfirmationValue.length < 6){
               return 'Too short password. Min 6 characters';
             }
-            else if (password != passwordConfirmation){
+            else if (passwordConfirmationValue != password){
               return 'Passwords do not match';
             }
             passwordConfirmation = passwordConfirmationValue;
