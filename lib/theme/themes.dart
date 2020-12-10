@@ -20,22 +20,22 @@ class AppTheme{
     ),),*/
 
     appBarTheme: AppBarTheme(
-      color: Colors.deepPurple[700],
+      color: const Color(0xff4d446f),
       iconTheme: IconThemeData(
-        color: Colors.orangeAccent,
+        color: const Color(0xffdfb15b),
       ),
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(primary: Colors.orangeAccent),
+      style: ElevatedButton.styleFrom(primary: const Color(0xffdfb15b)),
     ),
 
       primaryIconTheme: IconThemeData(
-        color: Colors.orangeAccent,
+        color: const Color(0xffdfb15b),
       ),
 
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: Colors.deepPurple[700],
+      backgroundColor: const Color(0xff4d446f),
       selectedIconTheme: IconThemeData(color: Colors.white),
       selectedItemColor:  Colors.white,
       unselectedIconTheme: IconThemeData(color: Colors.white60),
@@ -61,10 +61,10 @@ class AppTheme{
     ),*/
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Colors.black38,
-        selectedIconTheme: IconThemeData(color: Colors.orangeAccent),
-        selectedLabelStyle: TextStyle(color:Colors.orangeAccent), //ÄR FÖRMODLIGEN FEL EFTERSOM DEN INTE TAR DENNA ANDRA FÄRG
-        unselectedIconTheme: IconThemeData(color: Colors.orange),
-        unselectedLabelStyle: TextStyle(color: Colors.orange) //ÄR FÖRMODLIGEN FEL EFTERSOM DEN INTE TAR DENNA ANDRA FÄRG
+        selectedIconTheme: IconThemeData(color: const Color(0xffb18d49)),
+        selectedLabelStyle: TextStyle(color:const Color(0xffb18d49)), //ÄR FÖRMODLIGEN FEL EFTERSOM DEN INTE TAR DENNA ANDRA FÄRG
+        unselectedIconTheme: IconThemeData(color: const Color(0xffdfb15b)),
+        unselectedLabelStyle: TextStyle(color: const Color(0xffdfb15b)) //ÄR FÖRMODLIGEN FEL EFTERSOM DEN INTE TAR DENNA ANDRA FÄRG
       )
   );
 }
