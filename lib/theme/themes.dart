@@ -7,7 +7,7 @@ class AppTheme{
   AppTheme._();
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
-    scaffoldBackgroundColor: Colors.deepPurple[400],
+    scaffoldBackgroundColor: Colors.orange[50],
     /*scaffoldBackgroundColor: Container(decoration: BoxDecoration( //VARFÖR KAN JAG INTE FÅ EN LINEAR GRADIENT BACKGROUND VARFÖR MÅSTE DET GÖRAS I CONTAINER????
       gradient: LinearGradient(
         begin: Alignment.topCenter,
@@ -18,23 +18,28 @@ class AppTheme{
         ]
       )
     ),),*/
+
     appBarTheme: AppBarTheme(
       color: Colors.deepPurple[700],
       iconTheme: IconThemeData(
         color: Colors.orangeAccent,
       ),
     ),
+
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(primary: Colors.orangeAccent),
     ),
 
+      primaryIconTheme: IconThemeData(
+        color: Colors.orangeAccent,
+      ),
 
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: Colors.deepPurple[700],
       selectedIconTheme: IconThemeData(color: Colors.white),
-      selectedLabelStyle: TextStyle(color:Colors.white), //ÄR FÖRMODLIGEN FEL EFTERSOM DEN INTE TAR DENNA ANDRA FÄRG
+      selectedItemColor:  Colors.white,
       unselectedIconTheme: IconThemeData(color: Colors.white60),
-      unselectedLabelStyle: TextStyle(color: Colors.white60), //ÄR FÖRMODLIGEN FEL EFTERSOM DEN INTE TAR DENNA ANDRA FÄRG
+      unselectedItemColor: Colors.white60,
     )
   );
 

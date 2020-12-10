@@ -9,6 +9,14 @@ class ScheduleSettings extends StatelessWidget {
       appBar: AppBar(
         title: Text("Schedule Settings"),
       ),
+      body: Container(
+        child: FlatButton.icon(
+          onPressed:(){Navigator.pushNamed(context, '/addCourse');},
+          icon: Icon(Icons.add,color: Colors.orangeAccent,size: 100,),
+          label: Text(""),
+        ),
+        alignment: Alignment.bottomCenter,
+      ),
       bottomNavigationBar: NavigationBarLoggedIn(),
     );
   }

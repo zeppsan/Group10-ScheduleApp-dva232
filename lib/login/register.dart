@@ -182,7 +182,7 @@ class _RegisterForm extends State<RegisterForm> {
         body: body
     );
 
-    if(response.statusCode == 400){
+    /*if(response.statusCode == 400){
       //TODO: Error message to user
       setState(() {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -202,7 +202,7 @@ class _RegisterForm extends State<RegisterForm> {
         Navigator.pushReplacementNamed(context, "/");
       });
       print("Registration complete");
-    }
+    }*/
 
     print("${response.statusCode}");
     print("${response.body}");
