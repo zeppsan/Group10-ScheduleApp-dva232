@@ -22,7 +22,7 @@ class AddCourse extends StatelessWidget {
                 child: Text("Add course")),
             Text("My Courses"),
             SizedBox(
-              height: 300,
+              height: 400,
               child: ListView.builder(
                 itemCount: 3,
                 itemBuilder: (context, pos) {
