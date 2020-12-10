@@ -7,7 +7,7 @@ class AppTheme{
   AppTheme._();
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
-    //scaffoldBackgroundColor: Colors.orange[50],
+    scaffoldBackgroundColor: Colors.orange[50],
     /*scaffoldBackgroundColor: Container(decoration: BoxDecoration( //VARFÖR KAN JAG INTE FÅ EN LINEAR GRADIENT BACKGROUND VARFÖR MÅSTE DET GÖRAS I CONTAINER????
       gradient: LinearGradient(
         begin: Alignment.topCenter,
