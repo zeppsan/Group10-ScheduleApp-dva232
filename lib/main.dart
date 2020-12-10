@@ -9,6 +9,7 @@ import 'package:schedule_dva232/schedule/thisweek.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 import 'package:schedule_dva232/theme/themes.dart';
 import 'package:schedule_dva232/generalPages/settings.dart';
+import 'package:schedule_dva232/login/loginMain.dart';
 
 Future main() async {
   await ThemeManager.initialise();
@@ -23,20 +24,20 @@ class App extends StatelessWidget{
       darkTheme: AppTheme.darkTheme,
       lightTheme: AppTheme.lightTheme,
       builder: (context, regularTheme, darkTheme, themeMode) => MaterialApp(
-      theme: regularTheme,
+        theme: regularTheme,
         darkTheme: darkTheme,
         themeMode: themeMode,
         initialRoute: '/',
         routes: {
-          '/': (context) => Login(),
-          '/register': (context) => Register(),
-          '/schedule': (context) => Schedule(),
-          '/scheduleSettings': (context) => ScheduleSettings(),
-          '/addCourse': (context) => AddCourse(),
-          '/thisweek': (context) => Thisweek(),
-          '/map': (context) => Map(),
-          '/settings': (context) => Settings(),
-        },
+            '/': (context) => LoginMain(),
+            '/register': (context) => Register(),
+            '/schedule': (context) => Schedule(),
+            '/scheduleSettings': (context) => ScheduleSettings(),
+            '/addCourse': (context) => AddCourse(),
+            '/thisweek': (context) => Thisweek(),
+            '/map': (context) => Map(),
+            '/settings': (context) => Settings(),
+          },
       ),
     );
   }

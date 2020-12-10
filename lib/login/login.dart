@@ -42,92 +42,99 @@ class _LoginForm extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   var email;
   var password;
+  bool _passwordVisible;
+  bool _register;
+
+  @override
+  void initState() {
+    _passwordVisible = false;
+    _register = false;
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            //Email input
-            TextFormField(
-              keyboardType: TextInputType.emailAddress,
+    return Form(
+    key: _formKey,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        //Email input
+        TextFormField(
+          decoration: InputDecoration(
+            labelText: "Enter email",
+            icon: Icon(Icons.email, color: Colors.black,),
+          ),
+          keyboardType: TextInputType.emailAddress,
+          validator: (emailValue) {
+            if (emailValue.isEmpty) {
+              return 'Please enter some text';
+            }
+            else if(isEmail(emailValue.toLowerCase()) == false) {
+              return 'Please enter an valid email';
+            }
 
-              decoration: InputDecoration(
-                labelText: "Enter email",
-              ),
-              validator: (emailValue) {
-                if (emailValue.isEmpty) {
-                  return 'Please enter some text';
-                }
-                else if(isEmail(emailValue.toLowerCase()) == false) {
-                  return 'Please enter an valid email';
-                }
-
-                email = emailValue;
-                return null;
-              },
-            ),
-            //Password
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: "Enter password",
-              ),
-              keyboardType: TextInputType.text,
-              obscureText: true,
-              validator: (passwordValue) {
-                if (passwordValue.isEmpty) {
-                  return 'Please enter some text';
-                }
-                else if(passwordValue.length < 6){
-                  return 'Too short password. Min 6 characters';
-                }
-                password = passwordValue;
-                return null;
-              },
-            ),
-            //LoginButton
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    postRequest(email: email,password: password);
-                  }
-                },
-                child: Text('Login'),
-              ),
-            ),
-            //RegisterButton
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ElevatedButton(
-                onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => Register())
-                  );
-                },
-                child: Text("Register"),
-              ),
-            ),
-            //Continue without register/login
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ElevatedButton(
-                onPressed: (){
-                  Navigator.pushReplacementNamed(context, "/map");
-                },
-                child: Text("Continue without register/login"),
-              ),
-            ),
-          ],
+            email = emailValue;
+            return null;
+          },
         ),
-      ),
-    ]
-    );
+        //Password
+        TextFormField(
+          decoration: InputDecoration(
+            icon: Icon(Icons.vpn_key),
+            suffixIcon: IconButton(
+              icon: Icon(
+                //If _passwordVisible is true show the visibility icon else visibility_off
+                _passwordVisible ? Icons.visibility : Icons.visibility_off,
+              ),
+              onPressed: (){
+                //Redraw the page and switch the password visibility state
+                setState(() {
+                  _passwordVisible = !_passwordVisible;
+                });
+              },
+            ),
+            labelText: "Enter password",
+            //TODO: Add icon to show password
+          ),
+          keyboardType: TextInputType.text,
+          obscureText: !_passwordVisible,
+          validator: (passwordValue) {
+            if (passwordValue.isEmpty) {
+              return 'Please enter some text';
+            }
+            else if(passwordValue.length < 6){
+              return 'Too short password. Min 6 characters';
+            }
+            password = passwordValue;
+            return null;
+          },
+        ),
+        //LoginButton
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: ElevatedButton(
+            onPressed: () {
+              if (_formKey.currentState.validate()) {
+                postRequest(email: email,password: password);
+              }
+            },
+            child: Text('Login'),
+          ),
+        ),
+        //Continue without register/login
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: ElevatedButton(
+            onPressed: (){
+              Navigator.pushReplacementNamed(context, "/map");
+            },
+            child: Text("Continue without register/login"),
+          ),
+        ),
+      ],
+    ),
+      );
   }
 
   void postRequest ({var email, var password}) async {
@@ -164,6 +171,7 @@ class _LoginForm extends State<LoginForm> {
    else if(response.statusCode == 401){
       //TODO: Error message to user. Something wrong with the error code 401
       setState(() {
+
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: const Text("Unauthorized"),
           duration: const Duration(seconds: 3),
