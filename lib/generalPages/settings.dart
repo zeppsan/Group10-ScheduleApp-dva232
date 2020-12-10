@@ -34,6 +34,7 @@ class Settings extends StatelessWidget {
                 SharedPreferences localStorage = await SharedPreferences.getInstance();
                 await localStorage.remove('rawSchedule');
                 await localStorage.remove('token');
+                await localStorage.remove('course_list');
                 Navigator.pushReplacementNamed(context, '/');
               },
               icon: Icon(Icons.remove_circle),

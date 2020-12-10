@@ -7,6 +7,7 @@
 * */
 
 import 'dart:collection';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
@@ -18,37 +19,58 @@ class CourseParser{
 
   CourseParser({this.rawData});
 
+  /* This is the parent function of courseSorter, this one does the course looping
+  * */
   void parseRawData(){
     rawData.forEach((element) async {
       await courseSorter(jsonDecode(element['schedule']));
     });
   }
 
-  // BUGG! ONLY SHOWS 1 COURSE PER DAY. THIS IS CAUSED BY THE TIME OVERLAPPING OF COURSE
+
+  /* This function takes in the rawdata from the api-endpoint and loops trough the course in the json-string.
+  *  It then adds each course occation into the events map, sorting them by datetime.
+  * */
   void courseSorter(LinkedHashMap<String, dynamic> course) async {
     await course.forEach((lectureTime, lectureInformation) async {
-      await print(lectureTime);
-      DateTime lectureDateTime = await DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime));
-      if(events[lectureDateTime] == null){
-        events[lectureDateTime] = await List<Lecture>();
-        events[lectureDateTime].add(await Lecture(lectureInformation['summary'], lectureInformation['dateStart'], lectureInformation['dateEnd']));
+      int year = await DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime)).year;
+      int month = await DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime)).month;
+      int day = await DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime)).day;
+      DateTime target = DateTime(year, month, day);
+      log("Datetime was : ${target.toString()}");
+      if(events[target] == null){
+        log("I was called on null slot");
+        events[target] = List<Lecture>();
+        events[target].add(Lecture(lectureInformation['summary'], lectureInformation['dateStart'], lectureInformation['dateEnd'], lectureInformation['location']));
       } else {
-        events[lectureDateTime].add(await Lecture( lectureInformation['summary'], lectureInformation['dateStart'], lectureInformation['dateEnd']));
+        log("I was called on non null slot");
+        events[target].add(Lecture( lectureInformation['summary'], lectureInformation['dateStart'], lectureInformation['dateEnd'], lectureInformation['location']));
       }
+      log("ListLength was : ${events[target].length}");
     });
   }
+
+  static saveToLocalStorage(){
+
+  }
+
+
 }
 
+/* This class is used to create a lecture. Each lecture has a summary, startTime, endTime, location.
+* */
 class Lecture{
 
   String summary;
   int startTime;
   int endTime;
+  String location;
 
-  Lecture(summary, startTime, endTime){
+  Lecture(summary, startTime, endTime, location){
     this.summary = summary;
     this.startTime = startTime;
     this.endTime = endTime;
+    this.location = location;
   }
 
   String getTime(int dateTime){
@@ -58,6 +80,4 @@ class Lecture{
     resultString = "${date.hour.toString()}:${minute}";
     return resultString;
   }
-
-
 }
