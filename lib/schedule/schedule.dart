@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:ui';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
@@ -15,38 +16,28 @@ import 'package:http/http.dart' as http;
 class Schedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    CheckLogin(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Schedule'),
         actions: [
           FlatButton.icon(
-              onPressed: (){
-                Navigator.pushNamed(context, '/scheduleSettings');
-              },
-              icon: Icon(
-                  Icons.settings,
-                color: Colors.white,
-              ),
-              label: Text(""),
+            onPressed: () {
+              Navigator.pushNamed(context, '/scheduleSettings');
+            },
+            icon: Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+            label: Text(""),
           ),
         ],
       ),
-      body: Column(
-        children: [
-          ScheduleWidget(),
-        ],
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        child: ScheduleWidget(),
       ),
       bottomNavigationBar: NavigationBarLoggedIn(),
     );
-  }
-
-  void CheckLogin(context) async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    print(localStorage.getString('token'));
-    if (localStorage.getString('token') == null) {
-      Navigator.pushReplacementNamed(context, '/');
-    }
   }
 }
 
@@ -58,7 +49,7 @@ class ScheduleWidget extends StatefulWidget {
 class _ScheduleWidgetState extends State<ScheduleWidget> {
   @override
   Future calendarFuture;
-  String noScheduleError = "Sorry, we could not find your schedule...";
+  String noScheduleError = "Seems like you don't subscribe on any schedule, add some!";
 
   @override
   void initState() {
@@ -67,38 +58,51 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
   }
 
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        FutureBuilder(
-            future: calendarFuture,
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-                  return Text('Something went wrong');
-                  break;
-                case ConnectionState.waiting:
-                  return Text('waiting');
-                  break;
-                case ConnectionState.done:
-                  {
-                    // Data is retrieved. Check if the data is null, if so, return Text that displays that there is no schedule to show.
-                    if (snapshot.data == null) {
-                      // Data = null;
-                      return Text(
-                        noScheduleError,
-                        style: TextStyle(color: Colors.blue, fontSize: 24),
-                      );
-                    } else {
-                      // Data is not null
-                      return ScheduleCalendar(snapshot.data);
-                    }
+    return Container(
+      child: FutureBuilder(
+          future: calendarFuture,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return Text('Something went wrong');
+                break;
+              case ConnectionState.waiting:
+                return Text('waiting');
+                break;
+              case ConnectionState.done:
+                {
+                  // Data is retrieved. Check if the data is null, if so, return Text that displays that there is no schedule to show.
+                  if (snapshot.data == null) {
+                    // Data = null;
+                    return Container(
+                      padding: EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          Text(
+                          noScheduleError,
+                          style: TextStyle(
+                              color: Colors.purple,
+                              fontSize: 24
+                          ),
+                        ),
+                          ElevatedButton(
+                            child: Text("Schedule Settings"),
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(context, '/scheduleSettings');
+                            },
+                          )
+                      ]),
+                    );
+                  } else {
+                    // Data is not null
+                    return ScheduleCalendar(snapshot.data);
                   }
-                  break;
-                default:
-                  return ScheduleCalendar(snapshot.data);
-              }
-            }),
-      ],
+                }
+                break;
+              default:
+                return ScheduleCalendar(snapshot.data);
+            }
+          }),
     );
   }
 
@@ -106,52 +110,86 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
   * Functions gets schedule raw-data from the locatstorage if possible, else, it fetches fresh information from the database.
   * If there however is no internet at that time, return an empty list of events and display an "empty schedule" for the user.
   * */
+
   Future<List<dynamic>> getEvents() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    List<dynamic> result = List<dynamic>();
-    // Check if there is an schedule saved already. If so, do not update unless it's out of date.
+    bool hasInternetAccess = false;
+
+    // Check if there is an existing schedule if so, return that.
     if (localStorage.containsKey('rawSchedule')) {
-      result = jsonDecode(localStorage.getString('rawSchedule'));
-    } else {
-      // If there is no schedule saved in the localStorage
+      print("Got the raw");
+      return jsonDecode(localStorage.getString('rawSchedule'));
+    }
 
-      // The following try-catch is taken from stackOVerflow. Link below:
-      // https://stackoverflow.com/questions/49648022/check-whether-there-is-an-internet-connection-available-on-flutter-app
-      try {
-        final internetCheck = await InternetAddress.lookup('google.com');
-        if (internetCheck.isNotEmpty &&
-            internetCheck[0].rawAddress.isNotEmpty) {
-          // Phone has internet access
-          String token = await localStorage.getString('token');
-          String url = "https://qvarnstrom.tech/api/schedule/update";
-
-          // Generate the http request for fetching the schedule
-          var response = await http.get(
-            url,
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'Authorization': 'Bearer ' + token,
-            },
-          );
-          if (response.statusCode == 401) {
-            // user is holding an invalid authentication token. Sen user to login screen.
-            Navigator.pushReplacementNamed(context, '/');
-          }
-          // Save the new schedule to the local storage
-          await localStorage.setString('rawSchedule', response.body);
-          result = jsonDecode(response.body);
-        }
-      } on SocketException catch (_) {
+    // Checks if the user has internet or not
+    try {
+      final internetCheck = await InternetAddress.lookup('google.com');
+      if (!internetCheck.isNotEmpty &&
+          !internetCheck[0].rawAddress.isNotEmpty) {
         // Phone does not have internet access
-        result = null;
+        return null;
+      }
+    } on SocketException catch (_) {
+      // Phone does not have internet access
+      return null;
+    }
+
+
+    // Check if the user is logged in to an account that has online-sync
+    if (localStorage.containsKey('token')) {
+      String token = await localStorage.getString('token');
+      String url = "https://qvarnstrom.tech/api/schedule/update";
+      var response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + token,
+        },
+      );
+      if (response.statusCode == 401) {
+        // user is holding an invalid authentication token. Sen user to login screen.
+        Navigator.pushReplacementNamed(context, '/');
+      }
+      // Save the new schedule to the local storage
+      await localStorage.setString('rawSchedule', response.body);
+      return jsonDecode(response.body);
+    }
+
+
+    // if the user does not have any account, but still has internet access, fetch the course information from the api
+    // and store it in the raw-data.
+    if (localStorage.containsKey('course_list')) {
+      String courses = localStorage.getString('course_list');
+      var url = 'https://qvarnstrom.tech/api/schedule/updateNonUser';
+
+      Map data = {
+        'course_list': localStorage.getString('course_list')
+      };
+
+      //encode Map to JSON
+      var body = json.encode(data);
+
+      var response = await http.post(url,
+          headers: {"Content-Type": "application/json"},
+          body: body
+      );
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      }
+      else {
+        print("Database error, could not fetch");
       }
     }
 
-    // Return result to the Future
-    return result;
+    // if there is no course_subscription either, return null;
+    return null;
   }
 }
+
+
+
 
 class ScheduleCalendar extends StatefulWidget {
   @override
@@ -174,6 +212,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
   Future calendarFuture;
   Future listViewFuture;
   List<dynamic> listEvents;
+  CourseParser parser;
 
   _ScheduleCalendarState(List<dynamic> httpResult) {
     this.courses = httpResult;
@@ -202,39 +241,36 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
               return Text('waiting');
               break;
             case ConnectionState.done:
-              return Container(
-                child: Column(
-                  children: [
-                    Container(
-                      child: TableCalendar(
-                        calendarStyle: CalendarStyle(
-                          selectedColor: Colors.blue,
-                          todayColor: Colors.blue[400]
-                        ),
-                        initialSelectedDay: DateTime.now(),
-                        calendarController: _calendarController,
-                        startingDayOfWeek: StartingDayOfWeek.monday,
-                        events: snapshot.data,
-                        onDaySelected: (date, events, test) {
-                          setState(() {
-                            _selectedEvents = events;
-                          });
-                        },
-                      ),
-                    ),
-                    Container(
-                      height: 150,
-                      width: 400,
-                      child: ListView(
-                        padding: EdgeInsets.all(8.0),
-                        children: _selectedEvents.map((ev){
-                          return eventContainer(ev.getTime(ev.startTime), ev.summary, ev.getTime(ev.endTime), "zoom");
-                        }).toList(),
-                      ),
-                    ),
-                  ],
+              return ListView(children: [
+                Container(
+                  child: TableCalendar(
+                    calendarStyle: CalendarStyle(
+                        selectedColor: Colors.blue,
+                        todayColor: Colors.blue[400]),
+                    initialSelectedDay: DateTime.now(),
+                    calendarController: _calendarController,
+                    startingDayOfWeek: StartingDayOfWeek.monday,
+                    events: snapshot.data,
+                    onDaySelected: (date, events, test) {
+                      log("Test : ${snapshot.data}");
+                      setState(() {
+                        _selectedEvents = events;
+                      });
+                    },
+                  ),
                 ),
-              );
+                Container(
+                  height: 1000,
+                  width: 400,
+                  child: ListView(
+                    padding: EdgeInsets.all(8.0),
+                    children: _selectedEvents.map((ev) {
+                      return eventContainer(ev.getTime(ev.startTime),
+                          ev.summary, ev.getTime(ev.endTime), ev.location);
+                    }).toList(),
+                  ),
+                ),
+              ]);
               break;
             default:
               return ScheduleCalendar(courses);
@@ -242,67 +278,59 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
         });
   }
 
-  Future<Map<DateTime, List<Lecture>>> renderCalendar(List<dynamic> coursesToParse) async {
+  Future<Map<DateTime, List<Lecture>>> renderCalendar(
+      List<dynamic> coursesToParse) async {
     Map<DateTime, List<dynamic>> test = Map<DateTime, List<dynamic>>();
 
-    var parser = CourseParser(rawData: coursesToParse);
+    parser = CourseParser(rawData: coursesToParse);
 
-    parser.parseRawData();
+    await parser.parseRawData();
 
     return parser.events;
   }
 
-  Widget eventContainer(startDate, summary, endDate, room){
+  Widget eventContainer(startDate, summary, endDate, room) {
     return Container(
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
+        padding: EdgeInsets.all(8),
+        margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [Colors.blue[300], Colors.blue[500]],
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [Colors.blue[300], Colors.blue[500]],
           ),
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10)
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Text(
+        child: Column(
+          children: [
+            Text(
               '${startDate} -> ${endDate}',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 18
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18),
             ),
-          ),
-          Text(
+            Text(
               '${summary}',
-            style: TextStyle(
-                color: Colors.white
+              style: TextStyle(color: Colors.white),
             ),
-          ),
-          Text(
+            Text(
               'Location: ${room}',
-            style: TextStyle(
-                color: Colors.white,
-              fontSize: 18
+              style: TextStyle(color: Colors.white, fontSize: 18),
             ),
-          ),
-        ],
-      )
-    );
+          ],
+        ));
   }
-
-
 }
