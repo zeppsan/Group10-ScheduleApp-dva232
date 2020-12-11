@@ -70,15 +70,31 @@ class _MapState extends State<Map> {
                     ],
                   ),
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10.0,0.0,10.0,10.0),
-                    child: Image(
-                      //height: 100.0,
-                      image: AssetImage('assets/U1.jpg'),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10.0, 0.0,10.0,0.0),
+                  child: Container(
+                    child: ClipRect(
+                      child: InteractiveViewer(
+                        //boundaryMargin: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
+                        minScale: 0.1,
+                        maxScale: 6.0,
+                        child: Container(
+                          decoration: BoxDecoration(color: Colors.white),
+                          child: Stack(
+                            children: [
+                              Image.asset('assets/U1.jpg'),
+                              Positioned(
+                                top: 198, left: 172, //give the values according to your requirement
+                                child: Icon(Icons.location_on),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
                   child: Row(

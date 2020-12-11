@@ -1,0 +1,858 @@
+{
+  "buildings": [
+    {
+      "campus": "Vstrs",
+      "name" : "U",
+      "position" : {
+        "lat": 0.3,
+        "lng": 0.7  },
+      "floors" :  3,
+			"rooms" : [
+				{
+					"name" : "Alfa",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "Beta",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "Gamma",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "Lambda",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "Kappa",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "U1-042",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "U1-043",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "U1-044",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "U1-045",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "U1-046",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "Ypsilon",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-003",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-006",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-009",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-010",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-011",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-012",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-013",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-016",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-023",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-024",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-029",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-032",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-034",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-036",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-039",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-040",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-043",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-044",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-046",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-051",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-067",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-074",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-079",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-082",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-097",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-114",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-124",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-129",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-132",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-145",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-154",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-158",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-258",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-260",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-261",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-263",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-264",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-265",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-267",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-269",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-271",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U2-273",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "U3-003",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  3
+				}
+			]			
+    },
+    {
+      "campus": "Vstrs",
+      "name" : "R",
+      "position" : {
+        "lat": 0.2,
+        "lng": 0.1  },
+      "floors" :  3,
+			"rooms": [
+				{
+					"name" : "Delta",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "Omega",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "Pi",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-013",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-014",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-016",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-017",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-018",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-028",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-029",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-030",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-121",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-122",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-131",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-132",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-141",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-142",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-151",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-205",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-302",
+					"position" : {
+						"lat": 0.5,
+						"lng": 0.5  },
+					"floor" :  2
+				},
+				{
+					"name" : "R1-306",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-402",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-406",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-421",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-502",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-506",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "R1-622",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  1
+				},
+				{
+					"name" : "Case-sal",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "Milos",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "Naxos",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "Paros",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-001",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-003",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-012",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-013",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-014",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-025",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-031",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-032",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-041",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-042",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-043",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-089",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-090",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-091",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-092",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-121",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-132",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-141",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-142",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-151",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-205",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-208",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-302",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-402",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-408",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-501",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-502",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-506",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-605",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R2-606",
+					"position" : {
+						"lat": 0.3,
+						"lng": 0.7  },
+					"floor" :  2
+				},
+				{
+					"name" : "R3-003",
+					"position" : {
+						"lat": 0.5,
+						"lng": 0.5  },
+					"floor" :  3
+				}
+			]
+    },
+    {
+      "campus": "Vstrs",
+      "name" : "T",
+      "position" : {
+        "lat": 0.2,
+        "lng": 0.1  },
+      "floors" :  2,
+			"rooms": []
+    },
+    {
+      "campus": "Esklst",
+      "name" : "A",
+      "position" : {
+        "lat": 0.2,
+        "lng": 0.1  },
+      "floors" :  3,
+			"rooms": []
+    }
+  ]
+}
+	
+	
+	
+	
