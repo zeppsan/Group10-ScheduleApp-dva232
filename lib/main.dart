@@ -35,7 +35,7 @@ class App extends StatelessWidget{
             '/scheduleSettings': (context) => ScheduleSettings(),
             '/addCourse': (context) => AddCourse(),
             '/thisweek': (context) => Thisweek(),
-            '/map': (context) => Map(),
+            '/map': (context) => MdhMap(),
             '/settings': (context) => Settings(),
           },
       ),

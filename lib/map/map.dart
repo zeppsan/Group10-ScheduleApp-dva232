@@ -1,16 +1,47 @@
 //import 'dart:html';
-import 'dart:ui';
-
+import 'dart:convert';
+import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'dart:ui';
 
 import '../appComponents/bottomNavigationLoggedIn.dart';
 
-class Map extends StatefulWidget {
+class MdhMap extends StatefulWidget {
   @override
   _MapState createState() => _MapState();
 }
 
-class _MapState extends State<Map> {
+class _MapState extends State<MdhMap> {
+
+  double lat;
+  double long;
+
+  Future parseJson() async{
+    final String buildings = await rootBundle.loadString("assets/buildings_rooms.json");
+    print('inside room_repository the file is read');
+    print(buildings);
+    Map<String, dynamic> jsonBuildings = json.decode(buildings);
+
+    for (Map<String, dynamic> room in jsonBuildings['buildings'][0]['rooms']) {
+      if(room['name'] == 'beta'){
+        setState(() {
+          lat = room['position']['lat'];
+          long = room['position']['lng'];
+        });
+      }
+    }
+    print(lat);
+    print(long);
+  }
+
+  @override
+  void initState() {
+    parseJson();
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -89,7 +120,9 @@ class _MapState extends State<Map> {
                                 fit: BoxFit.cover,
                               ),
                               Positioned(
-                                top: 180, left: 160, //give the values according to your requirement
+                                top: long, // y
+                                left: lat, // x
+
                                 child: Icon(Icons.location_on),
                               ),
                             ],
