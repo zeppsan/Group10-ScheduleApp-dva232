@@ -37,16 +37,13 @@ class CourseParser{
       int month = await DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime)).month;
       int day = await DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime)).day;
       DateTime target = DateTime(year, month, day);
-      log("Datetime was : ${target.toString()}");
       if(events[target] == null){
-        log("I was called on null slot");
         events[target] = List<Lecture>();
-        events[target].add(Lecture(lectureInformation['summary'], lectureInformation['dateStart'], lectureInformation['dateEnd'], lectureInformation['location']));
+        events[target].add(Lecture(lectureInformation['summary'], lectureInformation['dateStart'], lectureInformation['dateEnd'], lectureInformation['location'], lectureInformation['course_code']));
       } else {
-        log("I was called on non null slot");
-        events[target].add(Lecture( lectureInformation['summary'], lectureInformation['dateStart'], lectureInformation['dateEnd'], lectureInformation['location']));
+        events[target].add(Lecture( lectureInformation['summary'], lectureInformation['dateStart'], lectureInformation['dateEnd'], lectureInformation['location'], lectureInformation['course_code']));
       }
-      log("ListLength was : ${events[target].length}");
+      log("course code was : ${lectureInformation['course_code']}");
     });
   }
 
@@ -65,12 +62,16 @@ class Lecture{
   int startTime;
   int endTime;
   String location;
+  String course_code;
+  String moment;
 
-  Lecture(summary, startTime, endTime, location){
+  Lecture(summary, startTime, endTime, location, course_code){
     this.summary = summary;
     this.startTime = startTime;
     this.endTime = endTime;
     this.location = location;
+    this.course_code = course_code;
+    this.moment = getMoment(summary);
   }
 
   String getTime(int dateTime){
@@ -79,5 +80,10 @@ class Lecture{
     String minute = (date.minute.toString().length < 2)? "0${date.minute.toString()}": "${date.minute.toString()}";
     resultString = "${date.hour.toString()}:${minute}";
     return resultString;
+  }
+
+  String getMoment(String input){
+    int momentIndex = input.indexOf("Moment");
+    return input.substring(momentIndex + 8);
   }
 }

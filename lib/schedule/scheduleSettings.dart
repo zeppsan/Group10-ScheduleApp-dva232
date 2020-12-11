@@ -17,6 +17,8 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
   TextEditingController course_input;
   Future courseFuture;
   bool activeButton;
+  Future addToList;
+  Future<bool> loadingSpinner;
 
   @override
   void initState() {
@@ -36,26 +38,29 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
       body: Container(
         child: Column(
           children: [
-            TextField(
-              controller: course_input,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
+            Container(
+              padding: EdgeInsets.all(10),
+              child: TextField(
+                controller: course_input,
+                decoration: InputDecoration(
+                  hintText: 'Course Code'
+                ),
               ),
             ),
             ElevatedButton(
                 onPressed: () {
                   if (activeButton) {
-                    addCourseToList(course_input.text);
                     activeButton = false;
+                    addToList = addCourseToList(course_input.text);
+                    FocusScope.of(context).unfocus();
                   }
-                  Future.delayed(Duration(milliseconds: 500), () {
-                    setState(() {
-                      courseFuture = getCourseList();
-                    });
-                  });
+                  addToList.whenComplete(() => {
+                        setState(() {
+                          courseFuture = getCourseList();
+                        })
+                      });
                 },
                 child: Text("Add course")),
-            Text("My Courses"),
             Flexible(
               child: FutureBuilder(
                 future: courseFuture,
@@ -73,19 +78,19 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                             children: courses.map((e) {
                           return Card(
                             child: ListTile(
-                              title: Text("${e}"),
-                              trailing: IconButton(
-                                icon: Icon(Icons.delete),
-                                onPressed: (){
-                                  removeCourse(e);
-                                  Future.delayed(Duration(milliseconds: 400), () {
-                                    setState(() {
-                                      courseFuture = getCourseList();
+                                title: Text("${e}"),
+                                trailing: IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () {
+                                    removeCourse(e);
+                                    Future.delayed(Duration(milliseconds: 400),
+                                        () {
+                                      setState(() {
+                                        courseFuture = getCourseList();
+                                      });
                                     });
-                                  });
-                                },
-                              )
-                            ),
+                                  },
+                                )),
                           );
                         }).toList());
                       } else {
@@ -98,7 +103,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                   }
                 },
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -116,13 +121,12 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
       var response = await http.get(url, headers: {
         "Content-Type": "application/json",
         'Authorization': 'Bearer ' + token,
-        "Accept":"application/json"
+        "Accept": "application/json"
       });
       print(response.body.toString());
       List<dynamic> result = jsonDecode(response.body);
       return result;
     }
-
 
     // IF THE USER IS NOT LOGGED IN
     if (!localStorage.containsKey('course_list')) {
@@ -134,7 +138,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
     }
   }
 
-  void addCourseToList(String courseName) async {
+  Future<bool> addCourseToList(String courseName) async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     List<dynamic> courses;
 
@@ -154,21 +158,19 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
           headers: {
             "Content-Type": "application/json",
             'Authorization': 'Bearer ' + token,
-            "Accept":"application/json"
+            "Accept": "application/json"
           },
           body: body);
 
       url = 'https://qvarnstrom.tech/api/schedule/update';
-      response = await http.get(url,
-          headers: {
-            "Content-Type": "application/json",
-            'Authorization': 'Bearer ' + token,
-            "Accept":"application/json"
-          });
+      response = await http.get(url, headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer ' + token,
+        "Accept": "application/json"
+      });
       await localStorage.setString('rawSchedule', response.body);
-
+      return true;
     } else {
-
       // IF THE USER IS NOT LOGGED IN
       var url = 'https://qvarnstrom.tech/api/schedule/exist/${courseName}';
       //encode Map to JSON
@@ -180,7 +182,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
         if (localStorage.containsKey('course_list')) {
           courses = jsonDecode(localStorage.getString('course_list'));
           if (courses.contains(courseName)) {
-            return;
+            return true;
           }
         } else {
           courses = List<String>();
@@ -199,6 +201,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
           barrierDismissible: true,
         );
       }
+      return true;
     }
   }
 
@@ -224,7 +227,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
           headers: {
             "Content-Type": "application/json",
             'Authorization': 'Bearer ' + token,
-            "Accept":"application/json"
+            "Accept": "application/json"
           },
           body: body);
       await localStorage.remove('rawSchedule');
@@ -234,4 +237,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
       localStorage.setString('course_list', jsonEncode(courses));
     }
   }
+
+
+
 }

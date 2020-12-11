@@ -117,7 +117,9 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
 
     // Check if there is an existing schedule if so, return that.
     if (localStorage.containsKey('rawSchedule')) {
-      print("Got the raw");
+
+      
+
       return jsonDecode(localStorage.getString('rawSchedule'));
     }
 
@@ -253,6 +255,8 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                     events: snapshot.data,
                     onDaySelected: (date, events, test) {
                       log("Test : ${snapshot.data}");
+                      _selectedEvents.sort((a,b) => a.startTime.compareTo(b.startTime));
+                      log("selected = ${_selectedEvents}");
                       setState(() {
                         _selectedEvents = events;
                       });
@@ -266,7 +270,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                     padding: EdgeInsets.all(8.0),
                     children: _selectedEvents.map((ev) {
                       return eventContainer(ev.getTime(ev.startTime),
-                          ev.summary, ev.getTime(ev.endTime), ev.location);
+                          ev.moment, ev.getTime(ev.endTime), ev.location, ev.course_code);
                     }).toList(),
                   ),
                 ),
@@ -289,7 +293,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
     return parser.events;
   }
 
-  Widget eventContainer(startDate, summary, endDate, room) {
+  Widget eventContainer(startDate, moment, endDate, room, course_code) {
     return Container(
         padding: EdgeInsets.all(8),
         margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -315,21 +319,45 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
         ),
         child: Column(
           children: [
-            Text(
-              '${startDate} -> ${endDate}',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '${course_code}',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                ),
+                Text(
+                  '${startDate} -> ${endDate}',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                ),
+
+              ],
             ),
-            Text(
-              '${summary}',
-              style: TextStyle(color: Colors.white),
-            ),
-            Text(
-              'Location: ${room}',
-              style: TextStyle(color: Colors.white, fontSize: 18),
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: Text(
+                    '${moment}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Text(
+                    'Location: ${room}',
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                ),
+              ],
+            )
           ],
         ));
   }
