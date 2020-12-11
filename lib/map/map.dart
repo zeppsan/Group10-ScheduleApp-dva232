@@ -79,17 +79,17 @@ class _MapState extends State<Map> {
                         minScale: 0.1,
                         maxScale: 5.0,
                         child: Container(
-                         // width: 400.0,
-                          //height: 350.0,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(color: Colors.white),
                           child: Stack(
                             children: [
                               Image.asset(
                                 'assets/U1.jpg',
-                                fit: BoxFit.cover,
+                                //fit: BoxFit.cover,
                               ),
                               Positioned(
-                                top: 197, left: 172, //give the values according to your requirement
+                                top: MediaQuery.of(context).size.width -180, left: MediaQuery.of(context).size.width -200, //give the values according to your requirement
                                 child: Icon(Icons.location_on),
                               ),
                             ],
