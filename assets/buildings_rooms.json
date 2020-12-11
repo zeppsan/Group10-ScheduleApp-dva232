@@ -9,17 +9,17 @@
       "floors" :  3,
 			"rooms" : [
 				{
-					"name" : "Alfa",
+					"name" : "alfa",
 					"position" : {
-						"lat": 172.0,
-						"lng": 195.0  },
+						"lat": 150.0,
+						"lng": 170.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "Beta",
+					"name" : "beta",
 					"position" : {
-						"lat": 0.3,
-						"lng": 0.7  },
+						"lat": 150.0,
+						"lng": 127.0  },
 					"floor" :  1
 				},
 				{
