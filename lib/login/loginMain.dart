@@ -15,13 +15,11 @@ class LoginMain extends StatefulWidget {
 class _LoginMainState extends State<LoginMain> {
   bool _login;
   bool _register;
-  String _switchButton;
 
   @override
   void initState (){
     _login = true;
     _register = false;
-    _switchButton = "Register";
   }
 
   @override
@@ -37,26 +35,37 @@ class _LoginMainState extends State<LoginMain> {
   }
 
   Widget body(){
-    return Column(
-      children: [
-        Visibility(
-          child: LoginForm(),
-          visible: _login,
-        ),
-        Visibility(
-          child: RegisterForm(),
-          visible: _register,
-        ),
-        ElevatedButton(
-          child: Text("Swap reg/login form"),
-          onPressed: (){
-            setState(() {
-              _login = !_login;
-              _register = !_register;
-            });
-          },
-        )
-      ],
+    return Container(
+      padding: EdgeInsets.all(50.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Visibility(
+            child: LoginForm(),
+            visible: _login,
+          ),
+          Visibility(
+            child: RegisterForm(),
+            visible: _register,
+          ),
+          Material(
+            elevation: 4.0,
+            borderRadius: BorderRadius.circular(30.0),
+            child: MaterialButton(
+              minWidth: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+              onPressed: () {
+                setState(() {
+                  _login = !_login;
+                  _register = !_register;
+                });
+              },
+              child: Text(_login ? "Register" : "Login", textAlign: TextAlign.center,),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
