@@ -237,7 +237,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                           _selectedEvents = events;
                         } else {
                           _selectedEvents.clear();
-                          _selectedEvents.add(Lecture("Moment: Home Studies", 0, 0, "Anywhere", "-"));
+                          _selectedEvents.add(Lecture("Moment: Home Studies", 0, 0, "Anywhere", "YOU ARE FREE!!"));
                         }
                       });
                     },
