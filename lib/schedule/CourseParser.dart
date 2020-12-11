@@ -75,6 +75,8 @@ class Lecture{
   }
 
   String getTime(int dateTime){
+    if(startTime == 0)
+      return "All day";
     String resultString = "";
     DateTime date = DateTime.fromMicrosecondsSinceEpoch(dateTime * 1000);
     String minute = (date.minute.toString().length < 2)? "0${date.minute.toString()}": "${date.minute.toString()}";
