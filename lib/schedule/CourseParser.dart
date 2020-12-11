@@ -10,6 +10,7 @@ import 'dart:collection';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CourseParser{
 
@@ -64,6 +65,7 @@ class Lecture{
   String location;
   String course_code;
   String moment;
+  Color color;
 
   Lecture(summary, startTime, endTime, location, course_code){
     this.summary = summary;
@@ -72,6 +74,8 @@ class Lecture{
     this.location = location;
     this.course_code = course_code;
     this.moment = getMoment(summary);
+
+    setColor();
   }
 
   String getTime(int dateTime){
@@ -87,5 +91,15 @@ class Lecture{
   String getMoment(String input){
     int momentIndex = input.indexOf("Moment");
     return input.substring(momentIndex + 8);
+  }
+
+  void setColor() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    if(!localStorage.containsKey('course_color')){
+      color = Color(0xfffffff);
+    } else {
+      LinkedHashMap colors = jsonDecode(localStorage.getString('course_color'));
+      color = Color(int.parse(colors[course_code]));
+    }
   }
 }

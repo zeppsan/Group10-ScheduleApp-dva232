@@ -36,16 +36,14 @@ class _fiveTopDaysState extends State<fiveTopDays>{
 
           if (daynr == calcday)
             day = "Today";
-          else if (daynr+1 == calcday)
-            day ="Tomorrow";
           else {
             switch (calcday) {
               /*case 1:
                 day = "Monday";
-                break;
+                break;*/
               case 2:
                 day = "Tuesday";
-                break;*/
+                break;
               case 3:
                 day = "Wednesday";
                 break;
