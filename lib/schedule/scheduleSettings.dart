@@ -37,30 +37,38 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
       ),
       body: Container(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              margin: EdgeInsets.fromLTRB(15,40,15,10),
               child: TextField(
                 controller: course_input,
                 decoration: InputDecoration(
-                  hintText: 'Course Code'
+                  hintText: 'Course Code',
+                    border: OutlineInputBorder(),
                 ),
               ),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  if (activeButton) {
-                    activeButton = false;
-                    addToList = addCourseToList(course_input.text);
-                    FocusScope.of(context).unfocus();
-                  }
-                  addToList.whenComplete(() => {
-                        setState(() {
-                          courseFuture = getCourseList();
-                        })
-                      });
-                },
-                child: Text("Add course")),
+            Container(
+              margin: EdgeInsets.fromLTRB(15,0,15,10),
+              child: ElevatedButton(
+                  onPressed: () {
+                    if (activeButton) {
+                      activeButton = false;
+                      addToList = addCourseToList(course_input.text);
+                      FocusScope.of(context).unfocus();
+                    }
+                    addToList.whenComplete(() => {
+                          setState(() {
+                            courseFuture = getCourseList();
+                          })
+                        });
+                  },
+                  child: Text("Add course")),
+            ),
             Flexible(
               child: FutureBuilder(
                 future: courseFuture,
@@ -77,6 +85,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                         return ListView(
                             children: courses.map((e) {
                           return Card(
+                            margin: EdgeInsets.fromLTRB(15,5,15,0),
                             child: ListTile(
                                 title: Text("${e}"),
                                 trailing: IconButton(

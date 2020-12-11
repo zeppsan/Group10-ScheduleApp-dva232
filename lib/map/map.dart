@@ -3,17 +3,19 @@ import 'dart:convert';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:schedule_dva232/map/DirectionPainter.dart';
 
 import 'dart:ui';
 
 import '../appComponents/bottomNavigationLoggedIn.dart';
+
 
 class MdhMap extends StatefulWidget {
   @override
   _MapState createState() => _MapState();
 }
 
-class _MapState extends State<MdhMap> {
+class _MapState extends State<MdhMap> with TickerProviderStateMixin {
 
   double x;
   double y;
@@ -25,7 +27,7 @@ class _MapState extends State<MdhMap> {
     Map<String, dynamic> jsonBuildings = json.decode(buildings);
 
     for (Map<String, dynamic> room in jsonBuildings['buildings'][0]['rooms']) {
-      if(room['name'] == 'ypsilon'){
+      if(room['name'] == 'beta'){
         setState(() {
           x = room['position']['x'];
           y = room['position']['y'];
@@ -125,7 +127,12 @@ class _MapState extends State<MdhMap> {
 
                                   child: Icon(Icons.location_on),
                                 ),
-                              ],
+
+                              CustomPaint(
+                                //size: Size(350, MediaQuery.of(context).size.height),
+                                painter: DirectionPainter(),
+                              ),
+                            ],
                             ),
                           ),
                         ),
@@ -164,3 +171,9 @@ class _MapState extends State<MdhMap> {
     );
   }
 }
+
+
+ //skapa funktion som kollar vilken painter-klass som ska användas..
+
+
+

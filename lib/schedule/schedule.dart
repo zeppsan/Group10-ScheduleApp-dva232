@@ -49,7 +49,6 @@ class ScheduleWidget extends StatefulWidget {
 class _ScheduleWidgetState extends State<ScheduleWidget> {
   @override
   Future calendarFuture;
-  String noScheduleError = "Seems like you don't subscribe on any schedule, add some!";
 
   @override
   void initState() {
@@ -71,36 +70,21 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                 break;
               case ConnectionState.done:
                 {
+                  List<dynamic> data = snapshot.data;
                   // Data is retrieved. Check if the data is null, if so, return Text that displays that there is no schedule to show.
-                  if (snapshot.data == null) {
+                  if (data == null || data.length == 0) {
                     // Data = null;
-                    return Container(
-                      padding: EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          Text(
-                          noScheduleError,
-                          style: TextStyle(
-                              color: Colors.purple,
-                              fontSize: 24
-                          ),
-                        ),
-                          ElevatedButton(
-                            child: Text("Schedule Settings"),
-                            onPressed: () {
-                              Navigator.pushReplacementNamed(context, '/scheduleSettings');
-                            },
-                          )
-                      ]),
-                    );
+                    return ScheduleCalendar(
+                        courses: snapshot.data, empty: true);
                   } else {
                     // Data is not null
-                    return ScheduleCalendar(snapshot.data);
+                    return ScheduleCalendar(
+                        courses: snapshot.data, empty: false);
                   }
                 }
                 break;
               default:
-                return ScheduleCalendar(snapshot.data);
+                return ScheduleCalendar(courses: snapshot.data);
             }
           }),
     );
@@ -117,9 +101,6 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
 
     // Check if there is an existing schedule if so, return that.
     if (localStorage.containsKey('rawSchedule')) {
-
-      
-
       return jsonDecode(localStorage.getString('rawSchedule'));
     }
 
@@ -135,7 +116,6 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
       // Phone does not have internet access
       return null;
     }
-
 
     // Check if the user is logged in to an account that has online-sync
     if (localStorage.containsKey('token')) {
@@ -154,10 +134,10 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
         Navigator.pushReplacementNamed(context, '/');
       }
       // Save the new schedule to the local storage
-      await localStorage.setString('rawSchedule', response.body);
+      if (response.body != null)
+        await localStorage.setString('rawSchedule', response.body);
       return jsonDecode(response.body);
     }
-
 
     // if the user does not have any account, but still has internet access, fetch the course information from the api
     // and store it in the raw-data.
@@ -165,22 +145,17 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
       String courses = localStorage.getString('course_list');
       var url = 'https://qvarnstrom.tech/api/schedule/updateNonUser';
 
-      Map data = {
-        'course_list': localStorage.getString('course_list')
-      };
+      Map data = {'course_list': localStorage.getString('course_list')};
 
       //encode Map to JSON
       var body = json.encode(data);
 
       var response = await http.post(url,
-          headers: {"Content-Type": "application/json"},
-          body: body
-      );
+          headers: {"Content-Type": "application/json"}, body: body);
 
       if (response.statusCode == 200) {
         return jsonDecode(response.body);
-      }
-      else {
+      } else {
         print("Database error, could not fetch");
       }
     }
@@ -190,18 +165,15 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
   }
 }
 
-
-
-
 class ScheduleCalendar extends StatefulWidget {
   @override
   List<dynamic> courses;
+  bool empty;
 
-  ScheduleCalendar(List<dynamic> httpResult) {
-    this.courses = httpResult;
-  }
+  ScheduleCalendar({this.courses, this.empty});
 
-  _ScheduleCalendarState createState() => _ScheduleCalendarState(courses);
+  _ScheduleCalendarState createState() =>
+      _ScheduleCalendarState(courses: courses, empty: empty);
 }
 
 class _ScheduleCalendarState extends State<ScheduleCalendar> {
@@ -215,19 +187,24 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
   Future listViewFuture;
   List<dynamic> listEvents;
   CourseParser parser;
+  bool empty;
+  String noScheduleError =
+      "Seems like you don't subscribe on any schedules, add some!";
 
-  _ScheduleCalendarState(List<dynamic> httpResult) {
-    this.courses = httpResult;
-  }
+  _ScheduleCalendarState({this.courses, this.empty});
 
   @override
   void initState() {
     super.initState();
     listEvents = List<Lecture>();
-    _selectedEvents = [];
+    _selectedEvents = List<Lecture>();
     _calendarController = CalendarController();
     courseObjects = List<CourseParser>();
     calendarFuture = renderCalendar(courses);
+
+    if (empty == null){
+      empty = false;
+    }
   }
 
   @override
@@ -248,19 +225,28 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                   child: TableCalendar(
                     calendarStyle: CalendarStyle(
                         selectedColor: Colors.blue,
-                        todayColor: Colors.blue[400]),
+                        todayColor: Colors.blue[200]),
                     initialSelectedDay: DateTime.now(),
                     calendarController: _calendarController,
                     startingDayOfWeek: StartingDayOfWeek.monday,
                     events: snapshot.data,
                     onDaySelected: (date, events, test) {
-                      log("Test : ${snapshot.data}");
-                      _selectedEvents.sort((a,b) => a.startTime.compareTo(b.startTime));
-                      log("selected = ${_selectedEvents}");
                       setState(() {
-                        _selectedEvents = events;
+                        if(events.isNotEmpty){
+                          _selectedEvents.sort((a, b) => a.startTime.compareTo(b.startTime));
+                          _selectedEvents = events;
+                        } else {
+                          _selectedEvents.clear();
+                          _selectedEvents.add(Lecture("Moment: Home Studies", 0, 0, "Anywhere", "YOU ARE FREE!!"));
+                        }
                       });
                     },
+                  ),
+                ),
+                Container(
+                  child: Text(
+                      (empty)? 'No courses in your schedule': "",
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Container(
@@ -269,22 +255,24 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                   child: ListView(
                     padding: EdgeInsets.all(8.0),
                     children: _selectedEvents.map((ev) {
-                      return eventContainer(ev.getTime(ev.startTime),
-                          ev.moment, ev.getTime(ev.endTime), ev.location, ev.course_code);
+                      return eventContainer(ev.getTime(ev.startTime), ev.moment,
+                          ev.getTime(ev.endTime), ev.location, ev.course_code);
                     }).toList(),
                   ),
+                ),
+                Text(
+                    "test"
                 ),
               ]);
               break;
             default:
-              return ScheduleCalendar(courses);
+              return Text("unexpected");
           }
         });
   }
 
   Future<Map<DateTime, List<Lecture>>> renderCalendar(
       List<dynamic> coursesToParse) async {
-    Map<DateTime, List<dynamic>> test = Map<DateTime, List<dynamic>>();
 
     parser = CourseParser(rawData: coursesToParse);
 
@@ -336,7 +324,6 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                       fontWeight: FontWeight.bold,
                       fontSize: 18),
                 ),
-
               ],
             ),
             Row(
