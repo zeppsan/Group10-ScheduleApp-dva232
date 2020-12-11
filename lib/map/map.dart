@@ -77,14 +77,16 @@ class _MapState extends State<Map> {
                       child: InteractiveViewer(
                         //boundaryMargin: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
                         minScale: 0.1,
-                        maxScale: 6.0,
+                        maxScale: 5.0,
                         child: Container(
+                          width: 300.0,
+                          height: 350.0,
                           decoration: BoxDecoration(color: Colors.white),
                           child: Stack(
                             children: [
                               Image.asset('assets/U1.jpg'),
                               Positioned(
-                                top: 198, left: 172, //give the values according to your requirement
+                                top: 197, left: 166, //give the values according to your requirement
                                 child: Icon(Icons.location_on),
                               ),
                             ],
