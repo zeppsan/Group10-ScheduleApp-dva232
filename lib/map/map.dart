@@ -15,8 +15,8 @@ class MdhMap extends StatefulWidget {
 
 class _MapState extends State<MdhMap> {
 
-  double lat;
-  double long;
+  double x;
+  double y;
 
   Future parseJson() async{
     final String buildings = await rootBundle.loadString("assets/buildings_rooms.json");
@@ -25,15 +25,14 @@ class _MapState extends State<MdhMap> {
     Map<String, dynamic> jsonBuildings = json.decode(buildings);
 
     for (Map<String, dynamic> room in jsonBuildings['buildings'][0]['rooms']) {
-      if(room['name'] == 'beta'){
+      if(room['name'] == 'ypsilon'){
         setState(() {
-          lat = room['position']['lat'];
-          long = room['position']['lng'];
+          x = room['position']['x'];
+          y = room['position']['y'];
         });
       }
     }
-    print(lat);
-    print(long);
+
   }
 
   @override
@@ -113,19 +112,21 @@ class _MapState extends State<MdhMap> {
                           width: MediaQuery.of(context).size.width,
                           height: 340,
                           decoration: BoxDecoration(color: Colors.white),
-                          child: Stack(
-                            children: [
-                              Image.asset(
-                                'assets/U1.jpg',
-                                fit: BoxFit.cover,
-                              ),
-                              Positioned(
-                                top: long, // y
-                                left: lat, // x
+                          child: Center(
+                            child: Stack(
+                              children: [
+                                Image.asset(
+                                  'assets/U2.jpg',
+                                  fit: BoxFit.cover,
+                                ),
+                                Positioned(
+                                  left: x, // x lat
+                                  top: y , // y long
 
-                                child: Icon(Icons.location_on),
-                              ),
-                            ],
+                                  child: Icon(Icons.location_on),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
