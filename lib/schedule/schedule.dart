@@ -256,7 +256,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                     padding: EdgeInsets.all(8.0),
                     children: _selectedEvents.map((ev) {
                       return eventContainer(ev.getTime(ev.startTime), ev.moment,
-                          ev.getTime(ev.endTime), ev.location, ev.course_code);
+                          ev.getTime(ev.endTime), ev.location, ev.course_code, ev.color);
                     }).toList(),
                   ),
                 ),
@@ -281,16 +281,12 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
     return parser.events;
   }
 
-  Widget eventContainer(startDate, moment, endDate, room, course_code) {
+  Widget eventContainer(startDate, moment, endDate, room, course_code, color) {
     return Container(
         padding: EdgeInsets.all(8),
         margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.blue[300], Colors.blue[500]],
-          ),
+         color: color,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),

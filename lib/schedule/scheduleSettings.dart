@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
 
@@ -6,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
+import 'package:schedule_dva232/schedule/colorPicker.dart';
 
 class ScheduleSettings extends StatefulWidget {
   @override
@@ -19,6 +21,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
   bool activeButton;
   Future addToList;
   Future<bool> loadingSpinner;
+  Map<String, Color> course_initColors;
 
   @override
   void initState() {
@@ -27,10 +30,12 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
     course_input = TextEditingController();
     courseFuture = getCourseList();
     activeButton = true;
+    course_initColors = Map<String, Color>();
   }
 
   @override
   Widget build(BuildContext context) {
+    getCourseColors();
     return Scaffold(
       appBar: AppBar(
         title: Text("Course Information"),
@@ -43,17 +48,17 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
-              margin: EdgeInsets.fromLTRB(15,40,15,10),
+              margin: EdgeInsets.fromLTRB(15, 40, 15, 10),
               child: TextField(
                 controller: course_input,
                 decoration: InputDecoration(
                   hintText: 'Course Code',
-                    border: OutlineInputBorder(),
+                  border: OutlineInputBorder(),
                 ),
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(15,0,15,10),
+              margin: EdgeInsets.fromLTRB(15, 0, 15, 10),
               child: ElevatedButton(
                   onPressed: () {
                     if (activeButton) {
@@ -84,26 +89,49 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                         activeButton = true;
                         return ListView(
                             children: courses.map((e) {
-                          return Card(
-                            margin: EdgeInsets.fromLTRB(15,5,15,0),
-                            child: ListTile(
-                                title: Text("${e}"),
-                                trailing: IconButton(
-                                  icon: Icon(Icons.delete),
-                                  onPressed: () {
-                                    removeCourse(e);
-                                    Future.delayed(Duration(milliseconds: 400),
-                                        () {
-                                      setState(() {
-                                        courseFuture = getCourseList();
-                                      });
-                                    });
-                                  },
-                                )),
+                          colorNofitier currentColor = colorNofitier(course_initColors[e]);
+                          return ValueListenableBuilder(
+                            valueListenable: currentColor,
+                            builder: (context, Color value, child) {
+                              return Card(
+                                color: currentColor.value,
+                                margin: EdgeInsets.fromLTRB(15, 5, 15, 0),
+                                child: ListTile(
+                                    title: Row(children: [
+                                      Text("${e}"),
+                                      BarColorPicker(
+                                        colorListener: (int value) {
+                                          currentColor.value = Color(value + 00000);
+                                          setCourseColor(e, currentColor.value);
+                                        },
+                                        thumbColor: Colors.white,
+                                        initialColor: course_initColors[e],
+                                      ),
+                                    ]),
+                                    trailing: IconButton(
+                                      icon: Icon(Icons.delete),
+                                      onPressed: () {
+                                        removeCourse(e);
+                                        Future.delayed(
+                                            Duration(milliseconds: 400), () {
+                                          setState(() {
+                                            courseFuture = getCourseList();
+                                          });
+                                        });
+                                      },
+                                    )),
+                              );
+                            },
                           );
                         }).toList());
                       } else {
-                        return Text("No courses :(");
+                        return Text(
+                            "No courses to show :(",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        );
                       }
                       break;
                     default:
@@ -248,5 +276,51 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
   }
 
 
+  void setCourseColor(String courseName, Color color) async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    if(!localStorage.containsKey('course_color')){
+      Map<dynamic, dynamic> list = new Map<dynamic, dynamic>();
+      list[courseName] = color.value.toString();
+      localStorage.setString('course_color', jsonEncode(list));
+    } else {
+      Map<dynamic, dynamic> list = await jsonDecode(localStorage.getString('course_color'));
+      list[courseName] = color.value.toString();
+      localStorage.setString('course_color', jsonEncode(list));
+    }
+  }
 
+
+  void getCourseColors() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+
+    List<dynamic> courses;
+
+    if(!localStorage.containsKey('course_list'))
+      courses = List<dynamic>();
+    else
+      courses = jsonDecode(localStorage.getString('course_list'));
+
+    Map<String, Color> course_colors = Map<String, Color>();
+    LinkedHashMap fromLocalStorage;
+
+    if(localStorage.containsKey('course_color')){
+      fromLocalStorage = jsonDecode(localStorage.getString('course_color'));
+    }
+    
+    courses.forEach((element) { 
+      if(fromLocalStorage[element] != null){
+        course_colors[element] = Color(int.parse(fromLocalStorage[element].toString()));
+      } else {
+        course_colors[element] = Color(0xffffffff);
+      }
+    });
+
+    course_initColors = course_colors;
+
+  }
+
+}
+
+class colorNofitier extends ValueNotifier<Color> {
+  colorNofitier(value) : super(value);
 }
