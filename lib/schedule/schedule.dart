@@ -72,7 +72,7 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                 {
                   List<dynamic> data = snapshot.data;
                   // Data is retrieved. Check if the data is null, if so, return Text that displays that there is no schedule to show.
-                  if (data.length == 0) {
+                  if (data == null || data.length == 0) {
                     // Data = null;
                     return ScheduleCalendar(
                         courses: snapshot.data, empty: true);
@@ -241,6 +241,12 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                         }
                       });
                     },
+                  ),
+                ),
+                Container(
+                  child: Text(
+                      (empty)? 'No courses in your schedule': "",
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Container(
