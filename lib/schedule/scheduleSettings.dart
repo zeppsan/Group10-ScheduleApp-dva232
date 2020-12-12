@@ -1,7 +1,7 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
-
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -150,19 +150,44 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
 
   Future<List<dynamic>> getCourseList() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-
     // IF THE USER IS LOGGED IN
+    bool hasInternetAccess = true;
+
+
     if (localStorage.containsKey('token')) {
-      String token = await localStorage.getString('token');
-      var url = 'https://qvarnstrom.tech/api/schedule/getCourses';
-      var response = await http.get(url, headers: {
-        "Content-Type": "application/json",
-        'Authorization': 'Bearer ' + token,
-        "Accept": "application/json"
-      });
-      print(response.body.toString());
-      List<dynamic> result = jsonDecode(response.body);
-      return result;
+      try {
+        final internetCheck = await InternetAddress.lookup('google.com');
+        if (!internetCheck.isNotEmpty &&
+            !internetCheck[0].rawAddress.isNotEmpty) {
+          // Phone does not have internet access
+          hasInternetAccess = false;
+        }
+      } on SocketException catch (_) {
+        // Phone does not have internet access
+        hasInternetAccess = false;
+      }
+
+      if(hasInternetAccess){
+        String token = await localStorage.getString('token');
+        var url = 'https://qvarnstrom.tech/api/schedule/getCourses';
+        var response = await http.get(url, headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer ' + token,
+          "Accept": "application/json"
+        });
+        if(response.statusCode == 401){
+          await localStorage.remove('token');
+          Navigator.pushReplacementNamed(context, '/');
+        }
+        print(response.body.toString());
+        List<dynamic> result = jsonDecode(response.body);
+        return result;
+      } else {
+        print("this is where we are ");
+        LinkedHashMap courses = await jsonDecode(localStorage.getString('course_color'));
+        List<String> result = courses.keys.toList();
+        return result;
+      }
     }
 
     // IF THE USER IS NOT LOGGED IN
@@ -216,14 +241,6 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
           builder: (_) => test,
           barrierDismissible: true,
         );
-      } else {
-        url = 'https://qvarnstrom.tech/api/schedule/update';
-        response = await http.get(url, headers: {
-          "Content-Type": "application/json",
-          'Authorization': 'Bearer ' + token,
-          "Accept": "application/json"
-        });
-        await localStorage.setString('rawSchedule', response.body);
       }
       return true;
     } else {
@@ -320,7 +337,6 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
       });
     }
   }
-
 }
 
 class colorNofitier extends ValueNotifier<Color> {
