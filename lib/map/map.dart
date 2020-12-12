@@ -31,8 +31,10 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
           x = room['position']['x'];
           y = room['position']['y'];
         });
+        print(room['position']['x']);
       }
     }
+
 
   }
 
@@ -125,8 +127,8 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
                                  //fit: BoxFit.cover,
                                 ),
                                 Positioned(
-                                  left: 940, // x lat
-                                  top: 310 , // y long
+                                  left: x, // x lat
+                                  top: y , // y long
 
                                   child: Icon(
                                     Icons.location_on,
