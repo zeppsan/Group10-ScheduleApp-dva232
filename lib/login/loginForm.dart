@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart';
-import 'loginCheck.dart';
 
 // Create a Form widget.
 class LoginForm extends StatefulWidget {
@@ -182,7 +181,9 @@ class _LoginForm extends State<LoginForm> {
 
       if (responseData['access_token'] != null) {
         SharedPreferences localStorage = await SharedPreferences.getInstance();
-        localStorage.setString('token', responseData['access_token']);
+        await localStorage.setString('token', responseData['access_token']);
+        await localStorage.remove('rawSchedule');
+        await localStorage.remove('course_list');
 
         //Store the email and password in local storage,
         //Will be used to contact the API in the background
