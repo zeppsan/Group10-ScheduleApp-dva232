@@ -44,7 +44,6 @@ class CourseParser{
       } else {
         events[target].add(Lecture( lectureInformation['summary'], lectureInformation['dateStart'], lectureInformation['dateEnd'], lectureInformation['location'], lectureInformation['course_code']));
       }
-      log("course code was : ${lectureInformation['course_code']}");
     });
   }
 
@@ -96,10 +95,15 @@ class Lecture{
   void setColor() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     if(!localStorage.containsKey('course_color')){
-      color = Color(0xfffffff);
-    } else {
-      LinkedHashMap colors = jsonDecode(localStorage.getString('course_color'));
+      color = Colors.lightBlueAccent;
+      return;
+    }
+
+    LinkedHashMap colors = jsonDecode(localStorage.getString('course_color'));
+    if (colors[course_code] != null){
       color = Color(int.parse(colors[course_code]));
+    } else {
+      color = Colors.lightBlueAccent;
     }
   }
 }

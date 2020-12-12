@@ -1,7 +1,7 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
-
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -80,7 +80,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
-                      return Text("Loading");
+                      return CircularProgressIndicator();
                       break;
                     case ConnectionState.done:
                       if (snapshot.hasData) {
@@ -89,7 +89,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                         activeButton = true;
                         return ListView(
                             children: courses.map((e) {
-                          colorNofitier currentColor = colorNofitier(course_initColors[e]);
+                          colorNofitier currentColor = colorNofitier((course_initColors[e] != null)? course_initColors[e] : Colors.lightBlueAccent);
                           return ValueListenableBuilder(
                             valueListenable: currentColor,
                             builder: (context, Color value, child) {
@@ -105,7 +105,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                                           setCourseColor(e, currentColor.value);
                                         },
                                         thumbColor: Colors.white,
-                                        initialColor: course_initColors[e],
+                                        initialColor: (course_initColors[e] != null)? course_initColors[e] : Colors.lightBlueAccent,
                                       ),
                                     ]),
                                     trailing: IconButton(
@@ -150,19 +150,44 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
 
   Future<List<dynamic>> getCourseList() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-
     // IF THE USER IS LOGGED IN
+    bool hasInternetAccess = true;
+
+
     if (localStorage.containsKey('token')) {
-      String token = await localStorage.getString('token');
-      var url = 'https://qvarnstrom.tech/api/schedule/getCourses';
-      var response = await http.get(url, headers: {
-        "Content-Type": "application/json",
-        'Authorization': 'Bearer ' + token,
-        "Accept": "application/json"
-      });
-      print(response.body.toString());
-      List<dynamic> result = jsonDecode(response.body);
-      return result;
+      try {
+        final internetCheck = await InternetAddress.lookup('google.com');
+        if (!internetCheck.isNotEmpty &&
+            !internetCheck[0].rawAddress.isNotEmpty) {
+          // Phone does not have internet access
+          hasInternetAccess = false;
+        }
+      } on SocketException catch (_) {
+        // Phone does not have internet access
+        hasInternetAccess = false;
+      }
+
+      if(hasInternetAccess){
+        String token = await localStorage.getString('token');
+        var url = 'https://qvarnstrom.tech/api/schedule/getCourses';
+        var response = await http.get(url, headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer ' + token,
+          "Accept": "application/json"
+        });
+        if(response.statusCode == 401){
+          await localStorage.remove('token');
+          Navigator.pushReplacementNamed(context, '/');
+        }
+        print(response.body.toString());
+        List<dynamic> result = jsonDecode(response.body);
+        return result;
+      } else {
+        print("this is where we are ");
+        LinkedHashMap courses = await jsonDecode(localStorage.getString('course_color'));
+        List<String> result = courses.keys.toList();
+        return result;
+      }
     }
 
     // IF THE USER IS NOT LOGGED IN
@@ -199,13 +224,24 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
           },
           body: body);
 
-      url = 'https://qvarnstrom.tech/api/schedule/update';
-      response = await http.get(url, headers: {
-        "Content-Type": "application/json",
-        'Authorization': 'Bearer ' + token,
-        "Accept": "application/json"
-      });
-      await localStorage.setString('rawSchedule', response.body);
+      if(response.statusCode == 500){
+        var test = AlertDialog(
+          title: Text('Course ${courseName} does not exist...'),
+          actions: [
+            FlatButton(
+              child: Text('Okay'),
+              onPressed: (){
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+        showDialog(
+          context: context,
+          builder: (_) => test,
+          barrierDismissible: true,
+        );
+      }
       return true;
     } else {
       // IF THE USER IS NOT LOGGED IN
@@ -292,33 +328,15 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
 
   void getCourseColors() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-
-    List<dynamic> courses;
-
-    if(!localStorage.containsKey('course_list'))
-      courses = List<dynamic>();
-    else
-      courses = jsonDecode(localStorage.getString('course_list'));
-
-    Map<String, Color> course_colors = Map<String, Color>();
     LinkedHashMap fromLocalStorage;
 
     if(localStorage.containsKey('course_color')){
       fromLocalStorage = jsonDecode(localStorage.getString('course_color'));
+      fromLocalStorage.forEach((key, value) {
+        course_initColors[key] = Color(int.parse(value));
+      });
     }
-    
-    courses.forEach((element) { 
-      if(fromLocalStorage[element] != null){
-        course_colors[element] = Color(int.parse(fromLocalStorage[element].toString()));
-      } else {
-        course_colors[element] = Color(0xffffffff);
-      }
-    });
-
-    course_initColors = course_colors;
-
   }
-
 }
 
 class colorNofitier extends ValueNotifier<Color> {

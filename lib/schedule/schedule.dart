@@ -66,7 +66,12 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                 return Text('Something went wrong');
                 break;
               case ConnectionState.waiting:
-                return Text('waiting');
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                    child: Center(
+                        child: CircularProgressIndicator()
+                    )
+                );
                 break;
               case ConnectionState.done:
                 {
@@ -96,13 +101,12 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
   * */
 
   Future<List<dynamic>> getEvents() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    bool hasInternetAccess = false;
 
-    // Check if there is an existing schedule if so, return that.
-    if (localStorage.containsKey('rawSchedule')) {
-      return jsonDecode(localStorage.getString('rawSchedule'));
-    }
+    /*await Future.delayed(Duration(seconds: 1), ()async{
+
+    });*/
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    bool hasInternetAccess = true;
 
     // Checks if the user has internet or not
     try {
@@ -110,53 +114,102 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
       if (!internetCheck.isNotEmpty &&
           !internetCheck[0].rawAddress.isNotEmpty) {
         // Phone does not have internet access
-        return null;
+        hasInternetAccess = false;
       }
     } on SocketException catch (_) {
       // Phone does not have internet access
-      return null;
+      hasInternetAccess = false;
     }
 
     // Check if the user is logged in to an account that has online-sync
-    if (localStorage.containsKey('token')) {
-      String token = await localStorage.getString('token');
-      String url = "https://qvarnstrom.tech/api/schedule/update";
-      var response = await http.get(
-        url,
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ' + token,
-        },
-      );
-      if (response.statusCode == 401) {
-        // user is holding an invalid authentication token. Sen user to login screen.
-        Navigator.pushReplacementNamed(context, '/');
+    if(hasInternetAccess){
+      if (localStorage.containsKey('token')) {
+        String token = await localStorage.getString('token');
+        String url = "https://qvarnstrom.tech/api/schedule/update-check";
+        var response = await http.get(
+          url,
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + token,
+          },
+        );
+        if (response.statusCode == 401) {
+          // user is holding an invalid authentication token. Sen user to login screen.
+          localStorage.remove('token');
+          Navigator.pushReplacementNamed(context, '/');
+        }
+        // NO UPDATE AVALIBLE
+        if(response.statusCode == 204){
+          // CHECK SO THAT THE DATA IS DOWNLOADED
+          if(!localStorage.containsKey('rawSchedule')){
+            String token = await localStorage.getString('token');
+            String url = "https://qvarnstrom.tech/api/schedule/update";
+            var response = await http.get(
+              url,
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token,
+              },
+            );
+            if (response.statusCode == 401) {
+              // user is holding an invalid authentication token. Sen user to login screen.
+              localStorage.remove('token');
+              Navigator.pushReplacementNamed(context, '/');
+            }
+            // Save the new schedule to the local storage
+            if (response.body != null)
+              await localStorage.setString('rawSchedule', response.body);
+            return jsonDecode(response.body);
+          } else {
+            return jsonDecode(localStorage.getString('rawSchedule'));
+          }
+        } else {
+          // UPDATE IS AVALIBLE, DOWNLOAD IT AND APPLY!
+          String token = await localStorage.getString('token');
+          String url = "https://qvarnstrom.tech/api/schedule/update";
+          var response = await http.get(
+            url,
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Authorization': 'Bearer ' + token,
+            },
+          );
+          await localStorage.setString('rawSchedule', response.body);
+          return jsonDecode(response.body);
+        }
       }
-      // Save the new schedule to the local storage
-      if (response.body != null)
-        await localStorage.setString('rawSchedule', response.body);
-      return jsonDecode(response.body);
-    }
 
-    // if the user does not have any account, but still has internet access, fetch the course information from the api
-    // and store it in the raw-data.
-    if (localStorage.containsKey('course_list')) {
-      String courses = localStorage.getString('course_list');
-      var url = 'https://qvarnstrom.tech/api/schedule/updateNonUser';
+      // IF THE USER IS NOT LOGGED IN, FETCH DATA FROM DATABASE
+      if (localStorage.containsKey('course_list')) {
 
-      Map data = {'course_list': localStorage.getString('course_list')};
+        String courses = localStorage.getString('course_list');
+        var url = 'https://qvarnstrom.tech/api/schedule/updateNonUser';
 
-      //encode Map to JSON
-      var body = json.encode(data);
+        Map data = {'course_list': localStorage.getString('course_list')};
 
-      var response = await http.post(url,
-          headers: {"Content-Type": "application/json"}, body: body);
+        //encode Map to JSON
+        var body = json.encode(data);
 
-      if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        var response = await http.post(url,
+            headers: {"Content-Type": "application/json"}, body: body);
+        if (response.statusCode == 200) {
+          await localStorage.setString('rawSchedule', response.body);
+          return jsonDecode(response.body);
+        } else {
+          print("Database error, could not fetch");
+        }
+      }
+    } else {
+      print("here we are ");
+      // IF THE USER HAS NO INTERNET ACCESS
+      // THE ONLY THING WE CAN DO IS TO RETURN THE ALREADY EXISTING SCHEDULE
+      if(localStorage.containsKey('rawSchedule')){
+        return jsonDecode(localStorage.getString('rawSchedule'));
       } else {
-        print("Database error, could not fetch");
+        return null;
       }
     }
 
@@ -217,7 +270,12 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
               return Text('Something went wrong');
               break;
             case ConnectionState.waiting:
-              return Text('waiting');
+              return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                      child: CircularProgressIndicator()
+                  )
+              );
               break;
             case ConnectionState.done:
               return ListView(children: [
@@ -271,12 +329,12 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
         });
   }
 
-  Future<Map<DateTime, List<Lecture>>> renderCalendar(
-      List<dynamic> coursesToParse) async {
+  Future<Map<DateTime, List<Lecture>>> renderCalendar(List<dynamic> coursesToParse) async {
 
     parser = CourseParser(rawData: coursesToParse);
 
     await parser.parseRawData();
+
 
     return parser.events;
   }

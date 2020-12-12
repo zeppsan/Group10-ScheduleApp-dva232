@@ -17,25 +17,25 @@ class MdhMap extends StatefulWidget {
 
 class _MapState extends State<MdhMap> with TickerProviderStateMixin {
 
-  double lat;
-  double long;
+  double x;
+  double y;
 
   Future parseJson() async{
     final String buildings = await rootBundle.loadString("assets/buildings_rooms.json");
     print('inside room_repository the file is read');
-    print(buildings);
     Map<String, dynamic> jsonBuildings = json.decode(buildings);
 
     for (Map<String, dynamic> room in jsonBuildings['buildings'][0]['rooms']) {
       if(room['name'] == 'alfa'){
         setState(() {
-          lat = room['position']['lat'];
-          long = room['position']['lng'];
+          x = room['position']['x'];
+          y = room['position']['y'];
         });
+        print(room['position']['x']);
       }
     }
-    print(lat);
-    print(long);
+
+
   }
 
   @override
@@ -114,26 +114,35 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
                         maxScale: 5.0,
                         child: Container(
                           width: MediaQuery.of(context).size.width,
-                          height: 340,
-                          decoration: BoxDecoration(color: Colors.white),
-                          child: Stack(
-                            children: [
-                              Image.asset(
-                                'assets/U1.jpg',
-                                fit: BoxFit.cover,
-                              ),
-                              Positioned(
-                                top: long, // y
-                                left: lat, // x
 
-                                child: Icon(Icons.location_on),
-                              ),
+                         // height: 340,
+                          height: MediaQuery.of(context).size.height * 0.55,
+                          decoration: BoxDecoration(color: Colors.white),
+                          child: FittedBox (
+                            fit: BoxFit.contain,
+                            child: Stack(
+                              children: [
+                                Image.asset(
+                                  'assets/U1.2.jpg',
+                                 //fit: BoxFit.cover,
+                                ),
+                                Positioned(
+                                  left: x, // x lat
+                                  top: y , // y long
+
+                                  child: Icon(
+                                    Icons.location_on,
+                                    size: 100,
+                                    color: Colors.deepOrange[800],
+                                  ),
+                                ),
 
                               CustomPaint(
                                 //size: Size(350, MediaQuery.of(context).size.height),
                                 painter: DirectionPainter(),
-                              )
+                              ),
                             ],
+                            ),
                           ),
                         ),
                       ),
@@ -175,5 +184,5 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
 
  //skapa funktion som kollar vilken painter-klass som ska användas..
 
-  
+
 
