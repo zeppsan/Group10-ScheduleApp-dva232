@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:validators/validators.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'register.dart';
-import 'login.dart';
+import 'registerForm.dart';
+import 'loginForm.dart';
 
 class LoginMain extends StatefulWidget {
   @override
@@ -25,7 +25,7 @@ class _LoginMainState extends State<LoginMain> {
   @override
   Widget build(BuildContext context) {
     final appTitle = 'XonorK';
-    checkLogin(context);
+    //checkLogin(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(appTitle),
@@ -70,11 +70,23 @@ class _LoginMainState extends State<LoginMain> {
   }
 
   void checkLogin (context) async{
+
+    var url = 'https://qvarnstrom.tech/api/auth/refresh';
+
     SharedPreferences key = await SharedPreferences.getInstance();
-    key.getString('token');
-    print(key.getString('token'));
-    if(key.getString('token') != null)
-    {
+    String token = key.getString('token');
+
+    var response = await http.get(url, headers: {
+      "Content-Type": "application/json",
+      'Authorization': 'Bearer ' + token,
+      "Accept": "application/json"
+    });
+
+    Map responseData = jsonDecode(response.body);
+
+    key.setString('token', responseData['access_token']);
+
+    if(key.getString('token') != null) {
       Navigator.pushReplacementNamed(context, '/thisweek');
     }
   }
