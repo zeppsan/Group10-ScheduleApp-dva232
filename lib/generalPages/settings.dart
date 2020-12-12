@@ -18,6 +18,7 @@ class Settings extends StatelessWidget {
               onPressed: () async {
                 SharedPreferences key = await SharedPreferences.getInstance();
                 await key.remove('token');
+                await key.remove('rawSchedule');
                 Navigator.pushReplacementNamed(context, '/');
               },
               icon: Icon(Icons.sensor_door_outlined),
@@ -35,6 +36,7 @@ class Settings extends StatelessWidget {
                 await localStorage.remove('rawSchedule');
                 await localStorage.remove('token');
                 await localStorage.remove('course_list');
+                await localStorage.remove('course_color');
                 Navigator.pushReplacementNamed(context, '/');
               },
               icon: Icon(Icons.remove_circle),

@@ -66,7 +66,12 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                 return Text('Something went wrong');
                 break;
               case ConnectionState.waiting:
-                return Text('waiting');
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                    child: Center(
+                        child: CircularProgressIndicator()
+                    )
+                );
                 break;
               case ConnectionState.done:
                 {
@@ -96,6 +101,10 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
   * */
 
   Future<List<dynamic>> getEvents() async {
+
+    /*await Future.delayed(Duration(seconds: 1), ()async{
+
+    });*/
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     bool hasInternetAccess = false;
 
@@ -217,7 +226,12 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
               return Text('Something went wrong');
               break;
             case ConnectionState.waiting:
-              return Text('waiting');
+              return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                      child: CircularProgressIndicator()
+                  )
+              );
               break;
             case ConnectionState.done:
               return ListView(children: [
@@ -271,12 +285,12 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
         });
   }
 
-  Future<Map<DateTime, List<Lecture>>> renderCalendar(
-      List<dynamic> coursesToParse) async {
+  Future<Map<DateTime, List<Lecture>>> renderCalendar(List<dynamic> coursesToParse) async {
 
     parser = CourseParser(rawData: coursesToParse);
 
     await parser.parseRawData();
+
 
     return parser.events;
   }
