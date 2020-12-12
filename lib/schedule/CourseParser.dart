@@ -95,7 +95,7 @@ class Lecture{
   void setColor() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     if(!localStorage.containsKey('course_color')){
-      color = Color(0xffffffff);
+      color = Colors.lightBlueAccent;
       return;
     }
 

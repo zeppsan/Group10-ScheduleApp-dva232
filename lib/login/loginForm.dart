@@ -1,34 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'register.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart';
-import 'loginCheck.dart';
-
-class Login extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final appTitle = 'XonorK';
-    checkLogin(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(appTitle),
-      ),
-      body: LoginForm(),
-    );
-  }
-
-  void checkLogin(context) async {
-    SharedPreferences key = await SharedPreferences.getInstance();
-    key.getString('token');
-    print(key.getString('token'));
-    if (key.getString('token') != null) {
-      Navigator.pushReplacementNamed(context, '/thisweek');
-    }
-  }
-}
 
 // Create a Form widget.
 class LoginForm extends StatefulWidget {
@@ -206,7 +181,9 @@ class _LoginForm extends State<LoginForm> {
 
       if (responseData['access_token'] != null) {
         SharedPreferences localStorage = await SharedPreferences.getInstance();
-        localStorage.setString('token', responseData['access_token']);
+        await localStorage.setString('token', responseData['access_token']);
+        await localStorage.remove('rawSchedule');
+        await localStorage.remove('course_list');
 
         //Store the email and password in local storage,
         //Will be used to contact the API in the background
