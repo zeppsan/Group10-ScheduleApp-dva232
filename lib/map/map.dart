@@ -26,7 +26,7 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
     Map<String, dynamic> jsonBuildings = json.decode(buildings);
 
     for (Map<String, dynamic> room in jsonBuildings['buildings'][0]['rooms']) {
-      if(room['name'] == 'beta'){
+      if(room['name'] == 'alfa'){
         setState(() {
           x = room['position']['x'];
           y = room['position']['y'];
@@ -125,12 +125,13 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
                                  //fit: BoxFit.cover,
                                 ),
                                 Positioned(
-                                  left: 1035, // x lat
-                                  top: 295 , // y long
+                                  left: 940, // x lat
+                                  top: 310 , // y long
 
                                   child: Icon(
-                                      Icons.location_on,
+                                    Icons.location_on,
                                     size: 100,
+                                    color: Colors.deepOrange[800],
                                   ),
                                 ),
 
