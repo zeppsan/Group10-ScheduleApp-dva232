@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
+import 'package:schedule_dva232/map/DirectionPainter.dart';
 
 
 class LocationAnimation extends StatefulWidget {
@@ -31,8 +32,8 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
   }
 
   Widget build(BuildContext context) {
-    final double x = 980;
-    final double y = 1080;
+    final double x = 250;
+    final double y = -40;
    //return LayoutBuilder(
       final Size biggest = Size(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height * 0.55);
         return Container(
@@ -50,14 +51,18 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
 
                   PositionedTransition(
                     rect: RelativeRectTween(
-                        begin: RelativeRect.fromSize(Rect.fromLTRB(0, 0, 100, 100), biggest),
-                        end: RelativeRect.fromSize(Rect.fromLTRB(0, 300, 100, 100), biggest),
+                        begin: RelativeRect.fromLTRB(x, y, 0, 0),
+                        end: RelativeRect.fromLTRB(x, y + 300, 0, 0),
                     ).animate(CurvedAnimation( parent: controller, curve: Curves.bounceIn.flipped)),
 
                     child: Image.asset(
                       'assets/test.png',
                     ),
                   ),
+                  CustomPaint(
+                      painter: DirectionPainter(),
+                  ),
+
                 ]
             ),
           ),
