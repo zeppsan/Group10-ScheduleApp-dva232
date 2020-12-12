@@ -84,14 +84,17 @@ class _LoginMainState extends State<LoginMain> {
 
     print("Refresh token");
 
-    var response = await http.get(url, headers: {
+    var response = await http.post(url, headers: {
       "Content-Type": "application/json",
       'Authorization': 'Bearer ' + token,
       "Accept": "application/json"
     });
 
+    print("HTTPget return ${response.body}");
+
     //The token is not valid. Need to update
     if(response.statusCode == 401) {
+      print("CheckLogin status 401");
       //If the user has ticked the remember box get the email and password
       if (localStorage.getString('email') != null) {
         var newLogin = 'https://qvarnstrom.tech/api/auth/login';
@@ -117,13 +120,14 @@ class _LoginMainState extends State<LoginMain> {
 
         Navigator.pushReplacementNamed(context, "/thisweek");
       }
-      //The old token was valid and have now been updated
-      else if(response.statusCode == 200){
-        Map responseData = jsonDecode(response.body);
+    }
+    //The old token was valid and have now been updated
+    else if(response.statusCode == 200){
+      print("CheckLogin status 200");
+      Map responseData = jsonDecode(response.body);
 
-        localStorage.setString('token', responseData['access_token']);
-        Navigator.pushReplacementNamed(context, "/thisweek");
-      }
+      localStorage.setString('token', responseData['access_token']);
+      Navigator.pushReplacementNamed(context, "/thisweek");
     }
   }
 }
