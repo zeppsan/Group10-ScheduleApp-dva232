@@ -23,7 +23,6 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
   Future parseJson() async{
     final String buildings = await rootBundle.loadString("assets/buildings_rooms.json");
     print('inside room_repository the file is read');
-    print(buildings);
     Map<String, dynamic> jsonBuildings = json.decode(buildings);
 
     for (Map<String, dynamic> room in jsonBuildings['buildings'][0]['rooms']) {
@@ -42,6 +41,7 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
     parseJson();
     super.initState();
   }
+
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,20 +112,26 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
                         maxScale: 5.0,
                         child: Container(
                           width: MediaQuery.of(context).size.width,
-                          height: 340,
+
+                         // height: 340,
+                          height: MediaQuery.of(context).size.height * 0.55,
                           decoration: BoxDecoration(color: Colors.white),
-                          child: Center(
+                          child: FittedBox (
+                            fit: BoxFit.contain,
                             child: Stack(
                               children: [
                                 Image.asset(
-                                  'assets/U2.jpg',
-                                  fit: BoxFit.cover,
+                                  'assets/U1.2.jpg',
+                                 //fit: BoxFit.cover,
                                 ),
                                 Positioned(
-                                  left: x, // x lat
-                                  top: y , // y long
+                                  left: 1035, // x lat
+                                  top: 295 , // y long
 
-                                  child: Icon(Icons.location_on),
+                                  child: Icon(
+                                      Icons.location_on,
+                                    size: 100,
+                                  ),
                                 ),
 
                               CustomPaint(
