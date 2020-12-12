@@ -66,7 +66,12 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
                 return Text('Something went wrong');
                 break;
               case ConnectionState.waiting:
-                return Text('waiting');
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                    child: Center(
+                        child: CircularProgressIndicator()
+                    )
+                );
                 break;
               case ConnectionState.done:
                 {
@@ -96,6 +101,10 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
   * */
 
   Future<List<dynamic>> getEvents() async {
+
+    /*await Future.delayed(Duration(seconds: 1), ()async{
+
+    });*/
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     bool hasInternetAccess = false;
 
@@ -217,7 +226,12 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
               return Text('Something went wrong');
               break;
             case ConnectionState.waiting:
-              return Text('waiting');
+              return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                      child: CircularProgressIndicator()
+                  )
+              );
               break;
             case ConnectionState.done:
               return ListView(children: [
@@ -256,7 +270,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                     padding: EdgeInsets.all(8.0),
                     children: _selectedEvents.map((ev) {
                       return eventContainer(ev.getTime(ev.startTime), ev.moment,
-                          ev.getTime(ev.endTime), ev.location, ev.course_code);
+                          ev.getTime(ev.endTime), ev.location, ev.course_code, ev.color);
                     }).toList(),
                   ),
                 ),
@@ -271,26 +285,22 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
         });
   }
 
-  Future<Map<DateTime, List<Lecture>>> renderCalendar(
-      List<dynamic> coursesToParse) async {
+  Future<Map<DateTime, List<Lecture>>> renderCalendar(List<dynamic> coursesToParse) async {
 
     parser = CourseParser(rawData: coursesToParse);
 
     await parser.parseRawData();
 
+
     return parser.events;
   }
 
-  Widget eventContainer(startDate, moment, endDate, room, course_code) {
+  Widget eventContainer(startDate, moment, endDate, room, course_code, color) {
     return Container(
         padding: EdgeInsets.all(8),
         margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.blue[300], Colors.blue[500]],
-          ),
+         color: color,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),

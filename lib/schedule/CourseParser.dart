@@ -10,6 +10,7 @@ import 'dart:collection';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CourseParser{
 
@@ -43,7 +44,6 @@ class CourseParser{
       } else {
         events[target].add(Lecture( lectureInformation['summary'], lectureInformation['dateStart'], lectureInformation['dateEnd'], lectureInformation['location'], lectureInformation['course_code']));
       }
-      log("course code was : ${lectureInformation['course_code']}");
     });
   }
 
@@ -64,6 +64,7 @@ class Lecture{
   String location;
   String course_code;
   String moment;
+  Color color;
 
   Lecture(summary, startTime, endTime, location, course_code){
     this.summary = summary;
@@ -72,6 +73,8 @@ class Lecture{
     this.location = location;
     this.course_code = course_code;
     this.moment = getMoment(summary);
+
+    setColor();
   }
 
   String getTime(int dateTime){
@@ -87,5 +90,20 @@ class Lecture{
   String getMoment(String input){
     int momentIndex = input.indexOf("Moment");
     return input.substring(momentIndex + 8);
+  }
+
+  void setColor() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    if(!localStorage.containsKey('course_color')){
+      color = Color(0xffffffff);
+      return;
+    }
+
+    LinkedHashMap colors = jsonDecode(localStorage.getString('course_color'));
+    if (colors[course_code] != null){
+      color = Color(int.parse(colors[course_code]));
+    } else {
+      color = Colors.lightBlueAccent;
+    }
   }
 }
