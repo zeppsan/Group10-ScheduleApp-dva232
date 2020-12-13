@@ -34,12 +34,10 @@ class DirectionPainter extends CustomPainter {
     }
 
     canvas.drawPath(path, paint);
-    // TODO: implement paint
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    // TODO: implement shouldRepaint
     return true;
   }
 }
