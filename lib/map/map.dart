@@ -67,7 +67,7 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
                       });
                     },
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
                       hintText: "Search room",
 
                       suffixIcon: Icon(
@@ -83,33 +83,36 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
                     //crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
-                        child: Material(
-                          elevation: 4.0,
-                          borderRadius: BorderRadius.circular(30.0),
-                          child: MaterialButton(
-                            minWidth: MediaQuery.of(context).size.width,
+                       // child: Material(
+                         // elevation: 4.0,
+                         // borderRadius: BorderRadius.circular(30.0),
+                         // child: MaterialButton(
+                            child: ElevatedButton(
+
+                            //minWidth: MediaQuery.of(context).size.width,
                             onPressed: (){},
                             child: Text(
                               "House U & T",
                             ),
 
                           ),
-                        ),
+                        //),
                       ),
                       SizedBox(width: 10.0),
                       Expanded(
-                        child: Material(
+                        /*child: Material(
                           elevation: 4.0,
                           borderRadius: BorderRadius.circular(30.0),
                           child: MaterialButton(
-                            minWidth: MediaQuery.of(context).size.width,
+                            minWidth: MediaQuery.of(context).size.width,*/
+                            child: ElevatedButton(
                             onPressed: (){},
                             child: Text(
                               "House R",
                             ),
 
                           ),
-                        ),
+                        //),
                       ),
                     ],
                   ),
