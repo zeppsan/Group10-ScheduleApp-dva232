@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_dva232/login/login.dart';
-import 'package:schedule_dva232/login/register.dart';
 import 'package:schedule_dva232/map/map.dart';
 import 'package:schedule_dva232/schedule/addCourse.dart';
 import 'package:schedule_dva232/schedule/schedule.dart';
@@ -30,7 +28,6 @@ class App extends StatelessWidget{
         initialRoute: '/',
         routes: {
             '/': (context) => LoginMain(),
-            '/register': (context) => Register(),
             '/schedule': (context) => Schedule(),
             '/scheduleSettings': (context) => ScheduleSettings(),
             '/addCourse': (context) => AddCourse(),

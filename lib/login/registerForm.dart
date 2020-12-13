@@ -4,20 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:validators/validators.dart';
 
-class Register extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final appTitle = 'XonorK';
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(appTitle),
-      ),
-      body: RegisterForm(),
-    );
-  }
-}
-
 // Create a Form widget.
 class RegisterForm extends StatefulWidget {
   @override

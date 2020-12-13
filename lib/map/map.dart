@@ -4,6 +4,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:schedule_dva232/map/DirectionPainter.dart';
+import 'package:schedule_dva232/map/locationAnimation.dart';
 
 import 'dart:ui';
 
@@ -26,7 +27,7 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
     Map<String, dynamic> jsonBuildings = json.decode(buildings);
 
     for (Map<String, dynamic> room in jsonBuildings['buildings'][0]['rooms']) {
-      if(room['name'] == 'alfa'){
+      if(room['name'] == 'u1-045'){
         setState(() {
           x = room['position']['x'];
           y = room['position']['y'];
@@ -43,7 +44,6 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
     parseJson();
     super.initState();
   }
-
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +67,7 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
                       });
                     },
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
                       hintText: "Search room",
 
                       suffixIcon: Icon(
@@ -83,22 +83,32 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
                     //crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
-                        child: ElevatedButton(
-                          onPressed: (){},
-                          child: Text(
-                            "House U & T",
-                          ),
+                        child: Material(
+                          elevation: 4.0,
+                          borderRadius: BorderRadius.circular(30.0),
+                          child: MaterialButton(
+                            minWidth: MediaQuery.of(context).size.width,
+                            onPressed: (){},
+                            child: Text(
+                              "House U & T",
+                            ),
 
+                          ),
                         ),
                       ),
                       SizedBox(width: 10.0),
                       Expanded(
-                        child: ElevatedButton(
-                          onPressed: (){},
-                          child: Text(
-                            "House R",
-                          ),
+                        child: Material(
+                          elevation: 4.0,
+                          borderRadius: BorderRadius.circular(30.0),
+                          child: MaterialButton(
+                            minWidth: MediaQuery.of(context).size.width,
+                            onPressed: (){},
+                            child: Text(
+                              "House R",
+                            ),
 
+                          ),
                         ),
                       ),
                     ],
@@ -111,40 +121,8 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
                       child: InteractiveViewer(
                         //boundaryMargin: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
                         minScale: 0.1,
-                        maxScale: 5.0,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-
-                         // height: 340,
-                          height: MediaQuery.of(context).size.height * 0.55,
-                          decoration: BoxDecoration(color: Colors.white),
-                          child: FittedBox (
-                            fit: BoxFit.contain,
-                            child: Stack(
-                              children: [
-                                Image.asset(
-                                  'assets/U1.2.jpg',
-                                 //fit: BoxFit.cover,
-                                ),
-                                Positioned(
-                                  left: x, // x lat
-                                  top: y , // y long
-
-                                  child: Icon(
-                                    Icons.location_on,
-                                    size: 100,
-                                    color: Colors.deepOrange[800],
-                                  ),
-                                ),
-
-                              CustomPaint(
-                                //size: Size(350, MediaQuery.of(context).size.height),
-                                painter: DirectionPainter(),
-                              ),
-                            ],
-                            ),
-                          ),
-                        ),
+                        maxScale: 3.0,
+                        child: LocationAnimation(),
                       ),
                     ),
                   ),
