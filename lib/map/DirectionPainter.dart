@@ -22,7 +22,7 @@ class DirectionPainter extends CustomPainter {
       path.moveTo(pointX, pointY);
       path.lineTo(872, 1454);
       path.lineTo(960, 1454);
-      path.lineTo(960, 1320);
+      path.lineTo(960, 1290);
     }
     else if(room == "beta")
     {
