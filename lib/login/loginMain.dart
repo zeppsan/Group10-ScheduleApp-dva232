@@ -18,12 +18,13 @@ class _LoginMainState extends State<LoginMain> {
   void initState (){
     _login = true;
     _register = false;
+    checkLogin(context);
   }
 
   @override
   Widget build(BuildContext context) {
     final appTitle = 'XonorK';
-    checkLogin(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(appTitle),
@@ -77,7 +78,7 @@ class _LoginMainState extends State<LoginMain> {
     String token = localStorage.getString('token');
     print("StoredToken: $token");
 
-    //Token = null then the user havent logged in
+    //Token = null then the user haven't logged in
     if(token == null){
       return;
     }
@@ -90,7 +91,7 @@ class _LoginMainState extends State<LoginMain> {
       "Accept": "application/json"
     });
 
-    print("HTTPget return ${response.body}");
+    print("HTTP.post return ${response.body}");
 
     //The token is not valid. Need to update
     if(response.statusCode == 401) {
