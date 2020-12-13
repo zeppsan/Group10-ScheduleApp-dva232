@@ -17,7 +17,7 @@ class DirectionPainter extends CustomPainter {
 
     Path path = Path();
 
-    if(room == "alfa")
+    if(room == "beta")
     {
       path.moveTo(pointX, pointY);
       path.lineTo(872, 1454);

@@ -62,9 +62,9 @@ class AppTheme{
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Colors.black38,
         selectedIconTheme: IconThemeData(color: const Color(0xffb18d49)),
-        selectedLabelStyle: TextStyle(color:const Color(0xffb18d49)), //ÄR FÖRMODLIGEN FEL EFTERSOM DEN INTE TAR DENNA ANDRA FÄRG
+        selectedItemColor: const Color(0xffb18d49),
         unselectedIconTheme: IconThemeData(color: const Color(0xffdfb15b)),
-        unselectedLabelStyle: TextStyle(color: const Color(0xffdfb15b)) //ÄR FÖRMODLIGEN FEL EFTERSOM DEN INTE TAR DENNA ANDRA FÄRG
+        unselectedItemColor: const Color(0xffdfb15b)
       )
   );
 }
