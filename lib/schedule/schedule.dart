@@ -50,6 +50,7 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
   @override
   Future calendarFuture;
 
+
   @override
   void initState() {
     super.initState();
@@ -243,6 +244,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
   bool empty;
   String noScheduleError =
       "Seems like you don't subscribe on any schedules, add some!";
+  bool lightTheme;
 
   _ScheduleCalendarState({this.courses, this.empty});
 
@@ -283,7 +285,10 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                   child: TableCalendar(
                     calendarStyle: CalendarStyle(
                         selectedColor: Colors.blue,
-                        todayColor: Colors.blue[200]),
+                        todayColor: Colors.blue[400],
+                      markersColor: (lightTheme)? Colors.black : Colors.white,
+                      markersMaxAmount: 1
+                    ),
                     initialSelectedDay: DateTime.now(),
                     calendarController: _calendarController,
                     startingDayOfWeek: StartingDayOfWeek.monday,
@@ -333,6 +338,9 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
   }
 
   Future<Map<DateTime, List<Lecture>>> renderCalendar(List<dynamic> coursesToParse) async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    lightTheme = await localStorage.getBool('theme');
+
 
     parser = CourseParser(rawData: coursesToParse);
 
