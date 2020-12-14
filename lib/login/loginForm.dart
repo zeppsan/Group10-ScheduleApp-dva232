@@ -128,7 +128,7 @@ class _LoginForm extends State<LoginForm> {
               minWidth: MediaQuery.of(context).size.width,
               padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
               onPressed: () {
-                Navigator.pushReplacementNamed(context, "/map");
+                Navigator.pushReplacementNamed(context, "/forgotPassword");
               },
               child: Text("Forgotten password?!", textAlign: TextAlign.center,),
             ),
@@ -143,7 +143,7 @@ class _LoginForm extends State<LoginForm> {
               minWidth: MediaQuery.of(context).size.width,
               padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
               onPressed: () {
-                Navigator.pushReplacementNamed(context, "/map");
+                Navigator.pushReplacementNamed(context, "/thisweek");
               },
               child: Text("Continue without register", textAlign: TextAlign.center,),
             ),

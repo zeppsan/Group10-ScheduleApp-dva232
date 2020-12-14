@@ -13,11 +13,13 @@ class LoginMain extends StatefulWidget {
 class _LoginMainState extends State<LoginMain> {
   bool _login;
   bool _register;
+  bool _forgotPassword;
 
   @override
   void initState (){
     _login = true;
     _register = false;
+    _forgotPassword = false;
     checkLogin(context);
   }
 
@@ -28,6 +30,7 @@ class _LoginMainState extends State<LoginMain> {
     return Scaffold(
       appBar: AppBar(
         title: Text(appTitle),
+        automaticallyImplyLeading: false,
       ),
       body: body(),
     );
@@ -41,12 +44,21 @@ class _LoginMainState extends State<LoginMain> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+
             Visibility(
-              child: LoginForm(),
+              child: AnimatedOpacity(
+                child: LoginForm(),
+                opacity: _login ? 1.0 : 0.0,
+                duration: Duration(milliseconds: 10000),
+              ),
               visible: _login,
             ),
             Visibility(
-              child: RegisterForm(),
+              child: AnimatedOpacity(
+                child: RegisterForm(),
+                opacity: _register ? 1.0 : 0.0,
+                duration: Duration(milliseconds: 10000),
+              ),
               visible: _register,
             ),
             Material(
