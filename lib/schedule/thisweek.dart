@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/schedule/CourseParser.dart';
@@ -29,27 +30,30 @@ class fiveTopDays extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => _fiveTopDaysState();
 }
+
 class _fiveTopDaysState extends State<fiveTopDays>{
   @override
   Future _checkSchedule;
-  Future dayParser;
   CourseParser parser;
   List<dynamic> days;
+  List<Lecture> _selectedLectures;
+  Future parsed;
 
   @override
   void initState(){
     super.initState();
     _checkSchedule = checkSchedule();
-    dayParser = getParsed(days);
+    _selectedLectures = List<Lecture>();
   }
+
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: _checkSchedule,
+        future: _checkSchedule, //holds rawSchedule
         builder: (BuildContext context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting: return Text("Loading..");
             default:
-          if (!snapshot.hasData) {
+          if (!snapshot.hasData) { //if there is no data return a message and a button to go to add course.
             return Column(
                 children: [
                   Text(
@@ -59,19 +63,52 @@ class _fiveTopDaysState extends State<fiveTopDays>{
                 ]
             );
           }
-          else {
+          else { //if there is data == schedule, you have lectures, this will print for next upcoming 5 school days.
             log(snapshot.data.toString());
-            return  ListView.builder(
-              itemCount: 5,
-              itemBuilder: (context, pos) {
-                return Column(
-                  children: [
-                    Text(getday(pos), style: TextStyle(fontSize: 20),),
+            parsed = getParsed(snapshot.data);
 
-                    Container(height: 50,),
-                  ],
+            return  ListView.builder(
+              itemCount: 5, //getting a list that loops for 5 indexes 0-4
+              itemBuilder: (context, pos) {
+                return FutureBuilder(
+                  future: parsed,
+                  builder: (BuildContext context, snapshot) {
+                    log(snapshot.data.toString());
+                    switch(snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Text("Loading...");
+                        break;
+                      default:
+                        {
+                          _selectedLectures = snapshot.data;
+                          return Column(
+                            children: [
+                              Text(
+                                getday(pos), style: TextStyle(fontSize: 20),),
+                              //writing days mon-friday, today when weekday
+                              ListView(
+                                  children: _selectedLectures.map((e) {
+                                    if(snapshot.hasData)
+                                      return Text("No classes today, YIPPIEKAYEEY!");
+                                    else{
+                                    return Card(
+                                      child: ListTile(
+                                        leading: Icon(Icons.work_outline),
+                                        title: Text("hej"),
+                                      ),
+                                    );
+                                  }}).toList()
+                                ),
+                              Container(height: 50,),
+
+                              // getting space between loops/next day
+                            ],
+                          );
+                        }
+                    }
+                  }
                 );
-              },
+              },                                               
             );
           }
         }}
@@ -92,7 +129,6 @@ class _fiveTopDaysState extends State<fiveTopDays>{
     return parser.events;
   }
 }
-
 
 String getday(int loopPos) {
   var daynr = DateTime.now().weekday +loopPos;
@@ -118,6 +154,20 @@ String getday(int loopPos) {
       return  "Friday";
       break;
   };
+}
+int getTimeStamp(int loopPos){
+  var actualDay = DateTime.now().day + loopPos;
+
+  if(DateTime.now().weekday >= 6 ) //look past weekend
+    actualDay +=1;
+
+  log(loopPos.toString());
+  log(DateTime.now().year.toString());
+  log(DateTime.fromMicrosecondsSinceEpoch(1607948100000 * 1000).day.toString());
+  log(DateTime(DateTime.now().year, DateTime.now().month, actualDay).millisecondsSinceEpoch.toString());
+
+  //return  DateTime(DateTime.now().year, DateTime.now().month, actualDay).millisecondsSinceEpoch;
+  return actualDay;
 }
 
 /*var daynr = DateTime.now().weekday;

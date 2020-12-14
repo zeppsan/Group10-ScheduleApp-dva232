@@ -293,6 +293,9 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                         if(events.isNotEmpty){
                           _selectedEvents.sort((a, b) => a.startTime.compareTo(b.startTime));
                           _selectedEvents = events;
+                          log(events.toString());
+                          log(_selectedEvents.toString());
+                          log(snapshot.data.toString());
                         } else {
                           _selectedEvents.clear();
                           _selectedEvents.add(Lecture("Moment: Home Studies", 0, 0, "Anywhere", "YOU ARE FREE!!"));

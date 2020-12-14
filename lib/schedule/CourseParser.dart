@@ -87,6 +87,7 @@ class Lecture{
     return resultString;
   }
 
+
   String getMoment(String input){
     int momentIndex = input.indexOf("Moment");
     return input.substring(momentIndex + 8);
