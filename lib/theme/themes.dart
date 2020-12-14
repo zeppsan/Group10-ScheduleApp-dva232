@@ -24,8 +24,9 @@ class AppTheme{
       iconTheme: IconThemeData(
         color: const Color(0xffdfb15b),
       ),
+      centerTitle: true,
       textTheme: TextTheme(
-          headline6: TextStyle(color: const Color(0xff2c1d33),)
+          headline6: TextStyle(color: const Color(0xff2c1d33), fontSize: 20)
       ),
     ),
 
@@ -54,8 +55,9 @@ class AppTheme{
       iconTheme: IconThemeData(
         color: const Color(0xffeeb462),
       ),
+    centerTitle: true,
     textTheme: TextTheme(
-        headline6: TextStyle(color: const Color(0xffeeb462),)
+        headline6: TextStyle(color: const Color(0xffeeb462),fontSize: 20,)
     )
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(

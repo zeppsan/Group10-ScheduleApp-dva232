@@ -26,7 +26,13 @@ class Settings extends StatelessWidget {
           ),
           ElevatedButton(
             child: Text("Change Theme"),
-            onPressed: () async { //när man ändrar färg så lär man ändra så att man sparar i localstorage att den är ändrad. update kanske.
+            onPressed: () async {
+              SharedPreferences localStorage = await SharedPreferences.getInstance();
+              if(localStorage.getBool('theme')) //if lightmode when change set to false to get darkmode
+                localStorage.setBool('theme', false);
+              else
+                localStorage.setBool('theme', true); //if darkmode when change set to true to get lightmode
+
               getThemeManager(context).toggleDarkLightTheme();
             },
           ),
