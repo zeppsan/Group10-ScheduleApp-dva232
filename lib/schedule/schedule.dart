@@ -22,7 +22,7 @@ class Schedule extends StatelessWidget {
         actions: [
           FlatButton.icon(
             onPressed: () {
-              Navigator.pushNamed(context, '/scheduleSettings');
+              Navigator.pushReplacementNamed(context, '/scheduleSettings');
             },
             icon: Icon(
               Icons.settings,
