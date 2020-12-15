@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
-import 'map_building_widget.dart';
 
 class PlanDisplay extends StatefulWidget{
   int _currentFloor;
@@ -19,6 +18,7 @@ class _PlanDisplayState extends State<PlanDisplay> {
  int _currentFloor;
  bool showCoordinates;
  _PlanDisplayState(this._currentFloor);
+
  @override
  void initState() {
     setState(() {
@@ -52,7 +52,7 @@ class _PlanDisplayState extends State<PlanDisplay> {
         children: [
           Flexible (
             flex: 4,
-            child: MapBuildingWidget(building: widget.building !=null ? widget.building : widget.room.building, room: widget.room, floor:_currentFloor, showCoordinates: showCoordinates),
+           // child: MapBuildingWidget(building: widget.building !=null ? widget.building : widget.room.building, room: widget.room, floor:_currentFloor, showCoordinates: showCoordinates),
           ),
           Flexible (
             flex:1,

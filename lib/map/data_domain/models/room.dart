@@ -1,6 +1,7 @@
-import 'package:latlong/latlong.dart';
+
 import 'package:meta/meta.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
+import 'package:schedule_dva232/map/data_domain/models/coordinates.dart';
 
 import 'building.dart';
 
@@ -8,7 +9,7 @@ class Room {
   final Building building;
   final String name;
   final int floor;
-  final LatLng position;
+  final Coordinates position;
 
   Room({
     @required this.building,
@@ -22,7 +23,7 @@ class Room {
       @required Building building,
       @required String name,
       @required int floor,
-      @required LatLng position,
+      @required Coordinates position,
     }) :super(name: name, floor: floor, position: position, building: building );
 
     Map<String, dynamic> toJson() {
@@ -30,8 +31,8 @@ class Room {
         "name": name,
         "floor": floor,
         "position": {
-          "lat": position.latitude,
-          "lng": position.longitude
+          "x": position.x,
+          "y": position.y
         },
         "building_name": building.name,
         "building_campus": building.campus,
@@ -47,7 +48,7 @@ class Room {
             name:jsonRoom['building_name']),
           name: jsonRoom ['name'],
           floor: jsonRoom ['floor'],
-          position: LatLng(
-              jsonRoom['position']['lat'], jsonRoom['position']['lng']));
+          position: Coordinates(
+             x: jsonRoom['position']['x'], y: jsonRoom['position']['y']));
     }
   }
