@@ -18,10 +18,10 @@ class ErrorState extends BrowsingState {
   ErrorState ({@required this.message}):super ([message]);
 }
 
-class SearchingForRoomState extends BrowsingState {
-  final String inputString;
-  SearchingForRoomState ({@required this.inputString}):super([inputString]);
-}
+//class SearchingForRoomState extends BrowsingState {
+ // final String inputString;
+  //SearchingForRoomState ({@required this.inputString}):super([inputString]);
+//}
 
 class PlanLoaded extends BrowsingState {
   final Building building;

@@ -35,7 +35,7 @@ class RoomAssetsDataSourceImpl implements RoomAssetsDataSource {
     Map<String, dynamic> jsonBuildings = json.decode(buildings);
     for (Map<String, dynamic> building in jsonBuildings['buildings']) {
       for (Map<String, dynamic> room in building['rooms']) {
-        if (room['name'] == name) {
+        if (room['name'].toString().toLowerCase() == name) {
           //if room is found
           print('the room is found');
           print (room['position']['x']);

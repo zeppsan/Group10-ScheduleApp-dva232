@@ -10,6 +10,7 @@ import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
 class IntroMapPage extends StatelessWidget {
   @override build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset:false,
       //TODO: Is there common AppBar to Share?
       appBar: AppBar(
         title: Text('Map'),
