@@ -45,9 +45,6 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
               margin: EdgeInsets.fromLTRB(15, 40, 15, 10),
               child: TextField(
                 controller: course_input,
@@ -103,6 +100,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                                         colorListener: (int value) {
                                           currentColor.value = Color(value + 00000);
                                           setCourseColor(e, currentColor.value);
+                                          print("I did set the color ${value}");
                                         },
                                         thumbColor: Colors.white,
                                         initialColor: (course_initColors[e] != null)? course_initColors[e] : Colors.lightBlueAccent,
