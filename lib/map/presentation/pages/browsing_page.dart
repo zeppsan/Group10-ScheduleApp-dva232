@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
-import 'package:schedule_dva232/map/injection_container.dart' as ic;
+import 'file:///C:/Users/emeli/AndroidStudioProjects/Group10-ScheduleApp-dva232/lib/injection_container.dart' as ic;
 import 'package:schedule_dva232/map/presentation/browsing_ploc/browsing_logic.dart';
 import 'package:schedule_dva232/map/presentation/widgets/plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
@@ -20,6 +21,7 @@ class BrowsingPage extends StatelessWidget {
         title: Text('Map'),
       ),
       body: buildBody(context),
+      bottomNavigationBar: NavigationBarLoggedIn(),
     );
   }
 
@@ -50,25 +52,19 @@ class BrowsingPage extends StatelessWidget {
                         return MessageDisplay(message: state.message);
                       } else if (state is BuildingLoadedState) {
                         return Container(
-                            child: new Column (
-                              children: <Widget> [
-                                Flexible (
-                                  flex:6,
-                                  child: BasicMapWidget(basicMapToShow: state.building.name),
-                                ),
-                                Flexible(
-                                  flex:1,
-                                  child: RaisedButton(
-                                    child: Text('To the floor plans'),
-                                    color: Theme
-                                        .of(context)
-                                        .accentColor,
-                                    textTheme: ButtonTextTheme.primary,
-                                    onPressed: () { dispatchGetFloorPlan(context, state.building, 1); },
+                            child: Stack (
+                                children: <Widget>[
+                                  BasicMapWidget(basicMapToShow: state.building.name),
+                                  Positioned(
+                                    top: 10,
+                                    left: 20,
+                                    child: ElevatedButton(
+                                      child: Text('To floor plans'),
+                                      onPressed: () { dispatchGetFloorPlan(context, state.building, 1); },
+                                    ),
                                   ),
+                                  ],
                                 ),
-                              ],
-                            ),
                         );
                       } else if (state is PlanLoaded) {
                         return WillPopScope(
@@ -118,53 +114,48 @@ class _TopControlsWidgetForBrowsingState extends State<TopControlsWidgetForBrows
 
     @override
     Widget build(BuildContext context) {
-      return Column(
-        children: <Widget>[
-          TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Enter a room',
-          ),
-          onChanged: (value) { roomToFind = value; }
-        ),
-          SizedBox(height: 10),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: RaisedButton(
-                  child: Text('Search'),
-                    color: Theme
-                      .of(context)
-                      .accentColor,
-                    textTheme: ButtonTextTheme.primary,
+      return Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: <Widget>[
+            TextFormField(
+              onChanged: (value) {
+                roomToFind = value;
+              },
+              decoration: InputDecoration(
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
+                hintText: "Search room",
+
+                suffixIcon: Icon(
+                  Icons.search_rounded,
+                  size: 34.0,
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: ElevatedButton(
+                    child: Text('Buildings U & T'),
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
-                  },
+                      dispatchGetBuilding('U');
+                    },
+                  ),
                 ),
-              ),
-              Expanded(
-                child: RaisedButton(
-                  child: Text('Buildings U & T'),
-                  color: Theme
-                      .of(context)
-                      .accentColor,
-                  textTheme: ButtonTextTheme.primary,
-                  onPressed: () { dispatchGetBuilding('U');}
+                SizedBox(width: 10.0),
+                Expanded(
+                  child: ElevatedButton(
+                    child: Text('Building R'),
+                    onPressed: () {
+                      dispatchGetBuilding('R');
+                    },
+                  ),
                 ),
-              ),
-              Expanded(
-                child: RaisedButton(
-                  child: Text('Building R'),
-                  color: Theme
-                      .of(context)
-                      .accentColor,
-                  textTheme: ButtonTextTheme.primary,
-                  onPressed: () { dispatchGetBuilding('R');}
-                ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       );
     }
 

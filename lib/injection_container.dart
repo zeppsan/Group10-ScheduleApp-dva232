@@ -5,8 +5,8 @@ import 'package:schedule_dva232/map/data_domain/usecases/get_building_usecase.da
 import 'package:schedule_dva232/map/presentation/browsing_ploc/browsing_logic.dart';
 import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'data_domain/repositories/room_repository.dart';
-import 'data_domain/usecases/get_room_usecase.dart';
+import 'map/data_domain/repositories/room_repository.dart';
+import 'map/data_domain/usecases/get_room_usecase.dart';
 
 final serviceLocator = GetIt.instance;
 Future<void> init () async

@@ -1,5 +1,6 @@
 //TODO: Change accordingly to UI design
 import 'package:flutter/cupertino.dart';
+import '../../locationAnimation.dart';
 import 'widgets.dart';
 
 class BasicMapWidget extends StatelessWidget {
@@ -8,29 +9,35 @@ class BasicMapWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    switch (basicMapToShow) {
-      case 'basic':
-        return Text('here is the basic map with NO building highlighted');
-      case 'U':
-        return Column(
-            children: <Widget> [
-              Text('here is the basic map with U building highlighted'),
-            ]
-        );
-      case 'R':
-        return Column(
-            children: <Widget> [
-              Text('here is the basic map with R building highlighted'),
-            ]
-          );
-      case 'T':
-        return Column(
-            children: <Widget> [
-              Text('here is the basic map with T building highlighted'),
-            ]
-          );
-      default:
-        return Text('Can not find corresponding image');
-    }
+    return  Padding(
+      padding: const EdgeInsets.fromLTRB(10.0, 0.0,10.0,0.0),
+      child: Container(
+        child: ClipRect(
+          child: InteractiveViewer(
+            minScale: 0.1,
+            maxScale: 3.0,
+            child: Image.asset(switchImage(basicMapToShow)),
+          ),
+        ),
+      ),
+    );
   }
+}
+
+String switchImage(String basicMapToShow) {
+
+  switch (basicMapToShow) {
+    case 'basic':
+      return 'assets/U1.jpg';
+  
+    case 'U':
+      return 'assets/U2.jpg';
+
+    case 'R':
+      return 'assets/R1.jpg';
+
+    default:
+      return 'Can not find corresponding image';
+  }
+  
 }

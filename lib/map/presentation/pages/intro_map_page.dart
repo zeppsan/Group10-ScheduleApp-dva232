@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
-import 'package:schedule_dva232/map/injection_container.dart' as ic;
+import 'file:///C:/Users/emeli/AndroidStudioProjects/Group10-ScheduleApp-dva232/lib/injection_container.dart' as ic;
 import 'package:schedule_dva232/map/presentation/widgets/basic_map_widget.dart';
 import 'package:schedule_dva232/map/presentation/widgets/plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
+
 class IntroMapPage extends StatelessWidget {
   @override build(BuildContext context) {
     return Scaffold(
@@ -13,6 +15,7 @@ class IntroMapPage extends StatelessWidget {
         title: Text('Map'),
       ),
       body: buildBody(context),
+      bottomNavigationBar: NavigationBarLoggedIn(),
     );
   }
 }
@@ -20,7 +23,7 @@ class IntroMapPage extends StatelessWidget {
   Widget buildBody (BuildContext context) {
     return Center(
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(5.0),
           child: Column(
               children: <Widget>[
                 SizedBox(height: 10),
@@ -51,60 +54,48 @@ class IntroMapPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter a room',
-            ),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: <Widget>[
+          TextFormField(
             onChanged: (value) {
               inputStr = value;
-            }
-        ),
-        SizedBox(height: 10),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: RaisedButton(
-                child: Text('Search'),
-                color: Theme
-                    .of(context)
-                    .accentColor,
-                textTheme: ButtonTextTheme.primary,
-                onPressed: () {
-                  print('in intro_page searching for ' + inputStr);
-                  Navigator.of(context).pushNamed('/searching', arguments: inputStr);
-                },
+            },
+            decoration: InputDecoration(
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
+              hintText: "Search room",
+
+              suffixIcon: Icon(
+                Icons.search_rounded,
+                size: 34.0,
               ),
             ),
-            Expanded(
-              child: RaisedButton(
-                child: Text('Buildings U & T'),
-                color: Theme
-                    .of(context)
-                    .accentColor,
-                textTheme: ButtonTextTheme.primary,
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/browsing', arguments: 'U');
-                },
+          ),
+          SizedBox(height: 10),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: ElevatedButton(
+                  child: Text('Buildings U & T'),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/browsing', arguments: 'U');
+                  },
+                ),
               ),
-            ),
-            Expanded(
-              child: RaisedButton(
-                child: Text('Building R'),
-                color: Theme
-                    .of(context)
-                    .accentColor,
-                textTheme: ButtonTextTheme.primary,
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/browsing', arguments: 'R');
-                },
+              SizedBox(width: 10.0),
+              Expanded(
+                child: ElevatedButton(
+                  child: Text('Building R'),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/browsing', arguments: 'R');
+                  },
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
