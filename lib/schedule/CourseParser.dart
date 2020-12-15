@@ -11,6 +11,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class CourseParser{
 
@@ -50,7 +51,6 @@ class CourseParser{
   static saveToLocalStorage(){
 
   }
-
 
 }
 
