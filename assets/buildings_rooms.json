@@ -44,35 +44,35 @@
 					"floor" :  1
 				},
 				{
-					"name" : "u1-042",
+					"name" : "u1042",
 					"position" : {
 						"x": 400.0 ,
 						"y": -1590.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "u1-043",
+					"name" : "u-043",
 					"position" : {
 						"x": 200.0 ,
 						"y": -1590.0   },
 					"floor" :  1
 				},
 				{
-					"name" : "u1-044",
+					"name" : "u1044",
 					"position" : {
 						"x": 300.0 ,
 						"y": -1760.0   },
 					"floor" :  1
 				},
 				{
-					"name" : "u1-045",
+					"name" : "u1045",
 					"position" : {
 						"x": 150.0 ,
 						"y": -1760.0   },
 					"floor" :  1
 				},
 				{
-					"name" : "u1-046",
+					"name" : "u1046",
 					"position" : {
 						"x": 250.0 ,
 						"y": -1940.0   },
@@ -86,154 +86,154 @@
 					"floor" :  2
 				},
 				{
-					"name" : "u2-003",
+					"name" : "u2003",
 					"position" : {
 						"x": 250.0,
 						"y": 70.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-006",
+					"name" : "u2006",
 					"position" : {
 						"x": 250.0,
 						"y": -200.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-009",
+					"name" : "u2009",
 					"position" : {
 						"x": 140.0,
 						"y": -380.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-010",
+					"name" : "u2010",
 					"position" : {
 						"x": 180.0,
 						"y": -440.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-011",
+					"name" : "u2011",
 					"position" : {
 						"x": 180.0,
 						"y": -510.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-012",
+					"name" : "u2012",
 					"position" : {
 						"x": 180.0,
 						"y": -580.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-013",
+					"name" : "u2013",
 					"position" : {
 						"x": 250.0,
 						"y": -780.0 },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-016",
+					"name" : "u016",
 					"position" : {
 						"x": 250.0,
 						"y": -1040.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-023",
+					"name" : "u2023",
 					"position" : {
 						"x": 250.0,
 						"y": -1590.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-024",
+					"name" : "u2024",
 					"position" : {
 						"x": 250.0,
 						"y": -1780.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-029",
+					"name" : "u2029",
 					"position" : {
 						"x": 250.0,
 						"y": -1950.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-032",
+					"name" : "u2032",
 					"position" : {
 						"x": 180.0,
 						"y": -2130.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-034",
+					"name" : "u2034",
 					"position" : {
 						"x": 650.0,
 						"y": -1590.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-036",
+					"name" : "u2036",
 					"position" : {
 						"x": 650.0,
 						"y": -1780.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-039",
+					"name" : "u2039",
 					"position" : {
 						"x": 650.0,
 						"y": -1950.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-040",
+					"name" : "u2040",
 					"position" : {
 						"x": 180.0,
 						"y": -2260.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-043",
+					"name" : "u2043",
 					"position" : {
 						"x": 600.0,
 						"y": -2260.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-044",
+					"name" : "u2044",
 					"position" : {
 						"x": 680.0,
 						"y": -2260.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-046",
+					"name" : "u2046",
 					"position" : {
 						"x": 880.0,
 						"y": -2180.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-051",
+					"name" : "u2051",
 					"position" : {
 						"x": 1120.0,
 						"y": -2180.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-062",
+					"name" : "u2062",
 					"position" : {
 						"x": 1520.0,
 						"y": -2260.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-067",
+					"name" : "u2067",
 					"position" : {
 						"x": 1520.0,
 						"y": -1900.0  },
@@ -241,217 +241,217 @@
 				},
 
 				{
-					"name" : "u2-072",
+					"name" : "u2072",
 					"position" : {
 						"x": 1520.0,
 						"y": -1730.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-074",
+					"name" : "u2074",
 					"position" : {
 						"x": 1520.0,
 						"y": -1540.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-079",
+					"name" : "u2079",
 					"position" : {
 						"x": 1120.0,
 						"y": -1380.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-082",
+					"name" : "u2082",
 					"position" : {
 						"x": 880.0,
 						"y": -1380.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-097",
+					"name" : "u2097",
 					"position" : {
 						"x": 650.0,
 						"y": -1030.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-114",
+					"name" : "u2114",
 					"position" : {
 						"x": 1520.0,
 						"y": -1060.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-124",
+					"name" : "u2124",
 					"position" : {
 						"x": 1520.0,
 						"y": -680.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-129",
+					"name" : "u2129",
 					"position" : {
 						"x": 1120.0,
 						"y": -520.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-132",
+					"name" : "u2132",
 					"position" : {
 						"x": 880.0,
 						"y": -520.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-145",
+					"name" : "u2145",
 					"position" : {
 						"x": 650.0,
 						"y": -780.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-154",
+					"name" : "u2154",
 					"position" : {
 						"x": 650.0,
 						"y": 200.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-158",
+					"name" : "u2158",
 					"position" : {
 						"x": 650.0,
 						"y": 70  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-178",
+					"name" : "u2178",
 					"position" : {
 						"x": 1350.0,
 						"y": -110.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-184",
+					"name" : "u2184",
 					"position" : {
 						"x": 1300.0,
 						"y": 300.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-228",
+					"name" : "u2228",
 					"position" : {
 						"x": 1530.0,
 						"y": 1320.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-257",
+					"name" : "u2257",
 					"position" : {
 						"x": 690.0,
 						"y": 1050.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-258",
+					"name" : "u2258",
 					"position" : {
 						"x": 690.0,
 						"y": 980.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-260",
+					"name" : "u2260",
 					"position" : {
 						"x": 690.0,
 						"y": 880.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-261",
+					"name" : "u2261",
 					"position" : {
 						"x": 690.0,
 						"y": 780.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-263",
+					"name" : "u2263",
 					"position" : {
 						"x": 690.0,
 						"y": 680.0   },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-264",
+					"name" : "u2264",
 					"position" : {
 						"x": 690.0,
 						"y": 580.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-265",
+					"name" : "u2265",
 					"position" : {
 						"x": -40.0,
 						"y": 280.0   },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-267",
+					"name" : "u2267",
 					"position" : {
 						"x": -190.0,
 						"y": 280.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-269",
+					"name" : "u2269",
 					"position" : {
 						"x": -300.0,
 						"y": 280.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-271",
+					"name" : "u2271",
 					"position" : {
 						"x": -450.0,
 						"y": 280.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "u2-273",
+					"name" : "u2273",
 					"position" : {
 						"x": -550.0,
 						"y": 280.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "hilbert-room",
+					"name" : "hilbertroom",
 					"position" : {
 						"x": 640.0,
 						"y": -2280.0 },
 					"floor" :  3
 				},
 				{
-					"name" : "u3-012",
+					"name" : "u3012",
 					"position" : {
 						"x": 740.0,
 						"y": 60.0 },
 					"floor" :  3
 				},
 				{
-					"name" : "u3-104",
+					"name" : "u3104",
 					"position" : {
 						"x": 1540.0,
 						"y": -2280.0 },
 					"floor" :  3
 				},
 				{
-					 "name" : "u3-251",
+					 "name" : "u3251",
 					"position" : {
 						"x": 1540.0,
 						"y": 1380.0 },
 					"floor" :  3
 				},
 				{
-					"name" : "u3-294",
+					"name" : "u3294",
 					"position" : {
 						"x": 600.0,
 						"y": 540.0 },
@@ -468,476 +468,469 @@
       "floors" :  3,
 			"rooms": [
 				{
-					"name" : "Delta",
+					"name" : "delta",
 					"position" : {
 						"x": -430.0,
 						"y": -1580.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "Omega",
+					"name" : "omega",
 					"position" : {
 						"x": -990.0,
 						"y": -30.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "Pi",
+					"name" : "pi",
 					"position" : {
 						"x": -430.0,
 						"y": 680.0 },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-013",
+					"name" : "r1013",
 					"position" : {
 						"x": -590.0,
 						"y": -1040.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-014",
+					"name" : "r1014",
 					"position" : {
 						"x": -590.0,
 						"y": -950.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-016",
+					"name" : "r1016",
 					"position" : {
 						"x": -590.0,
 						"y": -790.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-017",
+					"name" : "r1017",
 					"position" : {
 						"x": -590.0,
 						"y": -690.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-018",
+					"name" : "r1018",
 					"position" : {
 						"x": -590.0,
 						"y": -600.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-028",
+					"name" : "r1028",
 					"position" : {
 						"x": -230.0,
 						"y": -730.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-029",
+					"name" : "r1029",
 					"position" : {
 						"x": -230.0,
 						"y": -830.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-030",
+					"name" : "r1030",
 					"position" : {
 						"x": -230.0,
 						"y": -940.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-121",
+					"name" : "r1121",
 					"position" : {
 						"x": 20.0,
 						"y": -1860.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-122",
+					"name" : "r1122",
 					"position" : {
 						"x": 20.0,
 						"y": -1600.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-131",
+					"name" : "r1131",
 					"position" : {
 						"x": 20.0,
 						"y": -1000.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-132",
+					"name" : "r1132",
 					"position" : {
 						"x": 20.0,
 						"y": -730.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-141",
+					"name" : "r1141",
 					"position" : {
 						"x": 20.0,
 						"y": -140.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-142",
+					"name" : "r1142",
 					"position" : {
 						"x": 20.0,
 						"y": 120.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-151",
+					"name" : "r1151",
 					"position" : {
 						"x": 20.0,
 						"y": 720.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-152",
+					"name" : "r1152",
 					"position" : {
 						"x": 20.0,
 						"y": 970.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-205",
+					"name" : "r1205",
 					"position" : {
 						"x": 100.0,
 						"y": -2250.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-214",
+					"name" : "r1214",
 					"position" : {
 						"x": 240.0,
 						"y": -2250.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-218",
+					"name" : "r1218",
 					"position" : {
 						"x": 680.0,
 						"y": -2200.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-302",
+					"name" : "r1302",
 					"position" : {
 						"x": 300.0,
 						"y": -1330.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R1-306",
+					"name" : "r1306",
 					"position" : {
 						"x": 580.0,
 						"y": -1330.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-402",
+					"name" : "r1402",
 					"position" : {
 						"x": 250.0,
 						"y": -500.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-406",
+					"name" : "r1406",
 					"position" : {
 						"x": 560.0,
 						"y": -470.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-421",
+					"name" : "r1421",
 					"position" : {
 						"x": 0.0,
 						"y": 0.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-502",
+					"name" : "r1502",
 					"position" : {
 						"x": 300.0,
 						"y": 390.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-506",
+					"name" : "r1506",
 					"position" : {
 						"x": 580.0,
 						"y": 390.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "R1-622",
+					"name" : "r1622",
 					"position" : {
 						"x": 420.0,
 						"y": 1000.0  },
 					"floor" :  1
 				},
 				{
-					"name" : "Case-sal",
-					"position" : {
-						"x": 0.0,
-						"y": 0.0  },
-					"floor" :  2
-				},
-				{
-					"name" : "Milos",
+					"name" : "milos",
 					"position" : {
 						"x": -500.0,
 						"y": 30.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "Naxos",
+					"name" : "naxos",
 					"position" : {
 						"x": -500.0,
 						"y": -360.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "Paros",
+					"name" : "paros",
 					"position" : {
 						"x": -500.0,
 						"y": -780.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-001",
+					"name" : "r2001",
 					"position" : {
 						"x": -500.0,
 						"y": -1340.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-003",
+					"name" : "r2003",
 					"position" : {
 						"x": -500.0,
 						"y": -1240.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-012",
+					"name" : "r2012",
 					"position" : {
 						"x": -500.0,
 						"y": -1420.0 },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-013",
+					"name" : "r2013",
 					"position" : {
 						"x": -500.0,
 						"y": -1500.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-014",
+					"name" : "r2014",
 					"position" : {
 						"x": -500.0,
 						"y": -1630.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-025",
+					"name" : "r2025",
 					"position" : {
 						"x": -500.0,
 						"y": 1040.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-031",
+					"name" : "r2031",
 					"position" : {
 						"x": -200.0,
 						"y": -1130.0 },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-032",
+					"name" : "r2032",
 					"position" : {
 						"x": -250.0,
 						"y": -1010.0 },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-041",
+					"name" : "r2041",
 					"position" : {
 						"x": -250.0,
 						"y": -140.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-042",
+					"name" : "r2042",
 					"position" : {
 						"x": -250.0,
 						"y": -60.0 },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-043",
+					"name" : "r2043",
 					"position" : {
 						"x": -250.0,
 						"y": 100.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-089",
+					"name" : "r2089",
 					"position" : {
 						"x": -450.0,
 						"y": 630.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-090",
+					"name" : "r2090",
 					"position" : {
 						"x": -450.0,
 						"y": 530.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-091",
+					"name" : "r2091",
 					"position" : {
 						"x": -470.0,
 						"y": 430.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-092",
+					"name" : "r2092",
 					"position" : {
 						"x": -450.0,
 						"y": 330.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-121",
+					"name" : "r2121",
 					"position" : {
 						"x": 50.0,
 						"y": -1890.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-132",
+					"name" : "r2132",
 					"position" : {
 						"x": 50.0,
 						"y": -760.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-141",
+					"name" : "r2141",
 					"position" : {
 						"x": 50.0,
 						"y": -200.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-142",
+					"name" : "r2142",
 					"position" : {
 						"x": 50.0,
 						"y": 30.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-151",
+					"name" : "r2151",
 					"position" : {
 						"x": 50.0,
 						"y": 730.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-205",
+					"name" : "r2205",
 					"position" : {
 						"x": 50.0,
 						"y": -2270.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-206",
+					"name" : "r2206",
 					"position" : {
 						"x": 450.0,
 						"y": -2270.0 },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-302",
+					"name" : "r2302",
 					"position" : {
 						"x": 300.0,
 						"y": -1360.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-356",
+					"name" : "r2356",
 					"position" : {
 						"x": 820.0,
 						"y": -900.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-402",
+					"name" : "r2402",
 					"position" : {
 						"x": 300.0,
 						"y": -490.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-408",
+					"name" : "r2408",
 					"position" : {
 						"x": 650.0,
 						"y": -490.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-501",
+					"name" : "r2501",
 					"position" : {
 						"x": 840.0,
 						"y": 640.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-502",
+					"name" : "r2502",
 					"position" : {
 						"x": 300.0,
 						"y": 390.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-506",
+					"name" : "r2506",
 					"position" : {
 						"x": 600.0,
 						"y": 390.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-605",
+					"name" : "r2605",
 					"position" : {
 						"x": 300.0,
 						"y": 1330.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "R2-606",
+					"name" : "r2606",
 					"position" : {
 						"x": 600.0,
 						"y": 1330.0 },
 					"floor" :  2
 				},
 				{
-					"name" : "R3-121",
+					"name" : "r3121",
 					"position" : {
 						"x": 50.0,
 						"y": -2200.0  },
 					"floor" :  3
 				},
 				{
-					"name" : "R3-122",
+					"name" : "r3122",
 					"position" : {
 						"x": 50.0,
 						"y": -1830.0  },
 					"floor" :  3
 				},
 				{
-					"name" : "R3-131",
+					"name" : "r3131",
 					"position" : {
 						"x": 10.0,
 						"y": -1150.0  },
@@ -968,21 +961,21 @@
 					"floor" :  2
 				},
 				{
-					"name" : "t2-019",
+					"name" : "t2019",
 					"position" : {
 						"x": -1360.0,
 						"y": 280.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "t2-051",
+					"name" : "t2051",
 					"position" : {
 						"x": -900.0,
 						"y": -300.0  },
 					"floor" :  2
 				},
 				{
-					"name" : "t2-054",
+					"name" : "t2054",
 					"position" : {
 						"x": -970.0,
 						"y": -20.0  },
@@ -996,14 +989,14 @@
 					"floor" :  3
 				},
 				{
-					"name" : "board-room",
+					"name" : "boardroom",
 					"position" : {
 						"x": -1210.0,
 						"y": -140.0  },
 					"floor" :  3
 				} ,
 				{
-					"name" : "t3-066",
+					"name" : "t3066",
 					"position" : {
 						"x": -960.0,
 						"y": 190.0   },
