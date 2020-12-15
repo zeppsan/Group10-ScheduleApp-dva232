@@ -16,6 +16,7 @@ import 'package:http/http.dart' as http;
 class Schedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print("## in schedule ##");
     return Scaffold(
       appBar: AppBar(
         title: Text('Schedule'),
@@ -102,11 +103,11 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
   * */
 
   Future<List<dynamic>> getEvents() async {
-
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    
     /*await Future.delayed(Duration(seconds: 1), ()async{
 
     });*/
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
     bool hasInternetAccess = true;
 
     // Checks if the user has internet or not
@@ -121,7 +122,7 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
       // Phone does not have internet access
       hasInternetAccess = false;
     }
-
+    
     // Check if the user is logged in to an account that has online-sync
     if(hasInternetAccess){
       if (localStorage.containsKey('token')) {
@@ -140,6 +141,8 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
           localStorage.remove('token');
           Navigator.pushReplacementNamed(context, '/');
         }
+
+
         // NO UPDATE AVALIBLE
         if(response.statusCode == 204){
           // CHECK SO THAT THE DATA IS DOWNLOADED
@@ -200,11 +203,9 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
           await localStorage.setString('rawSchedule', response.body);
           return jsonDecode(response.body);
         } else {
-          print("Database error, could not fetch");
         }
       }
     } else {
-      print("here we are ");
       // IF THE USER HAS NO INTERNET ACCESS
       // THE ONLY THING WE CAN DO IS TO RETURN THE ALREADY EXISTING SCHEDULE
       if(localStorage.containsKey('rawSchedule')){
@@ -280,56 +281,46 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
               );
               break;
             case ConnectionState.done:
-              return ListView(children: [
-                Container(
-                  child: TableCalendar(
-                    calendarStyle: CalendarStyle(
-                        selectedColor: Colors.blue,
-                        todayColor: Colors.blue[400],
-                      markersColor: (lightTheme)? Colors.black : Colors.white,
-                      markersMaxAmount: 1
+              return Column(
+                children: [
+                  Container(
+                    child: TableCalendar(
+                      calendarStyle: CalendarStyle(
+                          selectedColor: Colors.blue,
+                          todayColor: Colors.blue[400],
+                          markersColor: (lightTheme)? Colors.black : Colors.white,
+                          markersMaxAmount: 1
+                      ),
+                      initialCalendarFormat: CalendarFormat.twoWeeks,
+                      availableCalendarFormats: { CalendarFormat.month:'Month',  CalendarFormat.week:'week', CalendarFormat.twoWeeks:'Two Weeks',},
+                      initialSelectedDay: DateTime.now(),
+                      calendarController: _calendarController,
+                      startingDayOfWeek: StartingDayOfWeek.monday,
+                      events: snapshot.data,
+                      onDaySelected: (date, events, test) {
+                        setState(() {
+                          if(events.isNotEmpty){
+                            _selectedEvents.sort((a, b) => a.startTime.compareTo(b.startTime));
+                            _selectedEvents = events;
+                          } else {
+                            _selectedEvents.clear();
+                            _selectedEvents.add(Lecture("Moment: Home Studies", 0, 0, "Anywhere", "YOU ARE FREE!!"));
+                          }
+                        });
+                      },
                     ),
-                    initialSelectedDay: DateTime.now(),
-                    calendarController: _calendarController,
-                    startingDayOfWeek: StartingDayOfWeek.monday,
-                    events: snapshot.data,
-                    onDaySelected: (date, events, test) {
-                      setState(() {
-                        if(events.isNotEmpty){
-                          _selectedEvents.sort((a, b) => a.startTime.compareTo(b.startTime));
-                          _selectedEvents = events;
-                          log(events.toString());
-                          log(_selectedEvents.toString());
-                          log(snapshot.data.toString());
-                        } else {
-                          _selectedEvents.clear();
-                          _selectedEvents.add(Lecture("Moment: Home Studies", 0, 0, "Anywhere", "YOU ARE FREE!!"));
-                        }
-                      });
-                    },
                   ),
-                ),
-                Container(
-                  child: Text(
-                      (empty)? 'No courses in your schedule': "",
-                    textAlign: TextAlign.center,
+                  Expanded(
+                    child: ListView(
+                      padding: EdgeInsets.all(8.0),
+                      children: _selectedEvents.map((ev) {
+                        return eventContainer(ev.getTime(ev.startTime), ev.moment,
+                            ev.getTime(ev.endTime), ev.location, ev.course_code, ev.color);
+                      }).toList(),
+                    ),
                   ),
-                ),
-                Container(
-                  height: 1000,
-                  width: 400,
-                  child: ListView(
-                    padding: EdgeInsets.all(8.0),
-                    children: _selectedEvents.map((ev) {
-                      return eventContainer(ev.getTime(ev.startTime), ev.moment,
-                          ev.getTime(ev.endTime), ev.location, ev.course_code, ev.color);
-                    }).toList(),
-                  ),
-                ),
-                Text(
-                    "test"
-                ),
-              ]);
+                ],
+              );
               break;
             default:
               return Text("unexpected");
@@ -403,10 +394,16 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                 ),
                 Flexible(
                   flex: 1,
-                  child: Text(
-                    'Location: ${room}',
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  ),
+                  child: FlatButton(
+                    padding: EdgeInsets.all(0),
+                    child: Text(
+                      'Location: ${room}',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                    onPressed: (){
+                      Navigator.pushNamed(context, '/searching', arguments: "${room}");
+                    },
+                  )
                 ),
               ],
             )

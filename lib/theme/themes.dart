@@ -22,7 +22,7 @@ class AppTheme{
     ),),*/
 
     appBarTheme: AppBarTheme(
-      color: const Color(0xffeacea5),
+      color: const Color(0xffDED9F0),
       iconTheme: IconThemeData(
         color: const Color(0xffdfb15b),
       ),
@@ -36,7 +36,11 @@ class AppTheme{
       
 
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33)),
+      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+      ),
     ),
 
       primaryIconTheme: IconThemeData(
@@ -44,7 +48,7 @@ class AppTheme{
       ),
 
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: const Color(0xffeacea5),
+      backgroundColor: const Color(0xffDED9F0),
       selectedIconTheme: IconThemeData(color: Colors.white),
       selectedItemColor:  Colors.white,
       unselectedIconTheme: IconThemeData(color: const Color(0xff2c1d33)),
@@ -66,7 +70,11 @@ class AppTheme{
     )
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-     style: ElevatedButton.styleFrom(primary: const Color(0xffeeb462))
+     style: ElevatedButton.styleFrom(primary: const Color(0xffeeb462),
+     shape: RoundedRectangleBorder(
+       borderRadius: BorderRadius.circular(30.0),
+     ),
+    ),
     ),
 
     iconTheme: IconThemeData(
