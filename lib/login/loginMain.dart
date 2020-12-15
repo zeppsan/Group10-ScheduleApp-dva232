@@ -16,7 +16,7 @@ class LoginMain extends StatefulWidget {
 class _LoginMainState extends State<LoginMain> {
   bool _login;
   bool _register;
-  bool _darkTheme = LoginMain.darkTheme;
+  bool _darkTheme;
 
   //DarkTheme Colors
   var _logoDark = Color(0xfffc107);
@@ -32,6 +32,7 @@ class _LoginMainState extends State<LoginMain> {
   void initState() {
     _login = true;
     _register = false;
+    _darkTheme = LoginMain.darkTheme;
     checkLogin(context);
   }
 

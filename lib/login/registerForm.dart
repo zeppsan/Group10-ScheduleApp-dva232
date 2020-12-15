@@ -143,32 +143,26 @@ class _RegisterForm extends State<RegisterForm> {
           SizedBox(
             height: 20.0,
           ),
-          Material(
-            elevation: 4.0,
-            borderRadius: BorderRadius.circular(30.0),
-            child: MaterialButton(
-              minWidth: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-              onPressed: () {
-                // Validate returns true if the form is valid, or false
-                if (_formKey.currentState.validate()) {
-                  // If the form is valid, display a Snackbar.
-
-                  if (password == passwordConfirmation) {
-                    //Register func to add data to backend
-                    postRequest(
-                        name: name,
-                        email: email,
-                        password: password,
-                        passwordConfirmation: passwordConfirmation);
-                  }
-                }
-              },
-              child: Text(
-                "Register",
-                textAlign: TextAlign.center,
-              ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(MediaQuery.of(context).size.width, 50.0),
             ),
+            child: Text("Register", textAlign: TextAlign.center,),
+            onPressed: () {
+              // Validate returns true if the form is valid, or false
+              if (_formKey.currentState.validate()) {
+                // If the form is valid, display a Snackbar.
+
+                if (password == passwordConfirmation) {
+                  //Register func to add data to backend
+                  postRequest(
+                      name: name,
+                      email: email,
+                      password: password,
+                      passwordConfirmation: passwordConfirmation);
+                }
+              }
+            },
           ),
           SizedBox(
             height: 10.0,

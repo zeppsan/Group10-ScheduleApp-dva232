@@ -11,6 +11,7 @@ import 'package:schedule_dva232/login/loginMain.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login/loading.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
+import 'package:schedule_dva232/routing.dart';
 
 var theme;
 
