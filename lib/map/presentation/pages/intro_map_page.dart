@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
-import 'file:///C:/Users/emeli/AndroidStudioProjects/Group10-ScheduleApp-dva232/lib/injection_container.dart' as ic;
+import 'package:schedule_dva232/injection_container.dart' as ic;
 import 'package:schedule_dva232/map/presentation/widgets/basic_map_widget.dart';
 import 'package:schedule_dva232/map/presentation/widgets/plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';

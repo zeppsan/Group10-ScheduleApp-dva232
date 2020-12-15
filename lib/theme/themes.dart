@@ -36,7 +36,11 @@ class AppTheme{
       
 
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33)),
+      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+      ),
     ),
 
       primaryIconTheme: IconThemeData(
@@ -66,7 +70,11 @@ class AppTheme{
     )
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-     style: ElevatedButton.styleFrom(primary: const Color(0xffeeb462))
+     style: ElevatedButton.styleFrom(primary: const Color(0xffeeb462),
+     shape: RoundedRectangleBorder(
+       borderRadius: BorderRadius.circular(30.0),
+     ),
+    ),
     ),
 
     iconTheme: IconThemeData(
