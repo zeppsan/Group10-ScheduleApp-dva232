@@ -7,7 +7,7 @@ import 'package:schedule_dva232/schedule/addCourse.dart';
 import 'package:schedule_dva232/schedule/schedule.dart';
 import 'package:schedule_dva232/schedule/scheduleSettings.dart';
 import 'package:schedule_dva232/schedule/thisweek.dart';
-
+import 'package:schedule_dva232/login/loading.dart';
 import 'generalPages/settings.dart';
 import 'login/loginMain.dart';
 
@@ -26,6 +26,9 @@ class Roots {
 
     switch(settings.name) {
       case '/':
+        return MaterialPageRoute(builder: (_)=> Loading());
+        break;
+      case '/login':
         return MaterialPageRoute(builder: (_)=> LoginMain());
         break;
       case '/schedule':

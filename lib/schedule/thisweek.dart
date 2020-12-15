@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/schedule/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'CourseParser.dart';
 
 class Thisweek extends StatelessWidget {
@@ -35,15 +33,11 @@ class _fiveTopDaysState extends State<fiveTopDays>{
   @override
   Future _checkSchedule;
   CourseParser parser;
-  List<dynamic> days;
-  List<Lecture> _selectedLectures;
-  Future parsed;
 
   @override
   void initState(){
     super.initState();
-    _checkSchedule = checkSchedule();
-    _selectedLectures = List<Lecture>();
+    _checkSchedule = checkSchedule(); //get rawschedule
   }
 
   Widget build(BuildContext context) {
@@ -53,65 +47,36 @@ class _fiveTopDaysState extends State<fiveTopDays>{
           switch (snapshot.connectionState) {
             case ConnectionState.waiting: return Text("Loading..");
             default:
-          if (!snapshot.hasData) { //if there is no data return a message and a button to go to add course.
-            return Column(
-                children: [
-                  Text(
-                      "There is no schedule for you.. Either do nothing or add one"),
-                  ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/scheduleSettings');},
-                  child: Text("Add Course"),),
-                ]
-            );
-          }
-          else { //if there is data == schedule, you have lectures, this will print for next upcoming 5 school days.
-            log(snapshot.data.toString());
-            parsed = getParsed(snapshot.data);
-
-            return  ListView.builder(
-              itemCount: 5, //getting a list that loops for 5 indexes 0-4
-              itemBuilder: (context, pos) {
-                return FutureBuilder(
-                  future: parsed,
-                  builder: (BuildContext context, snapshot) {
-                    log(snapshot.data.toString());
-                    switch(snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return Text("Loading...");
-                        break;
-                      default:
-                        {
-                          _selectedLectures = snapshot.data;
-                          return Column(
-                            children: [
-                              Text(
-                                getday(pos), style: TextStyle(fontSize: 20),),
-                              //writing days mon-friday, today when weekday
-                              ListView(
-                                  children: _selectedLectures.map((e) {
-                                    if(snapshot.hasData)
-                                      return Text("No classes today, YIPPIEKAYEEY!");
-                                    else{
-                                    return Card(
-                                      child: ListTile(
-                                        leading: Icon(Icons.work_outline),
-                                        title: Text("hej"),
-                                      ),
-                                    );
-                                  }}).toList()
-                                ),
-                              Container(height: 50,),
-
-                              // getting space between loops/next day
-                            ],
-                          );
-                        }
-                    }
-                  }
+              if (!snapshot.hasData) { //if there is no data return a message and a button to go to add course.
+                return Column(
+                    children: [
+                      Text(
+                        "There is no schedule for you.. Either do nothing or add one",
+                        style: TextStyle(fontSize: 20),),
+                      ElevatedButton(onPressed: () {
+                        Navigator.pushNamed(context, '/scheduleSettings');
+                      },
+                        child: Text("Add Course"),),
+                    ]
                 );
-              },                                               
-            );
+              }
+              else { //if there is data == schedule, you have lectures, this will print for next upcoming 5 school days.
+                 return  ListView.builder( //big list builder for all the days!
+                   itemCount: 5, //getting a list that loops for 5 indexes 0-4 == days
+                     itemBuilder: (context, pos) {
+                     return Column(children: [
+                       Text(getday(pos), style: TextStyle(fontSize: 20),), //writing days mon-friday, today when weekday day for each loop pos
+
+                       //write all the lectures. want to compare with DateTime.now().day to Timestamp to print right lectures for right day maybe do this in get timestamp all togheter..
+                       //when I have found right day I want to print the information for that Lecture
+
+                       Container(height: 50,), // getting space between loops/next day
+                     ],);
+                   }
+                   );
+              }
           }
-        }}
+        }
     );
   }
 
@@ -132,10 +97,13 @@ class _fiveTopDaysState extends State<fiveTopDays>{
 
 String getday(int loopPos) {
   var daynr = DateTime.now().weekday +loopPos;
-  if (daynr >=6)
-    daynr=1 + loopPos;
   if (daynr == DateTime.now().weekday)
     return "Today";
+  if (daynr >5 )  { //kanske fungerar får kolla imorgon
+    for(int i = daynr-5; i<=daynr-5;  i++){
+      daynr= daynr-loopPos-i;
+    }
+  }
 
   switch(daynr){
     case 1:
