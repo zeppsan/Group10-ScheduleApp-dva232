@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:schedule_dva232/map/data_domain/models/coordinates.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
 import 'package:meta/meta.dart';
 import 'package:schedule_dva232/map/core/error/exceptions.dart';
 import 'package:schedule_dva232/map/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
-import 'package:latlong/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //Domain Layer
@@ -38,14 +38,14 @@ class RoomAssetsDataSourceImpl implements RoomAssetsDataSource {
         if (room['name'] == name) {
           //if room is found
           print('the room is found');
-          print (room['position']['lat']);
-          print(room['position']['lng']);
+          print (room['position']['x']);
+          print(room['position']['y']);
           return Future.value(RoomModel(
               building: Building (floors: building['floors'], name:building['name'], campus: building['campus']),
               name: room['name'],
               floor: room['floor'],
-              position: LatLng(
-                  room['position']['lat'], room['position']['lng'])));
+              position: Coordinates(
+                  x: room['position']['x'], y: room['position']['y'])));
         }
       }
     }

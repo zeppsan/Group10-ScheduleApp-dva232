@@ -28,7 +28,6 @@ dependencies:
   table_calendar: ^2.3.1
   stacked_themes : ^0.2.2
   validators: ^2.0.0
-  flutter_map: ^0.10.1+1
   dartz: ^0.8.6
   flutter_bloc: ^6.1.1
   get_it: ^4.0.4

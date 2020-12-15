@@ -7,7 +7,6 @@ import 'package:schedule_dva232/map/core/error/exceptions.dart';
 import 'package:schedule_dva232/map/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
-import 'package:latlong/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //Domain Layer
