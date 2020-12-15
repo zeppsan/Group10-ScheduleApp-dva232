@@ -4,7 +4,7 @@ import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
 import 'package:schedule_dva232/map/presentation/widgets/basic_map_widget.dart';
-import 'package:schedule_dva232/map/presentation/widgets/plan_display.dart';
+import 'package:schedule_dva232/map/presentation/widgets/browsing_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
 
 class IntroMapPage extends StatelessWidget {
@@ -62,13 +62,21 @@ class IntroMapPage extends StatelessWidget {
             onChanged: (value) {
               inputStr = value;
             },
+            onFieldSubmitted: (value){
+              inputStr = value;
+              Navigator.of(context).pushNamed('/searching', arguments: inputStr);
+            },
+
             decoration: InputDecoration(
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
               hintText: "Search room",
 
-              suffixIcon: Icon(
-                Icons.search_rounded,
-                size: 34.0,
+              suffixIcon: IconButton(
+                onPressed: (){
+                  Navigator.of(context).pushNamed('/searching', arguments: inputStr);
+                },
+                icon: Icon(Icons.search_rounded),
+                //size: 34.0,
               ),
             ),
           ),

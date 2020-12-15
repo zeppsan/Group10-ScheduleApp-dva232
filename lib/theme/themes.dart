@@ -22,7 +22,7 @@ class AppTheme{
     ),),*/
 
     appBarTheme: AppBarTheme(
-      color: const Color(0xffeacea5),
+      color: const Color(0xffDED9F0),
       iconTheme: IconThemeData(
         color: const Color(0xffdfb15b),
       ),
@@ -48,7 +48,7 @@ class AppTheme{
       ),
 
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: const Color(0xffeacea5),
+      backgroundColor: const Color(0xffDED9F0),
       selectedIconTheme: IconThemeData(color: Colors.white),
       selectedItemColor:  Colors.white,
       unselectedIconTheme: IconThemeData(color: const Color(0xff2c1d33)),

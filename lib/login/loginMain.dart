@@ -18,14 +18,14 @@ class _LoginMainState extends State<LoginMain> {
   bool _darkTheme;
 
   //DarkTheme Colors
-  var _logoDark = Color(0xffeacea5);
+  var _logoDark = Color(0xffeeb462);
   var _gradientStartDark = Color(0xff2c1d33);
-  var _gradientEndDark = Color(0x00000000);
+  var _gradientEndDark = Colors.black;
 
   //Light Theme Colors
   var _logoLight = Color(0xff2c1d33);
-  var _gradientStartLight = Color(0xFFFFE082);
-  var _gradientEndLight = Color(0xFFFFECB3);
+  var _gradientStartLight = Color(0xFFC4BFDB);
+  var _gradientEndLight = Color(0xFFFFFFFF);
 
   @override
   void initState() {

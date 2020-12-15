@@ -5,7 +5,7 @@ import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
 import 'package:schedule_dva232/map/presentation/browsing_ploc/browsing_logic.dart';
-import 'package:schedule_dva232/map/presentation/widgets/plan_display.dart';
+import 'package:schedule_dva232/map/presentation/widgets/browsing_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
 
 //TODO: Should probably be Stateful
@@ -69,7 +69,7 @@ class BrowsingPage extends StatelessWidget {
                       } else if (state is PlanLoaded) {
                         return WillPopScope(
                           onWillPop: () async { print('something');  dispatchGetBuilding(context, state.building); return false;},
-                          child: PlanDisplay( state.building, state.currentFloor, null));
+                          child: PlanDisplay( state.building));
                       } else {
                         return MessageDisplay(message: 'Unexpected error');
                       }
@@ -85,6 +85,7 @@ class BrowsingPage extends StatelessWidget {
   }
   void dispatchGetFloorPlan(BuildContext context, Building building, int floorToShow)
   {
+    print('before event fires: ' + building.name);
     BlocProvider.of<BrowsingLogic>(context)
         .add(GetPlanEvent(1, building));
   }
@@ -122,16 +123,25 @@ class _TopControlsWidgetForBrowsingState extends State<TopControlsWidgetForBrows
               onChanged: (value) {
                 roomToFind = value;
               },
+              onFieldSubmitted: (value){
+                roomToFind = value;
+                Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
+              },
               decoration: InputDecoration(
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
                 hintText: "Search room",
 
-                suffixIcon: Icon(
-                  Icons.search_rounded,
-                  size: 34.0,
+               suffixIcon: IconButton(
+                 onPressed: (){
+                   Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
+                 },
+
+                 icon: Icon(Icons.search_rounded),
+                 //size: 34.0,
+               ),
                 ),
               ),
-            ),
+
             SizedBox(height: 10),
             Row(
               children: <Widget>[
