@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class NavigationBarLoggedIn extends StatelessWidget {
   static var _selectedItem = 0;
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(

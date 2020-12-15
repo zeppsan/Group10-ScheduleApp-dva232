@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stacked_themes/stacked_themes.dart';
 import 'registerForm.dart';
 import 'loginForm.dart';
 
@@ -19,7 +18,7 @@ class _LoginMainState extends State<LoginMain> {
   bool _darkTheme;
 
   //DarkTheme Colors
-  var _logoDark = Color(0xFFFFC107);
+  var _logoDark = Color(0xffeacea5);
   var _gradientStartDark = Color(0xff2c1d33);
   var _gradientEndDark = Color(0x00000000);
 

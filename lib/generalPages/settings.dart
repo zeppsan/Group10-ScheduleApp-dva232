@@ -5,6 +5,7 @@ import 'package:stacked_themes/stacked_themes.dart';
 import '../appComponents/bottomNavigationLoggedIn.dart';
 
 class Settings extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +52,7 @@ class Settings extends StatelessWidget {
           ElevatedButton(
             child: Text("Return to main, without signing out"),
             onPressed: () {
+
               Navigator.pushReplacementNamed(context, '/');
             },
           )
