@@ -2,6 +2,8 @@
 This will work as an CSS file, if you want to change color of buttons
  */
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class AppTheme{
   AppTheme._();
@@ -30,8 +32,15 @@ class AppTheme{
       ),
     ),
 
+    /* Calendar Styling */
+      
+
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33)),
+      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+      ),
     ),
 
       primaryIconTheme: IconThemeData(
@@ -61,7 +70,11 @@ class AppTheme{
     )
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-     style: ElevatedButton.styleFrom(primary: const Color(0xffeeb462))
+     style: ElevatedButton.styleFrom(primary: const Color(0xffeeb462),
+     shape: RoundedRectangleBorder(
+       borderRadius: BorderRadius.circular(30.0),
+     ),
+    ),
     ),
 
     iconTheme: IconThemeData(
