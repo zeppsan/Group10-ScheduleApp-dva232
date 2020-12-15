@@ -401,7 +401,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                     onPressed: (){
-                      Navigator.pushReplacementNamed(context, '/searching', arguments: "${room}");
+                      Navigator.pushNamed(context, '/searching', arguments: "${room}");
                     },
                   )
                 ),
