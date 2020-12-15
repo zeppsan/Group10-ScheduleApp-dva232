@@ -36,7 +36,7 @@ class AppTheme{
       
 
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),
+      style: ElevatedButton.styleFrom(primary: const Color(0xffdfb15b),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
