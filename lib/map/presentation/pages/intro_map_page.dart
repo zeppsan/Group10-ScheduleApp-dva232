@@ -62,6 +62,11 @@ class IntroMapPage extends StatelessWidget {
             onChanged: (value) {
               inputStr = value;
             },
+            onFieldSubmitted: (value){
+              inputStr = value;
+              Navigator.of(context).pushNamed('/searching', arguments: inputStr);
+            },
+
             decoration: InputDecoration(
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
               hintText: "Search room",

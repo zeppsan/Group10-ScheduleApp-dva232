@@ -123,6 +123,10 @@ class _TopControlsWidgetForBrowsingState extends State<TopControlsWidgetForBrows
               onChanged: (value) {
                 roomToFind = value;
               },
+              onFieldSubmitted: (value){
+                roomToFind = value;
+                Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
+              },
               decoration: InputDecoration(
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
                 hintText: "Search room",
@@ -131,6 +135,7 @@ class _TopControlsWidgetForBrowsingState extends State<TopControlsWidgetForBrows
                  onPressed: (){
                    Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
                  },
+
                  icon: Icon(Icons.search_rounded),
                  //size: 34.0,
                ),

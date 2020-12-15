@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
 import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart';
 import 'package:schedule_dva232/map/presentation/widgets/browsing_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
+import 'package:schedule_dva232/map/locationAnimation.dart';
 
 //TODO: Should probably be Stateful
 class SearchingPage extends StatelessWidget {
@@ -21,6 +23,7 @@ class SearchingPage extends StatelessWidget {
         title: Text('Map'),
       ),
       body: buildBody(context),
+      bottomNavigationBar: NavigationBarLoggedIn(),
     );
   }
 
@@ -61,8 +64,7 @@ class SearchingPage extends StatelessWidget {
                                   child: Text('Show room on floor plan'),
                                   onPressed: () { dispatchGetFloorPlan(context, state.room, state.room.floor); },
                                 ),
-
-                                BasicMapWidget(basicMapToShow: state.room.building.name),
+                                BasicMapWidget(basicMapToShow: state.room.building.name)
                               ],
                             ),
                         );
@@ -70,7 +72,7 @@ class SearchingPage extends StatelessWidget {
                         print('in builder state is PlanLoaded');
                         return WillPopScope(
                             onWillPop: () async { print('something');  dispatchGetRoom(context, state.room.name); return false;},
-                            //child: PlanDisplay( state.room),
+                            child: LocationAnimation(room: state.room),
                         );
                       } else {
                         return MessageDisplay(message: 'Unexpected error');
@@ -124,6 +126,10 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
             onChanged: (value) {
               roomToFind = value;
             },
+            onFieldSubmitted: (value){
+              roomToFind = value;
+              dispatchGetRoom(roomToFind);
+            },
             decoration: InputDecoration(
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
               hintText: "Search room",
@@ -136,8 +142,6 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
               ),
             ),
           ),
-          SizedBox(height: 10),
-
         ],
       );
     }
