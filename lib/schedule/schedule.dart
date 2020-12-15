@@ -394,10 +394,16 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                 ),
                 Flexible(
                   flex: 1,
-                  child: Text(
-                    'Location: ${room}',
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  ),
+                  child: FlatButton(
+                    padding: EdgeInsets.all(0),
+                    child: Text(
+                      'Location: ${room}',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                    onPressed: (){
+                      Navigator.pushReplacementNamed(context, '/searching', arguments: "${room}");
+                    },
+                  )
                 ),
               ],
             )
