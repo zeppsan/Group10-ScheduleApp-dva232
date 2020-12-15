@@ -9,26 +9,28 @@ import 'package:schedule_dva232/theme/themes.dart';
 import 'package:schedule_dva232/generalPages/settings.dart';
 import 'package:schedule_dva232/login/loginMain.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'login/loading.dart';
 
 var theme;
 
 Future main() async {
   await ThemeManager.initialise();
   SharedPreferences localStorage = await SharedPreferences.getInstance();
-  if(!localStorage.containsKey('theme')) //if first time open app set to true - default lightmode
+  if (!localStorage.containsKey(
+      'theme')) //if first time open app set to true - default lightmode
     localStorage.setBool('theme', true);
 
-  if(localStorage.getBool('theme')) //if true get lightmode
+  if (localStorage.getBool('theme')) //if true get lightmode
     theme = ThemeMode.light;
   else
     theme = ThemeMode.dark; //if false get darkmode
   runApp(App());
 }
 
-class App extends StatelessWidget{
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return  ThemeBuilder(
+    return ThemeBuilder(
       defaultThemeMode: theme,
       darkTheme: AppTheme.darkTheme,
       lightTheme: AppTheme.lightTheme,
@@ -38,14 +40,15 @@ class App extends StatelessWidget{
         themeMode: themeMode,
         initialRoute: '/',
         routes: {
-            '/': (context) => LoginMain(),
-            '/schedule': (context) => Schedule(),
-            '/scheduleSettings': (context) => ScheduleSettings(),
-            '/addCourse': (context) => AddCourse(),
-            '/thisweek': (context) => Thisweek(),
-            '/map': (context) => MdhMap(),
-            '/settings': (context) => Settings(),
-          },
+          '/': (context) => Loading(),
+          '/login': (context) => LoginMain(),
+          '/schedule': (context) => Schedule(),
+          '/scheduleSettings': (context) => ScheduleSettings(),
+          '/addCourse': (context) => AddCourse(),
+          '/thisweek': (context) => Thisweek(),
+          '/map': (context) => MdhMap(),
+          '/settings': (context) => Settings(),
+        },
       ),
     );
   }

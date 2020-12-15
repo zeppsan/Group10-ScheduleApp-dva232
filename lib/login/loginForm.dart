@@ -104,49 +104,28 @@ class _LoginForm extends State<LoginForm> {
           SizedBox(
             height: 20.0,
           ),
-          Material(
-            elevation: 4.0,
-            borderRadius: BorderRadius.circular(30.0),
-            child: MaterialButton(
-              minWidth: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-              onPressed: () {
-                if (_formKey.currentState.validate()) {
-                  postRequest(email: email, password: password);
-                }
-              },
-              child: Text("Login", textAlign: TextAlign.center,),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(MediaQuery.of(context).size.width, 50.0),
             ),
+            child: Text("Login", textAlign: TextAlign.center),
+            onPressed: () {
+              if (_formKey.currentState.validate()) {
+                postRequest(email: email, password: password);
+              }
+            },
           ),
           SizedBox(
             height: 10.0,
           ),
-          Material(
-            elevation: 4.0,
-            borderRadius: BorderRadius.circular(30.0),
-            child: MaterialButton(
-              minWidth: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, "/forgotPassword");
-              },
-              child: Text("Forgotten password?!", textAlign: TextAlign.center,),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(MediaQuery.of(context).size.width, 50.0),
             ),
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          Material(
-            elevation: 4.0,
-            borderRadius: BorderRadius.circular(30.0),
-            child: MaterialButton(
-              minWidth: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-              onPressed: () {
+            child: Text("Continue without register", textAlign: TextAlign.center,),
+            onPressed: () {
                 Navigator.pushReplacementNamed(context, "/thisweek");
               },
-              child: Text("Continue without register", textAlign: TextAlign.center,),
-            ),
           ),
           SizedBox(
             height: 10.0,
