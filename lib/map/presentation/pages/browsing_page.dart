@@ -34,13 +34,11 @@ class BrowsingPage extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
-              Flexible(
-                flex: 2,
-                child: TopControlsWidgetForBrowsing(),
-              ),
-              Flexible(
-                flex: 7,
-                child: //TODO: change to appropriate widget
+
+                TopControlsWidgetForBrowsing(),
+
+
+                 //TODO: change to appropriate widget
                 BlocBuilder<BrowsingLogic, BrowsingState>(
                     builder: (context,state) {
                       if (state is EmptyState) {
@@ -52,7 +50,9 @@ class BrowsingPage extends StatelessWidget {
                       } else if (state is ErrorState) {
                         return MessageDisplay(message: state.message);
                       } else if (state is BuildingLoadedState) {
-                        return Container(
+                        return WillPopScope(
+                          onWillPop: () async { dispatchGetOriginal(context); return false;},
+                          child: Container(
                             child: Stack (
                                 children: <Widget>[
                                   BasicMapWidget(basicMapToShow: state.building.name),
@@ -66,6 +66,7 @@ class BrowsingPage extends StatelessWidget {
                                   ),
                                   ],
                                 ),
+                          ),
                         );
                       } else if (state is PlanLoaded) {
                         return WillPopScope(
@@ -76,7 +77,7 @@ class BrowsingPage extends StatelessWidget {
                       }
                     }
                 ),
-              ),
+
             ]
             //TODO:Common bottomWidget?
           ),
@@ -92,9 +93,13 @@ class BrowsingPage extends StatelessWidget {
   }
   void dispatchGetBuilding(BuildContext context, Building building)
   {
-    print (building.name);
     BlocProvider.of<BrowsingLogic>(context)
         .add(GetBuildingEvent(building.name));
+  }
+  void dispatchGetOriginal(BuildContext context)
+  {
+    BlocProvider.of<BrowsingLogic>(context)
+        .add(GetOriginalEvent());
   }
 
 }
