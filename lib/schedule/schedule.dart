@@ -87,9 +87,7 @@ class scheduleModule extends StatelessWidget {
 Future<List<dynamic>> getEvents(context) async {
   SharedPreferences localStorage = await SharedPreferences.getInstance();
 
-  /*await Future.delayed(Duration(seconds: 1), ()async{
 
-    });*/
   bool hasInternetAccess = true;
 
   // Checks if the user has internet or not
@@ -266,6 +264,8 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
               return Column(
                 children: [
                   Container(
+                    // Set the width of the container accordingly to the phones orientation
+                    width: (MediaQuery.of(context).size.width > MediaQuery.of(context).size.height)? MediaQuery.of(context).size.height*0.6 : MediaQuery.of(context).size.width,
                     child: TableCalendar(
                       calendarStyle: CalendarStyle(
                         // Left color is light theme, right is darktheme
@@ -386,7 +386,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                     padding: EdgeInsets.all(0),
                     child: Text(
                       'Room: ${room}',
-                      style: TextStyle(color: Colors.white, fontSize: 18, fontStyle: FontStyle.italic),
+                      style: TextStyle(color: Colors.white, fontSize: 18, decoration: TextDecoration.underline),
                     ),
                     onPressed: (){
                       Navigator.pushNamed(context, '/searching', arguments: "${room}");
