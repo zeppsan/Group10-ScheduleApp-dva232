@@ -44,8 +44,9 @@ class BrowsingPage extends StatelessWidget {
                 BlocBuilder<BrowsingLogic, BrowsingState>(
                     builder: (context,state) {
                       if (state is EmptyState) {
-                        BlocProvider.of<BrowsingLogic>(context).add(GetBuildingEvent(buildingToFind));
-                        return Container();
+                        return BasicMapWidget(basicMapToShow: 'basic');
+                        //BlocProvider.of<BrowsingLogic>(context).add(GetBuildingEvent(buildingToFind));
+                        //return Container();
                       } else if (state is LoadingState) {
                         return LoadingWidget();
                       } else if (state is ErrorState) {
