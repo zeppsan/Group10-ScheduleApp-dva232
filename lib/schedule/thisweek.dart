@@ -60,7 +60,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                         "There is no schedule for you.. Either do nothing or add one",
                         style: TextStyle(fontSize: 20),),
                       ElevatedButton(onPressed: () {
-                        Navigator.pushNamed(context, '/scheduleSettings');
+                        Navigator.pushReplacementNamed(context, '/scheduleSettings');
                       },
                         child: Text("Add Course"),),
                     ]
@@ -72,8 +72,8 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                     itemCount: 5,
                     //getting a list that loops for 5 indexes 0-4 == days
                     itemBuilder: (context, pos) {
-                       int hje= getTimeStamp(pos);
-                       log(hje.toString());
+                       //int hje= getTimeStamp(pos);
+                       //log(hje.toString());
                       List<Lecture> _selectedLectures = snapshot.data[DateTime(DateTime.now().year, DateTime.now().month, getTimeStamp(pos))];
 
                       return Column(children: <Widget>[
@@ -83,19 +83,28 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                         Center(
                           child: Builder(
                             builder: (context){
-                              log(_selectedLectures.toString());
                               if(_selectedLectures != null){
 
                                 return Column(
                                   children: _selectedLectures.map((e) {
                                     return Card(
                                       child: ListTile(
-                                        title: Text(e.course_code.toUpperCase()),
-                                        subtitle: Text(e.moment),
-                                        trailing: Text(e.location),
+                                        leading: Text(e.getTime(e.startTime)+"\n    -\n"+e.getTime(e.endTime),
+                                            style: TextStyle(fontSize: 15, color: Colors.white)
+                                        ),
+                                        title: Text(e.course_code.toUpperCase(), style: TextStyle(color: Colors.white)),
+                                        subtitle: Text(e.moment, style: TextStyle(fontSize: 15, color: Colors.white), ),
+                                        trailing: FlatButton(
+                                          child: Text(e.location.toUpperCase(),
+                                              style: TextStyle(fontSize: 15, color: Colors.white,decoration: TextDecoration.underline, decorationThickness: 1.5, )
+                                          ),
+                                          onPressed: (){
+                                            Navigator.pushNamed((context), '/searching', arguments: e.location.toLowerCase());
+                                            },
+                                        ),
                                         tileColor: e.color,
                                       ),
-                                    );
+                                   );
                                   }).toList(),
                                 );
                               }
@@ -168,11 +177,8 @@ String getday(int loopPos) {
 int getTimeStamp(int loopPos){
   var actualDay = DateTime.now().day + loopPos;
 
-  if (DateTime(DateTime.now().year, DateTime.now().month,actualDay).weekday >5 )  { //kanske fungerar får kolla imorgon
-    for(int i = DateTime(DateTime.now().year, DateTime.now().month,actualDay).weekday-5; i<=DateTime(DateTime.now().year, DateTime.now().month,actualDay).weekday-5;  i++){
-      actualDay = actualDay+i;
-      log(actualDay.toString());
-    }
+  if (DateTime(DateTime.now().year, DateTime.now().month,actualDay).weekday>5 )  { //kanske fungerar får kolla imorgon om det är helg öka dagens datum med 2 kommer fucka för mer än mån-tis
+      actualDay = actualDay+2;
   }
 
 /*  log(loopPos.toString());
