@@ -44,6 +44,12 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
    });
  }
 
+ void ShowPath(){
+   setState(() {
+     showPath=true;
+     print (showPath);
+   });
+ }
   @override
   Widget build(BuildContext context) {
 
@@ -51,8 +57,8 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ElevatedButton(
-            child: Text('Show room on the floor plan'),
+          ElevatedButton( onPressed: () {ShowPath();},
+            child: Text('Show path'),
           ),
           LocationAnimation(room: widget.room, showPosition: _showPosition, showPath: showPath, currentFloor: _currentFloor ),
           Row(

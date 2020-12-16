@@ -4,9 +4,10 @@ import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
-import 'package:schedule_dva232/schedule/CourseParser.dart';
+//import 'package:schedule_dva232/schedule/CourseParser.dart';
+import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'CourseParser.dart';
+//import 'CourseParser.dart';
 
 class Thisweek extends StatelessWidget {
   @override

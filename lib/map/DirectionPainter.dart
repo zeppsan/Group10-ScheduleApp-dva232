@@ -3,9 +3,8 @@ import 'package:schedule_dva232/map/data_domain/models/coordinates.dart';
 
 class DirectionPainter extends CustomPainter {
 
-  DirectionPainter({@required this.searchedRoom, @required this.direction});
+  DirectionPainter({ @required this.direction});
 
-  final String searchedRoom;
   List<Coordinates> direction = List<Coordinates>();
 
   @override

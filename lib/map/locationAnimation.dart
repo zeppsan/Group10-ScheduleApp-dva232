@@ -80,7 +80,7 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
                             ),
                           ),
                         if(widget.showPath)
-                          CustomPaint( painter: DirectionPainter(), ),
+                          CustomPaint( painter: DirectionPainter(direction: widget.room.path), ),
 
                       ]
                   ),
