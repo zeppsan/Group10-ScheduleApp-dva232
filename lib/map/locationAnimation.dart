@@ -110,22 +110,22 @@ String getFloorImage(String building){
   switch (building) {
 
     case 'U1':
-      return 'assets/U1.jpg';
+      return 'assets/U1.png';
 
     case 'U2':
-      return 'assets/U2.jpg';
+      return 'assets/U2.png';
 
     case 'U3':
-      return 'assets/U3.jpg';
+      return 'assets/U3.png';
 
     case 'R1':
-      return 'assets/R1.jpg';
+      return 'assets/R1.png';
 
     case 'R2':
-      return 'assets/R2.jpg';
+      return 'assets/R2.png';
 
     case 'R3':
-      return 'assets/R3.jpg';
+      return 'assets/R3.png';
 
     default:
       return 'Can not find corresponding image';
