@@ -10,12 +10,14 @@ class Room {
   final String name;
   final int floor;
   final Coordinates position;
+  final List<Coordinates> path;
 
   Room({
     @required this.building,
     @required this.name,
     @required this.floor,
     @required this.position,
+    @required this.path,
   });
 }
   class RoomModel extends Room {
@@ -24,11 +26,13 @@ class Room {
       @required String name,
       @required int floor,
       @required Coordinates position,
-    }) :super(name: name, floor: floor, position: position, building: building );
+      @required List<Coordinates> path,
+    }) :super(name: name, floor: floor, position: position, building: building, path: path );
 
     Map<String, dynamic> toJson() {
       return {
         "name": name,
+        "path": path,
         "floor": floor,
         "position": {
           "x": position.x,
@@ -47,6 +51,7 @@ class Room {
             campus:jsonRoom['building_campus'],
             name:jsonRoom['building_name']),
           name: jsonRoom ['name'],
+          path: jsonRoom ['path'],
           floor: jsonRoom ['floor'],
           position: Coordinates(
              x: jsonRoom['position']['x'], y: jsonRoom['position']['y']));

@@ -4,13 +4,9 @@ import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
-import 'package:schedule_dva232/schedule/CourseParser.dart';
+import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'CourseParser.dart';
-import 'CourseParser.dart';
-import 'CourseParser.dart';
-import 'CourseParser.dart';
-import 'CourseParser.dart';
+import 'subfiles/CourseParser.dart';
 
 class Thisweek extends StatelessWidget {
   @override
@@ -26,8 +22,8 @@ class Thisweek extends StatelessWidget {
     );
   }
 }
-//Make card list for each day cards are lectures or lessons in the schedule for that day.
-//Fill in data for each day
+
+bool lightTheme = true;
 
 class fiveTopDays extends StatefulWidget{
   @override
@@ -50,80 +46,88 @@ class _fiveTopDaysState extends State<fiveTopDays> {
         builder: (BuildContext context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return Text("Loading..");
+              return Text("Loading..", style: TextStyle(fontSize: 20,
+                  color: lightTheme ? Color(0xff2c1d33) : Colors.white));
             default:
-              if (!snapshot
-                  .hasData) { //if there is no data return a message and a button to go to add course.
-                return Column(
-                    children: [
-                      Text(
-                        "There is no schedule for you.. Either do nothing or add one",
-                        style: TextStyle(fontSize: 20),),
-                      ElevatedButton(onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/scheduleSettings');
-                      },
-                        child: Text("Add Course"),),
-                    ]
+              if (!snapshot.hasData) { //if no data == no schedule get button to addCourse
+                return Container(
+                  padding: EdgeInsets.fromLTRB(0, 150, 0, 0),
+                  child: Column(
+                      children: [
+                        Text("There is not an active course schedule for you.\n\n\n\nEither do nothing or add one",
+                          style: TextStyle(fontSize: 20,
+                              color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462)),
+                          textAlign: TextAlign.center,
+                        ),
+                        ElevatedButton(
+                          child: Text("Add Course", style: TextStyle(fontSize: 20),),
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/scheduleSettings');
+                          },
+
+                        ),
+                      ]
+                  ),
                 );
               }
               else { //if there is data == schedule, you have lectures, this will print for next upcoming 5 school days.
-               // log(snapshot.data[DateTime(DateTime.now().year, DateTime.now().month, getTimeStamp(3))].toString());
-                return ListView.builder( //big list builder for all the days!
+                return ListView.builder(
                     itemCount: 5,
-                    //getting a list that loops for 5 indexes 0-4 == days
                     itemBuilder: (context, pos) {
-                       //int hje= getTimeStamp(pos);
-                       //log(hje.toString());
-                      List<Lecture> _selectedLectures = snapshot.data[DateTime(DateTime.now().year, DateTime.now().month, getTimeStamp(pos))];
+                      List<Lecture> _selectedLectures = snapshot.data[DateTime(DateTime.now().year, DateTime.now().month, getDayDate(pos))]; //get lectures for specific date
+                      return Column(
+                        children: <Widget>[
+                          Text(getday(pos), style: TextStyle(fontSize: 20, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462)),),
 
-                      return Column(children: <Widget>[
-                        Text(getday(pos), style: TextStyle(fontSize: 20),), //writing days mon-friday, today when weekday day for each loop pos
-
-
-                        Center(
-                          child: Builder(
-                            builder: (context){
-                              if(_selectedLectures != null){
-
-                                return Column(
-                                  children: _selectedLectures.map((e) {
-                                    return Card(
-                                      child: ListTile(
-                                        leading: Text(e.getTime(e.startTime)+"\n    -\n"+e.getTime(e.endTime),
-                                            style: TextStyle(fontSize: 15, color: Colors.white)
+                          Center(
+                            child: Builder(
+                              builder: (context) {
+                                if (_selectedLectures != null) {
+                                  return Column(
+                                    children: _selectedLectures.map((e) {
+                                      return Card(
+                                        elevation: 10,
+                                        shadowColor: Color(0xff2c1d33),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(15),
                                         ),
-                                        title: Text(e.course_code.toUpperCase(), style: TextStyle(color: Colors.white)),
-                                        subtitle: Text(e.moment, style: TextStyle(fontSize: 15, color: Colors.white), ),
-                                        trailing: FlatButton(
-                                          child: Text(e.location.toUpperCase(),
-                                              style: TextStyle(fontSize: 15, color: Colors.white,decoration: TextDecoration.underline, decorationThickness: 1.5, )
+                                        child: ListTile(
+                                          leading: Text(e.getTime(e.startTime) + "\n    -\n" + e.getTime(e.endTime),
+                                              style: TextStyle(fontSize: 15, color: Colors.white)
                                           ),
-                                          onPressed: (){
-                                            Navigator.pushNamed((context), '/searching', arguments: e.location.toLowerCase());
+                                          title: Text(e.course_code.toUpperCase(),
+                                              style: TextStyle(color: Colors.white)),
+                                          subtitle: Text(e.moment,
+                                            style: TextStyle(fontSize: 15, color: Colors.white),),
+                                          trailing: FlatButton(
+                                            child: Text(e.location.toUpperCase(),
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.white,
+                                                  decoration: TextDecoration.underline,
+                                                  decorationThickness: 1.5,)
+                                            ),
+                                            onPressed: () {
+                                              Navigator.pushNamed((context), '/searching', arguments: e.location.toLowerCase());
                                             },
+                                          ),
+                                          tileColor: e.color,
                                         ),
-                                        tileColor: e.color,
-                                      ),
-                                   );
-                                  }).toList(),
-                                );
-                              }
-                              else{
-                              return Text("There is nothing here for you, have fun!");
-                              }
-                            },
+                                      );
+                                    }).toList(),
+                                  );
+                                }
+                                else {
+                                  return Text("There is nothing here for you, have fun!",
+                                    style: TextStyle(color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462), fontSize: 17),
+                                  );
+                                }
+                              },
+                            ),
                           ),
-                        ),
-
-
-
-
-
-
-
-                        Container(height: 50,),
-                        // getting space between loops/next day
-                      ],);
+                          Container(height: 30,),
+                        ],
+                      );
                     }
                 );
               }
@@ -133,16 +137,15 @@ class _fiveTopDaysState extends State<fiveTopDays> {
   }
 }
 
-  Future<Map<DateTime, List<Lecture>>> checkSchedule() async{
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    if(localStorage.containsKey('rawSchedule')) {
-      CourseParser parser = CourseParser(rawData: jsonDecode(localStorage.getString('rawSchedule')));
-      await parser.parseRawData();
-      return parser.events;
-    }
-
+Future<Map<DateTime, List<Lecture>>> checkSchedule() async{
+  SharedPreferences localStorage = await SharedPreferences.getInstance();
+  lightTheme = await localStorage.getBool('theme');
+  if(localStorage.containsKey('rawSchedule')) {
+    CourseParser parser = CourseParser(rawData: jsonDecode(localStorage.getString('rawSchedule')));
+    await parser.parseRawData();
+    return parser.events;
   }
-
+}
 
 String getday(int loopPos) {
   var daynr = DateTime.now().weekday +loopPos;
@@ -154,7 +157,6 @@ String getday(int loopPos) {
           daynr=i;
     }
   }
-
 
   switch(daynr){
     case 1:
@@ -172,85 +174,13 @@ String getday(int loopPos) {
     case 5:
       return  "Friday";
       break;
-  };
+  }
 }
-int getTimeStamp(int loopPos){
-  var actualDay = DateTime.now().day + loopPos;
 
+int getDayDate(int loopPos){
+  var actualDay = DateTime.now().day + loopPos;
   if (DateTime(DateTime.now().year, DateTime.now().month,actualDay).weekday>5 )  { //kanske fungerar får kolla imorgon om det är helg öka dagens datum med 2 kommer fucka för mer än mån-tis
       actualDay = actualDay+2;
   }
-
-/*  log(loopPos.toString());
-  log(DateTime.now().year.toString());
-  log(DateTime.fromMicrosecondsSinceEpoch(1607948100000 * 1000).day.toString());
-  log(DateTime(DateTime.now().year, DateTime.now().month, actualDay).millisecondsSinceEpoch.toString());*/
-
-  //return  DateTime(DateTime.now().year, DateTime.now().month, actualDay).millisecondsSinceEpoch;
   return actualDay;
 }
-
-/*var daynr = DateTime.now().weekday;
-                  var day;
-                  var calcday = daynr + pos;
-
-                  if(daynr >= 6)
-                    calcday = 1;
-                  else if (daynr == calcday)
-                    day = "Today";
-                  else {
-                    log(daynr.toString());
-                    log(calcday.toString());
-                    switch (calcday) {
-                    case 1:
-                      day = "Monday";
-                      break;
-                    case 2:
-                      day = "Tuesday";
-                      break;
-                    case 3:
-                      day = "Wednesday";
-                      break;
-                    case 4:
-                      day = "Thursday";
-                      break;
-                    case 5:
-                      day = "Friday";
-                      break;
-                    case 6:
-                      day = "Monday";
-                      break;
-                    case 7:
-                      day = "Tuesday";
-                      break;
-                    case 8:
-                      day = "Wednesday";
-                      break;
-                    case 9:
-                      day = "Thursday";
-                      break;
-                    };
-                  }
-                  return Column(children: [
-                    Text(day, style: TextStyle(
-                      fontSize: 20,
-                    ),),
-                    SizedBox(
-                      height: 150,
-                      width: 300,
-                      child: ListView.builder(
-                          itemCount: 10,
-                          itemBuilder: (context, pos) {
-                            return Card(
-                              child: ListTile(
-                                title: Text("hej $pos"),
-                                subtitle: Text("undertext $pos"),
-                                leading: Icon(Icons.work),
-                              ),
-                            );
-                          }
-                      ),
-                    ),
-                    Container(height: 50,),
-                  ],
-                  );*/

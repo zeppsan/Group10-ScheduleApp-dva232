@@ -5,12 +5,13 @@ import 'dart:ui';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:schedule_dva232/schedule/CourseParser.dart';
+import 'subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'CourseParser.dart';
+import 'subfiles/CourseParser.dart';
 import 'package:http/http.dart' as http;
+import 'subfiles/scheduleUpdater.dart';
 
 // Schedule Page
 class Schedule extends StatelessWidget {
@@ -45,7 +46,7 @@ class Schedule extends StatelessWidget {
 class scheduleModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Future calendarFuture = getEvents(context);
+    Future calendarFuture = ScheduleUpdater.getEvents(context);
     return FutureBuilder(
         future: calendarFuture,
         builder: (context, snapshot) {
@@ -83,129 +84,11 @@ class scheduleModule extends StatelessWidget {
   }
 }
 
-
-Future<List<dynamic>> getEvents(context) async {
-  SharedPreferences localStorage = await SharedPreferences.getInstance();
-
-
-  bool hasInternetAccess = true;
-
-  // Checks if the user has internet or not
-  try {
-    final internetCheck = await InternetAddress.lookup('google.com');
-    if (!internetCheck.isNotEmpty &&
-        !internetCheck[0].rawAddress.isNotEmpty) {
-      // Phone does not have internet access
-      hasInternetAccess = false;
-    }
-  } on SocketException catch (_) {
-    // Phone does not have internet access
-    hasInternetAccess = false;
-  }
-
-  // Check if the user is logged in to an account that has online-sync
-  if(hasInternetAccess){
-    if (localStorage.containsKey('token')) {
-      String token = await localStorage.getString('token');
-      String url = "https://qvarnstrom.tech/api/schedule/update-check";
-      var response = await http.get(
-        url,
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ' + token,
-        },
-      );
-      if (response.statusCode == 401) {
-        // user is holding an invalid authentication token. Sen user to login screen.
-        localStorage.remove('token');
-        Navigator.pushReplacementNamed(context, '/');
-      }
-
-
-      // NO UPDATE AVALIBLE
-      if(response.statusCode == 204){
-        // CHECK SO THAT THE DATA IS DOWNLOADED
-        if(!localStorage.containsKey('rawSchedule')){
-          String token = await localStorage.getString('token');
-          String url = "https://qvarnstrom.tech/api/schedule/update";
-          var response = await http.get(
-            url,
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'Authorization': 'Bearer ' + token,
-            },
-          );
-          if (response.statusCode == 401) {
-            // user is holding an invalid authentication token. Sen user to login screen.
-            localStorage.remove('token');
-            Navigator.pushReplacementNamed(context, '/');
-          }
-          // Save the new schedule to the local storage
-          if (response.body != null)
-            await localStorage.setString('rawSchedule', response.body);
-          return jsonDecode(response.body);
-        } else {
-          return jsonDecode(localStorage.getString('rawSchedule'));
-        }
-      } else {
-        // UPDATE IS AVALIBLE, DOWNLOAD IT AND APPLY!
-        String token = await localStorage.getString('token');
-        String url = "https://qvarnstrom.tech/api/schedule/update";
-        var response = await http.get(
-          url,
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + token,
-          },
-        );
-        await localStorage.setString('rawSchedule', response.body);
-        return jsonDecode(response.body);
-      }
-    }
-
-    // IF THE USER IS NOT LOGGED IN, FETCH DATA FROM DATABASE
-    if (localStorage.containsKey('course_list')) {
-
-      String courses = localStorage.getString('course_list');
-      var url = 'https://qvarnstrom.tech/api/schedule/updateNonUser';
-
-      Map data = {'course_list': localStorage.getString('course_list')};
-
-      //encode Map to JSON
-      var body = json.encode(data);
-
-      var response = await http.post(url,
-          headers: {"Content-Type": "application/json"}, body: body);
-      if (response.statusCode == 200) {
-        await localStorage.setString('rawSchedule', response.body);
-        return jsonDecode(response.body);
-      } else {
-      }
-    }
-  } else {
-    // IF THE USER HAS NO INTERNET ACCESS
-    // THE ONLY THING WE CAN DO IS TO RETURN THE ALREADY EXISTING SCHEDULE
-    if(localStorage.containsKey('rawSchedule')){
-      return jsonDecode(localStorage.getString('rawSchedule'));
-    } else {
-      return null;
-    }
-  }
-
-  // if there is no course_subscription either, return null;
-  return null;
-}
-
 class ScheduleCalendar extends StatefulWidget {
   @override
   List<dynamic> courses;
   bool empty;
-
   ScheduleCalendar({this.courses, this.empty});
-
   _ScheduleCalendarState createState() =>
       _ScheduleCalendarState(courses: courses, empty: empty);
 }

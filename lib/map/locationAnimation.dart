@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
-import 'package:schedule_dva232/map/DirectionPainter.dart';
+import 'package:schedule_dva232/map/data_domain/models/coordinates.dart';
 
+import 'DirectionPainter.dart';
 import 'data_domain/models/room.dart';
 
 
@@ -103,6 +104,7 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
                   );
   }
 }
+
 String getFloorImage(String building){
   print('gets floor image');
   switch (building) {
