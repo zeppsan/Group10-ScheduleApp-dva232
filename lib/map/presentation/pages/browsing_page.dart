@@ -41,8 +41,6 @@ class BrowsingPage extends StatelessWidget {
                     builder: (context,state) {
                       if (state is EmptyState) {
                         return BasicMapWidget(basicMapToShow: 'basic');
-                        //BlocProvider.of<BrowsingLogic>(context).add(GetBuildingEvent(buildingToFind));
-                        //return Container();
                       } else if (state is LoadingState) {
                         return LoadingWidget();
                       } else if (state is ErrorState) {
@@ -68,8 +66,8 @@ class BrowsingPage extends StatelessWidget {
                         );
                       } else if (state is PlanLoaded) {
                         return WillPopScope(
-                          onWillPop: () async { print('something');  dispatchGetBuilding(context, state.building); return false;},
-                          child: PlanDisplay( state.building));
+                          onWillPop: () async { dispatchGetBuilding(context, state.building); return false;},
+                          child: BrowsingPlanDisplay( state.building));
                       } else {
                         return MessageDisplay(message: 'Unexpected error');
                       }

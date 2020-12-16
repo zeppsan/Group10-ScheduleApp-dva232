@@ -9,8 +9,10 @@ import 'data_domain/models/room.dart';
 
 class LocationAnimation extends StatefulWidget {
   final Room room;
+  bool showPosition;
+  bool showPath;
 
-  LocationAnimation ({this.room });
+  LocationAnimation ({this.room, this.showPosition, this.showPath});
 
   @override
   _LocationAnimation createState() => _LocationAnimation();
@@ -59,7 +61,7 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
                 children: [
                   Image.asset(
                     getFloorImage(floorImage)),
-
+                  if(widget.showPosition)
                   PositionedTransition(
                     rect: RelativeRectTween(
                       begin: RelativeRect.fromLTRB(x, y, 0, 0),
@@ -70,7 +72,7 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
                       'assets/test.png',
                     ),
                   ),
-
+                  if(widget.showPath)
                   CustomPaint(
                     painter: DirectionPainter(),
                   ),

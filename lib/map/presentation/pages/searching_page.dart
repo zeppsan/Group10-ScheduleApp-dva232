@@ -7,6 +7,7 @@ import 'package:schedule_dva232/map/data_domain/models/room.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
 import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart';
 import 'package:schedule_dva232/map/presentation/widgets/browsing_plan_display.dart';
+import 'package:schedule_dva232/map/presentation/widgets/searching_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
 import 'package:schedule_dva232/map/locationAnimation.dart';
 
@@ -58,13 +59,18 @@ class SearchingPage extends StatelessWidget {
                       } else if (state is RoomLoadedState) {
                         print('in builder state is Loaded');
                         return Container(
-                            child: new Column (
+                          child: Stack  (
                               children: <Widget> [
-                                ElevatedButton(
-                                  child: Text('Show room on floor plan'),
-                                  onPressed: () { dispatchGetFloorPlan(context, state.room, state.room.floor); },
+                                BasicMapWidget(basicMapToShow: state.room.building.name),
+                                Positioned(
+                                  top: 10,
+                                  left: 20,
+                                  child: ElevatedButton(
+                                    child: Text('Show room on the floor plan'),
+                                    onPressed: () { dispatchGetFloorPlan(context, state.room, state.room.floor); },
+                                  ),
                                 ),
-                                BasicMapWidget(basicMapToShow: state.room.building.name)
+
                               ],
                             ),
                         );
@@ -72,7 +78,7 @@ class SearchingPage extends StatelessWidget {
                         print('in builder state is PlanLoaded');
                         return WillPopScope(
                             onWillPop: () async { print('something');  dispatchGetRoom(context, state.room.name); return false;},
-                            child: LocationAnimation(room: state.room),
+                            child: SearchingPlanDisplay(state.room.floor, state.room),
                         );
                       } else {
                         return MessageDisplay(message: 'Unexpected error');
