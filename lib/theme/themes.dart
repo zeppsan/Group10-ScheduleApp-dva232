@@ -28,7 +28,7 @@ class AppTheme{
       ),
       centerTitle: true,
       textTheme: TextTheme(
-          headline6: TextStyle(color: const Color(0xff2c1d33), fontSize: 20)
+          headline6: TextStyle(color: const Color(0xffeeb462), fontSize: 20)
       ),
     ),
 
@@ -36,7 +36,7 @@ class AppTheme{
       
 
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),
+      style: ElevatedButton.styleFrom(primary: const Color(0xffeeb462),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -51,14 +51,14 @@ class AppTheme{
       backgroundColor: const Color(0xffDED9F0),
       selectedIconTheme: IconThemeData(color: Colors.white),
       selectedItemColor:  Colors.white,
-      unselectedIconTheme: IconThemeData(color: const Color(0xff2c1d33)),
-      unselectedItemColor: const Color(0xff2c1d33),
+      unselectedIconTheme: IconThemeData(color: const Color(0xafeeb619)),
+      unselectedItemColor: const Color(0xaffaa619),
     )
   );
 
   static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
-    backgroundColor: const Color(0xff302933), //DETTA BEHÖVS FÖRMODLIGEN INTE OM INTE NÅGON VILL SITTA OCH FINSLIPA DEN KODEN
+    backgroundColor: const Color(0xff302933),
     appBarTheme: AppBarTheme(
       color: const Color(0xff2c1d33),
       iconTheme: IconThemeData(

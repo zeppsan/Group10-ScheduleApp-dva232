@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/map/presentation/pages/browsing_page.dart';
-import 'package:schedule_dva232/map/presentation/pages/intro_map_page.dart';
 import 'package:schedule_dva232/map/presentation/pages/searching_page.dart';
 import 'package:schedule_dva232/schedule/addCourse.dart';
 import 'package:schedule_dva232/schedule/schedule.dart';
@@ -43,18 +42,8 @@ class Roots {
       case '/thisweek':
         return MaterialPageRoute(builder: (_)=> Thisweek());
         break;
-      case '/map':
-        return MaterialPageRoute(builder: (_)=> IntroMapPage());
-        break;
       case '/browsing':
-        if(args is String) {
-          return MaterialPageRoute(
-            builder:(_)=> BrowsingPage(
-                buildingToFind: args,
-            ),
-          );
-        }
-        else return null;
+          return MaterialPageRoute(builder:(_)=> BrowsingPage());
         break;
       case '/searching':
           return MaterialPageRoute(
@@ -68,7 +57,7 @@ class Roots {
         return MaterialPageRoute(builder: (_)=> Settings());
         break;
       default:
-        return MaterialPageRoute (builder: (_)=> IntroMapPage());
+        return MaterialPageRoute (builder: (_)=> BrowsingPage());
     }
   }
 }
