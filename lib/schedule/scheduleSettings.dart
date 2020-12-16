@@ -5,9 +5,9 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:schedule_dva232/schedule/subfiles/colorPicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
-import 'file:///C:/Users/eric_/Desktop/mobileproject/Group10-ScheduleApp-dva232/lib/schedule/subfiles/colorPicker.dart';
 
 class ScheduleSettings extends StatefulWidget {
   @override

@@ -52,7 +52,7 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
         mainAxisSize: MainAxisSize.min,
         children: [
           ElevatedButton(
-            child: Text('Show room on the floor plan'),
+            child: Text('Show way to room from main'),
           ),
           LocationAnimation(room: widget.room, showPosition: _showPosition, showPath: showPath, currentFloor: _currentFloor ),
           Row(
