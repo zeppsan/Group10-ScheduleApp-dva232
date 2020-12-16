@@ -8,7 +8,7 @@ class InputConverter {
       if (str == "")
         throw InvalidInputException();
       else
-        return Right(str.replaceAll(new RegExp(r"\s+"), "").toLowerCase());
+        return Right(str.replaceAll(new RegExp(r"\s+|-"), "").toLowerCase());
     }
     on InvalidInputException{
       return Left(InvalidInputFailure());
