@@ -33,5 +33,10 @@ class BrowsingLogic extends Bloc<BrowsingEvent, BrowsingState> {
       yield LoadingState();
       yield PlanLoaded(building: event.building, currentFloor: event.currentFloor);
     }
+    else if (event is GetOriginalEvent)
+      {
+        yield LoadingState();
+        yield EmptyState();
+      }
   }
 }
