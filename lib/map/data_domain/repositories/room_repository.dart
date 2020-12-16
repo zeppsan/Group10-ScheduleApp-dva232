@@ -41,13 +41,9 @@ class RoomAssetsDataSourceImpl implements RoomAssetsDataSource {
           print('the room is found');
           print (room['position']['x']);
           print(room['position']['y']);
-          print(room['path']);
           for(Map<String, dynamic> coordinate in room['path'])
             {
-              print(coordinate['x']);
-              print(coordinate['y']);
               direction.add(new Coordinates(x: coordinate['x'], y: coordinate['y']));
-
             }
 
           return Future.value(RoomModel(
