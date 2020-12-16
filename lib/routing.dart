@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/map/presentation/pages/browsing_page.dart';
-import 'package:schedule_dva232/map/presentation/pages/intro_map_page.dart';
 import 'package:schedule_dva232/map/presentation/pages/searching_page.dart';
 import 'package:schedule_dva232/schedule/addCourse.dart';
 import 'package:schedule_dva232/schedule/schedule.dart';
@@ -58,7 +57,7 @@ class Roots {
         return MaterialPageRoute(builder: (_)=> Settings());
         break;
       default:
-        return MaterialPageRoute (builder: (_)=> IntroMapPage());
+        return MaterialPageRoute (builder: (_)=> BrowsingPage());
     }
   }
 }

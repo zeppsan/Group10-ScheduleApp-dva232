@@ -34,9 +34,7 @@ class BrowsingPage extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
-
                 TopControlsWidgetForBrowsing(),
-
 
                  //TODO: change to appropriate widget
                 BlocBuilder<BrowsingLogic, BrowsingState>(
