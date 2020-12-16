@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
-import 'package:schedule_dva232/map/DirectionPainter.dart';
+import 'package:schedule_dva232/map/data_domain/models/coordinates.dart';
 
+import 'DirectionPainter.dart';
 import 'data_domain/models/room.dart';
 
 
@@ -18,6 +19,9 @@ class LocationAnimation extends StatefulWidget {
 
 class _LocationAnimation extends State<LocationAnimation> with TickerProviderStateMixin {
   String floorImage;
+  String roomName;
+  List<Coordinates> direction;
+
   double x;
   double y;
   AnimationController controller; // Manage the animation
@@ -26,6 +30,8 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
     void initState() {
       super.initState();
       floorImage = widget.room.building.name + widget.room.floor.toString();
+      roomName = widget.room.name;
+      direction = widget.room.path;
       x = widget.room.position.x;
       y = widget.room.position.y;
       print(x);
@@ -33,6 +39,7 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
       print(floorImage);
       controller = AnimationController(duration: Duration(milliseconds: 2000), vsync: this) // Manage the animation
       ..forward();
+
   }
   
   @override
@@ -72,7 +79,7 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
                   ),
 
                   CustomPaint(
-                    painter: DirectionPainter(),
+                    painter: DirectionPainter(searchedRoom: roomName, direction: direction),
                   ),
                 ]
             ),
@@ -82,6 +89,7 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
     );
   }
 }
+
 String getFloorImage(String building){
   print('gets floor image');
   switch (building) {
