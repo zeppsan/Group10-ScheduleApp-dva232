@@ -82,8 +82,9 @@ class Lecture{
       return "All day";
     String resultString = "";
     DateTime date = DateTime.fromMicrosecondsSinceEpoch(dateTime * 1000);
+    String hour = (date.hour.toString().length<2) ? "0"+date.hour.toString(): date.hour.toString();
     String minute = (date.minute.toString().length < 2)? "0${date.minute.toString()}": "${date.minute.toString()}";
-    resultString = "${date.hour.toString()}:${minute}";
+    resultString = "${hour}:${minute}";
     return resultString;
   }
 
