@@ -54,17 +54,13 @@ class SearchingPage extends StatelessWidget {
                   } else if (state is RoomLoadedState) {
                     print('in builder state is Loaded');
                     return Container(
-                      child: Stack  (
+                      child: Column  (
                           children: <Widget> [
-                            BasicMapWidget(basicMapToShow: state.room.building.name),
-                            Positioned(
-                              top: 10,
-                              left: 20,
-                              child: ElevatedButton(
-                                child: Text('Show room on the floor plan'),
-                                onPressed: () { dispatchGetFloorPlan(context, state.room, state.room.floor); },
-                              ),
+                            ElevatedButton(
+                              child: Text('Show room on the floor plan'),
+                              onPressed: () { dispatchGetFloorPlan(context, state.room, state.room.floor); },
                             ),
+                            BasicMapWidget(basicMapToShow: state.room.building.name),
 
                           ],
                         ),
