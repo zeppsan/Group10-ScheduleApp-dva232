@@ -11,7 +11,7 @@ import 'data_domain/models/room.dart';
 class LocationAnimation extends StatefulWidget {
   final Room room;
   bool showPosition;
-  bool showPath = true;
+  bool showPath;
   int currentFloor;
   String floorImage;
 
@@ -79,8 +79,8 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
                               'assets/test.png',
                             ),
                           ),
-                        //if(widget.showPath)
-                          CustomPaint( painter: DirectionPainter(searchedRoom: widget.room.name, direction: widget.room.path), ),
+                        if(widget.showPath)
+                          CustomPaint( painter: DirectionPainter(direction: widget.room.path), ),
 
                       ]
                   ),
