@@ -67,21 +67,14 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                 );
               }
               else { //if there is data == schedule, you have lectures, this will print for next upcoming 5 school days.
-                log(snapshot.data[DateTime(DateTime
-                    .now()
-                    .year, DateTime
-                    .now()
-                    .month, 16)].toString());
+               // log(snapshot.data[DateTime(DateTime.now().year, DateTime.now().month, getTimeStamp(3))].toString());
                 return ListView.builder( //big list builder for all the days!
                     itemCount: 5,
                     //getting a list that loops for 5 indexes 0-4 == days
                     itemBuilder: (context, pos) {
-                      List<Lecture> _selectedLectures = snapshot.data[DateTime(
-                          DateTime
-                              .now()
-                              .year, DateTime
-                          .now()
-                          .month, getTimeStamp(pos))];
+                       int hje= getTimeStamp(pos);
+                       log(hje.toString());
+                      List<Lecture> _selectedLectures = snapshot.data[DateTime(DateTime.now().year, DateTime.now().month, getTimeStamp(pos))];
 
                       return Column(children: <Widget>[
                         Text(getday(pos), style: TextStyle(fontSize: 20),), //writing days mon-friday, today when weekday day for each loop pos
@@ -98,6 +91,9 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                     return Card(
                                       child: ListTile(
                                         title: Text(e.course_code.toUpperCase()),
+                                        subtitle: Text(e.moment),
+                                        trailing: Text(e.location),
+                                        tileColor: e.color,
                                       ),
                                     );
                                   }).toList(),
@@ -172,13 +168,17 @@ String getday(int loopPos) {
 int getTimeStamp(int loopPos){
   var actualDay = DateTime.now().day + loopPos;
 
-  if(DateTime.now().weekday >= 6 ) //look past weekend
-    actualDay +=1;
+  if (DateTime(DateTime.now().year, DateTime.now().month,actualDay).weekday >5 )  { //kanske fungerar får kolla imorgon
+    for(int i = DateTime(DateTime.now().year, DateTime.now().month,actualDay).weekday-5; i<=DateTime(DateTime.now().year, DateTime.now().month,actualDay).weekday-5;  i++){
+      actualDay = actualDay+i;
+      log(actualDay.toString());
+    }
+  }
 
-  log(loopPos.toString());
+/*  log(loopPos.toString());
   log(DateTime.now().year.toString());
   log(DateTime.fromMicrosecondsSinceEpoch(1607948100000 * 1000).day.toString());
-  log(DateTime(DateTime.now().year, DateTime.now().month, actualDay).millisecondsSinceEpoch.toString());
+  log(DateTime(DateTime.now().year, DateTime.now().month, actualDay).millisecondsSinceEpoch.toString());*/
 
   //return  DateTime(DateTime.now().year, DateTime.now().month, actualDay).millisecondsSinceEpoch;
   return actualDay;
