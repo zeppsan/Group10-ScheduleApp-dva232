@@ -1,10 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/schedule/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'CourseParser.dart';
+import 'CourseParser.dart';
+import 'CourseParser.dart';
+import 'CourseParser.dart';
 import 'CourseParser.dart';
 
 class Thisweek extends StatelessWidget {
@@ -29,13 +34,12 @@ class fiveTopDays extends StatefulWidget{
   State<StatefulWidget> createState() => _fiveTopDaysState();
 }
 
-class _fiveTopDaysState extends State<fiveTopDays>{
+class _fiveTopDaysState extends State<fiveTopDays> {
   @override
   Future _checkSchedule;
-  CourseParser parser;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _checkSchedule = checkSchedule(); //get rawschedule
   }
@@ -45,9 +49,11 @@ class _fiveTopDaysState extends State<fiveTopDays>{
         future: _checkSchedule, //holds rawSchedule
         builder: (BuildContext context, snapshot) {
           switch (snapshot.connectionState) {
-            case ConnectionState.waiting: return Text("Loading..");
+            case ConnectionState.waiting:
+              return Text("Loading..");
             default:
-              if (!snapshot.hasData) { //if there is no data return a message and a button to go to add course.
+              if (!snapshot
+                  .hasData) { //if there is no data return a message and a button to go to add course.
                 return Column(
                     children: [
                       Text(
@@ -61,39 +67,70 @@ class _fiveTopDaysState extends State<fiveTopDays>{
                 );
               }
               else { //if there is data == schedule, you have lectures, this will print for next upcoming 5 school days.
-                 return  ListView.builder( //big list builder for all the days!
-                   itemCount: 5, //getting a list that loops for 5 indexes 0-4 == days
-                     itemBuilder: (context, pos) {
-                     return Column(children: [
-                       Text(getday(pos), style: TextStyle(fontSize: 20),), //writing days mon-friday, today when weekday day for each loop pos
+                log(snapshot.data[DateTime(DateTime
+                    .now()
+                    .year, DateTime
+                    .now()
+                    .month, 16)].toString());
+                return ListView.builder( //big list builder for all the days!
+                    itemCount: 5,
+                    //getting a list that loops for 5 indexes 0-4 == days
+                    itemBuilder: (context, pos) {
+                      List<Lecture> _selectedLectures = snapshot.data[DateTime(
+                          DateTime
+                              .now()
+                              .year, DateTime
+                          .now()
+                          .month, getTimeStamp(pos))];
 
-                       //write all the lectures. want to compare with DateTime.now().day to Timestamp to print right lectures for right day maybe do this in get timestamp all togheter..
-                       //when I have found right day I want to print the information for that Lecture
+                      return Column(children: <Widget>[
+                        Text(getday(pos), style: TextStyle(fontSize: 20),), //writing days mon-friday, today when weekday day for each loop pos
 
-                       Container(height: 50,), // getting space between loops/next day
-                     ],);
-                   }
-                   );
+
+                        /*
+
+                        if(_selectedLectures.isNotEmpty){
+
+                       ListView(
+                       children: _selectedLectures.map((e) {
+                       return Card(
+                       child: ListTile(
+                       title: Text(e.course_code.toUpperCase()),
+                       ),
+                       );
+                       }).toList(),
+                       ),
+                       }
+                       else{
+                         Text("There is nothing here for you, have fun!"),
+                       },
+
+*/
+
+
+
+                        Container(height: 50,),
+                        // getting space between loops/next day
+                      ],);
+                    }
+                );
               }
           }
         }
     );
   }
-
-  Future checkSchedule() async{
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    if(localStorage.containsKey('rawSchedule'))
-      return jsonDecode(localStorage.getString('rawSchedule'));
-  }
-
-  Future<Map<DateTime, List<Lecture>>> getParsed(List<dynamic> coursesToParse) async {
-    parser = CourseParser(rawData: coursesToParse);
-
-    await parser.parseRawData();
-
-    return parser.events;
-  }
 }
+
+  Future<Map<DateTime, List<Lecture>>> checkSchedule() async{
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    if(localStorage.containsKey('rawSchedule')) {
+      CourseParser parser = CourseParser(rawData: jsonDecode(localStorage.getString('rawSchedule')));
+      await parser.parseRawData();
+      return parser.events;
+    }
+
+  }
+
 
 String getday(int loopPos) {
   var daynr = DateTime.now().weekday +loopPos;
@@ -101,9 +138,11 @@ String getday(int loopPos) {
     return "Today";
   if (daynr >5 )  { //kanske fungerar får kolla imorgon
     for(int i = daynr-5; i<=daynr-5;  i++){
-      daynr= daynr-loopPos-i;
+      //daynr= daynr-loopPos-i;
+          daynr=i;
     }
   }
+
 
   switch(daynr){
     case 1:
