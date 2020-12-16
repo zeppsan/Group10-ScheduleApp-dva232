@@ -87,25 +87,32 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                         Text(getday(pos), style: TextStyle(fontSize: 20),), //writing days mon-friday, today when weekday day for each loop pos
 
 
-                        /*
+                        Center(
+                          child: Builder(
+                            builder: (context){
+                              log(_selectedLectures.toString());
+                              if(_selectedLectures != null){
 
-                        if(_selectedLectures.isNotEmpty){
+                                return Column(
+                                  children: _selectedLectures.map((e) {
+                                    return Card(
+                                      child: ListTile(
+                                        title: Text(e.course_code.toUpperCase()),
+                                      ),
+                                    );
+                                  }).toList(),
+                                );
+                              }
+                              else{
+                              return Text("There is nothing here for you, have fun!");
+                              }
+                            },
+                          ),
+                        ),
 
-                       ListView(
-                       children: _selectedLectures.map((e) {
-                       return Card(
-                       child: ListTile(
-                       title: Text(e.course_code.toUpperCase()),
-                       ),
-                       );
-                       }).toList(),
-                       ),
-                       }
-                       else{
-                         Text("There is nothing here for you, have fun!"),
-                       },
 
-*/
+
+
 
 
 
