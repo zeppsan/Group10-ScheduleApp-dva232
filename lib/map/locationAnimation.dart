@@ -11,15 +11,19 @@ class LocationAnimation extends StatefulWidget {
   final Room room;
   bool showPosition;
   bool showPath;
+  int currentFloor;
+  String floorImage;
 
-  LocationAnimation ({this.room, this.showPosition, this.showPath});
+  LocationAnimation ({this.room, this.showPosition, this.showPath, this.currentFloor})
+  {
+    floorImage = room.building.name + currentFloor.toString();
+  }
 
   @override
   _LocationAnimation createState() => _LocationAnimation();
 }
 
 class _LocationAnimation extends State<LocationAnimation> with TickerProviderStateMixin {
-  String floorImage;
   double x;
   double y;
   AnimationController controller; // Manage the animation
@@ -27,12 +31,11 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
   @override
     void initState() {
       super.initState();
-      floorImage = widget.room.building.name + widget.room.floor.toString();
       x = widget.room.position.x;
       y = widget.room.position.y;
       print(x);
       print(y);
-      print(floorImage);
+      print(widget.floorImage);
       controller = AnimationController(duration: Duration(milliseconds: 2000), vsync: this) // Manage the animation
       ..forward();
   }
@@ -45,23 +48,23 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
 
   Widget build(BuildContext context) {
 
-    return Container(
-      child:ClipRect(
+    return Container (
+        child: ClipRect(
       child: InteractiveViewer(
         minScale: 0.1,
         maxScale: 3.0,
-        //child:
-          //width: MediaQuery.of(context).size.width,
-          //height: MediaQuery.of(context).size.height,// * 0.55,
-          //decoration: BoxDecoration(color: Colors.white),
-
-          //child: FittedBox(
-            //fit: BoxFit.contain,
+        /*child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,// * 0.55,
+          decoration: BoxDecoration(color: Colors.white),
+*/
+          child: FittedBox(
+            fit: BoxFit.contain,
 
             child: Stack(
                 children: [
                   Image.asset(
-                    getFloorImage(floorImage)),
+                    getFloorImage(widget.floorImage)),
                   if(widget.showPosition)
                   PositionedTransition(
                     rect: RelativeRectTween(
@@ -79,9 +82,10 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
                   ),
                 ]
             ),
-          //),
-        ),
+          ),
+        //),
       ),
+    )
     );
   }
 }

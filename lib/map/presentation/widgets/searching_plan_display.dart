@@ -24,16 +24,15 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
  @override
  void initState() {
     setState(() {
-      _showPosition=(widget.room!=null);
+      _showPosition=(widget.room.floor==_currentFloor );
     });
  }
 
  void Next() {
    setState(() {
-     if (widget.room==null && _currentFloor <widget.room.building.floors)
+     if (_currentFloor <widget.room.building.floors)
        _currentFloor++;
-     if (widget.room!=null)
-       _showPosition= _currentFloor!= widget.room.floor ? false : true;
+     _showPosition= _currentFloor!= widget.room.floor ? false : true;
    });
  }
 
@@ -41,8 +40,7 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
    setState(() {
      if (_currentFloor > 1)
        _currentFloor--;
-     if (widget.room!=null)
-       _showPosition = _currentFloor != widget.room.floor ? false : true;
+     _showPosition = _currentFloor != widget.room.floor ? false : true;
    });
  }
 
@@ -52,7 +50,7 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
     return Container(
       child: Column(
         children: [
-          LocationAnimation(room: widget.room, showPosition: _showPosition, showPath: showPath ),
+          LocationAnimation(room: widget.room, showPosition: _showPosition, showPath: showPath, currentFloor: _currentFloor ),
           Row(
           children: <Widget> [
             IconButton(
