@@ -34,143 +34,99 @@ class Schedule extends StatelessWidget {
         ],
       ),
       body: Container(
-        height: MediaQuery.of(context).size.height,
-        child: ScheduleWidget(),
+          height: MediaQuery.of(context).size.height,
+          child: scheduleModule(),
       ),
       bottomNavigationBar: NavigationBarLoggedIn(),
     );
   }
 }
 
-class ScheduleWidget extends StatefulWidget {
+class scheduleModule extends StatelessWidget {
   @override
-  _ScheduleWidgetState createState() => _ScheduleWidgetState();
+  Widget build(BuildContext context) {
+    Future calendarFuture = getEvents(context);
+    return FutureBuilder(
+        future: calendarFuture,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return Text('Something went wrong');
+              break;
+            case ConnectionState.waiting:
+              return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                      child: CircularProgressIndicator()
+                  )
+              );
+              break;
+            case ConnectionState.done:
+              {
+                List<dynamic> data = snapshot.data;
+                // Data is retrieved. Check if the data is null, if so, return Text that displays that there is no schedule to show.
+                if (data == null || data.length == 0) {
+                  // Data = null;
+                  return ScheduleCalendar(
+                      courses: snapshot.data, empty: true);
+                } else {
+                  // Data is not null
+                  return ScheduleCalendar(
+                      courses: snapshot.data, empty: false);
+                }
+              }
+              break;
+            default:
+              return ScheduleCalendar(courses: snapshot.data);
+          }
+        });
+  }
 }
 
-class _ScheduleWidgetState extends State<ScheduleWidget> {
-  @override
-  Future calendarFuture;
+
+Future<List<dynamic>> getEvents(context) async {
+  SharedPreferences localStorage = await SharedPreferences.getInstance();
 
 
-  @override
-  void initState() {
-    super.initState();
-    calendarFuture = getEvents();
-  }
+  bool hasInternetAccess = true;
 
-  Widget build(BuildContext context) {
-    return Container(
-      child: FutureBuilder(
-          future: calendarFuture,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-                return Text('Something went wrong');
-                break;
-              case ConnectionState.waiting:
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                    child: Center(
-                        child: CircularProgressIndicator()
-                    )
-                );
-                break;
-              case ConnectionState.done:
-                {
-                  List<dynamic> data = snapshot.data;
-                  // Data is retrieved. Check if the data is null, if so, return Text that displays that there is no schedule to show.
-                  if (data == null || data.length == 0) {
-                    // Data = null;
-                    return ScheduleCalendar(
-                        courses: snapshot.data, empty: true);
-                  } else {
-                    // Data is not null
-                    return ScheduleCalendar(
-                        courses: snapshot.data, empty: false);
-                  }
-                }
-                break;
-              default:
-                return ScheduleCalendar(courses: snapshot.data);
-            }
-          }),
-    );
-  }
-
-  /*
-  * Functions gets schedule raw-data from the locatstorage if possible, else, it fetches fresh information from the database.
-  * If there however is no internet at that time, return an empty list of events and display an "empty schedule" for the user.
-  * */
-
-  Future<List<dynamic>> getEvents() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    
-    /*await Future.delayed(Duration(seconds: 1), ()async{
-
-    });*/
-    bool hasInternetAccess = true;
-
-    // Checks if the user has internet or not
-    try {
-      final internetCheck = await InternetAddress.lookup('google.com');
-      if (!internetCheck.isNotEmpty &&
-          !internetCheck[0].rawAddress.isNotEmpty) {
-        // Phone does not have internet access
-        hasInternetAccess = false;
-      }
-    } on SocketException catch (_) {
+  // Checks if the user has internet or not
+  try {
+    final internetCheck = await InternetAddress.lookup('google.com');
+    if (!internetCheck.isNotEmpty &&
+        !internetCheck[0].rawAddress.isNotEmpty) {
       // Phone does not have internet access
       hasInternetAccess = false;
     }
-    
-    // Check if the user is logged in to an account that has online-sync
-    if(hasInternetAccess){
-      if (localStorage.containsKey('token')) {
-        String token = await localStorage.getString('token');
-        String url = "https://qvarnstrom.tech/api/schedule/update-check";
-        var response = await http.get(
-          url,
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + token,
-          },
-        );
-        if (response.statusCode == 401) {
-          // user is holding an invalid authentication token. Sen user to login screen.
-          localStorage.remove('token');
-          Navigator.pushReplacementNamed(context, '/');
-        }
+  } on SocketException catch (_) {
+    // Phone does not have internet access
+    hasInternetAccess = false;
+  }
+
+  // Check if the user is logged in to an account that has online-sync
+  if(hasInternetAccess){
+    if (localStorage.containsKey('token')) {
+      String token = await localStorage.getString('token');
+      String url = "https://qvarnstrom.tech/api/schedule/update-check";
+      var response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + token,
+        },
+      );
+      if (response.statusCode == 401) {
+        // user is holding an invalid authentication token. Sen user to login screen.
+        localStorage.remove('token');
+        Navigator.pushReplacementNamed(context, '/');
+      }
 
 
-        // NO UPDATE AVALIBLE
-        if(response.statusCode == 204){
-          // CHECK SO THAT THE DATA IS DOWNLOADED
-          if(!localStorage.containsKey('rawSchedule')){
-            String token = await localStorage.getString('token');
-            String url = "https://qvarnstrom.tech/api/schedule/update";
-            var response = await http.get(
-              url,
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token,
-              },
-            );
-            if (response.statusCode == 401) {
-              // user is holding an invalid authentication token. Sen user to login screen.
-              localStorage.remove('token');
-              Navigator.pushReplacementNamed(context, '/');
-            }
-            // Save the new schedule to the local storage
-            if (response.body != null)
-              await localStorage.setString('rawSchedule', response.body);
-            return jsonDecode(response.body);
-          } else {
-            return jsonDecode(localStorage.getString('rawSchedule'));
-          }
-        } else {
-          // UPDATE IS AVALIBLE, DOWNLOAD IT AND APPLY!
+      // NO UPDATE AVALIBLE
+      if(response.statusCode == 204){
+        // CHECK SO THAT THE DATA IS DOWNLOADED
+        if(!localStorage.containsKey('rawSchedule')){
           String token = await localStorage.getString('token');
           String url = "https://qvarnstrom.tech/api/schedule/update";
           var response = await http.get(
@@ -181,43 +137,66 @@ class _ScheduleWidgetState extends State<ScheduleWidget> {
               'Authorization': 'Bearer ' + token,
             },
           );
-          await localStorage.setString('rawSchedule', response.body);
-          return jsonDecode(response.body);
-        }
-      }
-
-      // IF THE USER IS NOT LOGGED IN, FETCH DATA FROM DATABASE
-      if (localStorage.containsKey('course_list')) {
-
-        String courses = localStorage.getString('course_list');
-        var url = 'https://qvarnstrom.tech/api/schedule/updateNonUser';
-
-        Map data = {'course_list': localStorage.getString('course_list')};
-
-        //encode Map to JSON
-        var body = json.encode(data);
-
-        var response = await http.post(url,
-            headers: {"Content-Type": "application/json"}, body: body);
-        if (response.statusCode == 200) {
-          await localStorage.setString('rawSchedule', response.body);
+          if (response.statusCode == 401) {
+            // user is holding an invalid authentication token. Sen user to login screen.
+            localStorage.remove('token');
+            Navigator.pushReplacementNamed(context, '/');
+          }
+          // Save the new schedule to the local storage
+          if (response.body != null)
+            await localStorage.setString('rawSchedule', response.body);
           return jsonDecode(response.body);
         } else {
+          return jsonDecode(localStorage.getString('rawSchedule'));
         }
-      }
-    } else {
-      // IF THE USER HAS NO INTERNET ACCESS
-      // THE ONLY THING WE CAN DO IS TO RETURN THE ALREADY EXISTING SCHEDULE
-      if(localStorage.containsKey('rawSchedule')){
-        return jsonDecode(localStorage.getString('rawSchedule'));
       } else {
-        return null;
+        // UPDATE IS AVALIBLE, DOWNLOAD IT AND APPLY!
+        String token = await localStorage.getString('token');
+        String url = "https://qvarnstrom.tech/api/schedule/update";
+        var response = await http.get(
+          url,
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + token,
+          },
+        );
+        await localStorage.setString('rawSchedule', response.body);
+        return jsonDecode(response.body);
       }
     }
 
-    // if there is no course_subscription either, return null;
-    return null;
+    // IF THE USER IS NOT LOGGED IN, FETCH DATA FROM DATABASE
+    if (localStorage.containsKey('course_list')) {
+
+      String courses = localStorage.getString('course_list');
+      var url = 'https://qvarnstrom.tech/api/schedule/updateNonUser';
+
+      Map data = {'course_list': localStorage.getString('course_list')};
+
+      //encode Map to JSON
+      var body = json.encode(data);
+
+      var response = await http.post(url,
+          headers: {"Content-Type": "application/json"}, body: body);
+      if (response.statusCode == 200) {
+        await localStorage.setString('rawSchedule', response.body);
+        return jsonDecode(response.body);
+      } else {
+      }
+    }
+  } else {
+    // IF THE USER HAS NO INTERNET ACCESS
+    // THE ONLY THING WE CAN DO IS TO RETURN THE ALREADY EXISTING SCHEDULE
+    if(localStorage.containsKey('rawSchedule')){
+      return jsonDecode(localStorage.getString('rawSchedule'));
+    } else {
+      return null;
+    }
   }
+
+  // if there is no course_subscription either, return null;
+  return null;
 }
 
 class ScheduleCalendar extends StatefulWidget {
@@ -246,18 +225,19 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
   String noScheduleError =
       "Seems like you don't subscribe on any schedules, add some!";
   bool lightTheme;
+  bool calendarRendered;
 
   _ScheduleCalendarState({this.courses, this.empty});
 
   @override
   void initState() {
     super.initState();
+    calendarRendered = false;
     listEvents = List<Lecture>();
     _selectedEvents = List<Lecture>();
     _calendarController = CalendarController();
     courseObjects = List<CourseParser>();
     calendarFuture = renderCalendar(courses);
-
     if (empty == null){
       empty = false;
     }
@@ -284,27 +264,35 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
               return Column(
                 children: [
                   Container(
+                    // Set the width of the container accordingly to the phones orientation
+                    width: (MediaQuery.of(context).size.width > MediaQuery.of(context).size.height)? MediaQuery.of(context).size.height*0.6 : MediaQuery.of(context).size.width,
                     child: TableCalendar(
                       calendarStyle: CalendarStyle(
-                          selectedColor: Colors.blue,
-                          todayColor: Colors.blue[400],
+                        // Left color is light theme, right is darktheme
+                          selectedColor: (lightTheme)?Color(0xffDED9F0):Color(0xffeeb462),
+                          todayColor: (lightTheme)?Color(0xffDED9F0):Color(0xffeeb462),
                           markersColor: (lightTheme)? Colors.black : Colors.white,
                           markersMaxAmount: 1
                       ),
                       initialCalendarFormat: CalendarFormat.twoWeeks,
                       availableCalendarFormats: { CalendarFormat.month:'Month',  CalendarFormat.week:'week', CalendarFormat.twoWeeks:'Two Weeks',},
-                      initialSelectedDay: DateTime.now(),
                       calendarController: _calendarController,
                       startingDayOfWeek: StartingDayOfWeek.monday,
                       events: snapshot.data,
+                      onCalendarCreated: (test1, test2, test3){
+                          Future.delayed(Duration(milliseconds: 10), ()async{
+                            _calendarController.setSelectedDay(DateTime.now(), animate: true, isProgrammatic: true, runCallback: true);
+                          });
+                      },
                       onDaySelected: (date, events, test) {
+                        calendarRendered = true;
                         setState(() {
+                          log(events.toString());
                           if(events.isNotEmpty){
-                            _selectedEvents.sort((a, b) => a.startTime.compareTo(b.startTime));
                             _selectedEvents = events;
+                            _selectedEvents.sort((a, b) => a.startTime.compareTo(b.startTime));
                           } else {
-                            _selectedEvents.clear();
-                            _selectedEvents.add(Lecture("Moment: Home Studies", 0, 0, "Anywhere", "YOU ARE FREE!!"));
+                            _selectedEvents = List<Lecture>();
                           }
                         });
                       },
@@ -313,7 +301,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                   Expanded(
                     child: ListView(
                       padding: EdgeInsets.all(8.0),
-                      children: _selectedEvents.map((ev) {
+                      children: (_selectedEvents.length == 0 && calendarRendered == true)? [eventContainer("Morning", "Moment: Home Studies", "Night", "Anywhere", "YOU ARE FREE!!", Colors.lightBlueAccent)] : _selectedEvents.map((ev) {
                         return eventContainer(ev.getTime(ev.startTime), ev.moment,
                             ev.getTime(ev.endTime), ev.location, ev.course_code, ev.color);
                       }).toList(),
@@ -354,7 +342,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
               bottomRight: Radius.circular(10)),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
+              color: lightTheme? Colors.grey.withOpacity(0.5) : Colors.grey.withOpacity(0.3) ,
               spreadRadius: 5,
               blurRadius: 7,
               offset: Offset(0, 3), // changes position of shadow
@@ -397,8 +385,8 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                   child: FlatButton(
                     padding: EdgeInsets.all(0),
                     child: Text(
-                      'Location: ${room}',
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+                      'Room: ${room}',
+                      style: TextStyle(color: Colors.white, fontSize: 18, decoration: TextDecoration.underline),
                     ),
                     onPressed: (){
                       Navigator.pushNamed(context, '/searching', arguments: "${room}");

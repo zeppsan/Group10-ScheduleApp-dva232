@@ -38,7 +38,7 @@ class NavigationBarLoggedIn extends StatelessWidget {
             _selectedItem = value;
             break;
           case 2:
-            Navigator.pushReplacementNamed(context, '/map');
+            Navigator.pushReplacementNamed(context, '/browsing');
             _selectedItem = value;
             break;
           case 3:

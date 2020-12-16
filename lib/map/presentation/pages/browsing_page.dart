@@ -34,24 +34,21 @@ class BrowsingPage extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
-              Flexible(
-                flex: 2,
-                child: TopControlsWidgetForBrowsing(),
-              ),
-              Flexible(
-                flex: 7,
-                child: //TODO: change to appropriate widget
+                TopControlsWidgetForBrowsing(),
+
+                 //TODO: change to appropriate widget
                 BlocBuilder<BrowsingLogic, BrowsingState>(
                     builder: (context,state) {
                       if (state is EmptyState) {
-                        BlocProvider.of<BrowsingLogic>(context).add(GetBuildingEvent(buildingToFind));
-                        return Container();
+                        return BasicMapWidget(basicMapToShow: 'basic');
                       } else if (state is LoadingState) {
                         return LoadingWidget();
                       } else if (state is ErrorState) {
                         return MessageDisplay(message: state.message);
                       } else if (state is BuildingLoadedState) {
-                        return Container(
+                        return WillPopScope(
+                          onWillPop: () async { dispatchGetOriginal(context); return false;},
+                          child: Container(
                             child: Stack (
                                 children: <Widget>[
                                   BasicMapWidget(basicMapToShow: state.building.name),
@@ -65,19 +62,18 @@ class BrowsingPage extends StatelessWidget {
                                   ),
                                   ],
                                 ),
+                          ),
                         );
                       } else if (state is PlanLoaded) {
                         return WillPopScope(
-                          onWillPop: () async { print('something');  dispatchGetBuilding(context, state.building); return false;},
-                          child: PlanDisplay( state.building));
+                          onWillPop: () async { dispatchGetBuilding(context, state.building); return false;},
+                          child: BrowsingPlanDisplay( state.building));
                       } else {
                         return MessageDisplay(message: 'Unexpected error');
                       }
                     }
                 ),
-              ),
             ]
-            //TODO:Common bottomWidget?
           ),
         )
       ),
@@ -91,9 +87,13 @@ class BrowsingPage extends StatelessWidget {
   }
   void dispatchGetBuilding(BuildContext context, Building building)
   {
-    print (building.name);
     BlocProvider.of<BrowsingLogic>(context)
         .add(GetBuildingEvent(building.name));
+  }
+  void dispatchGetOriginal(BuildContext context)
+  {
+    BlocProvider.of<BrowsingLogic>(context)
+        .add(GetOriginalEvent());
   }
 
 }
@@ -115,57 +115,54 @@ class _TopControlsWidgetForBrowsingState extends State<TopControlsWidgetForBrows
 
     @override
     Widget build(BuildContext context) {
-      return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              onChanged: (value) {
-                roomToFind = value;
-              },
-              onFieldSubmitted: (value){
-                roomToFind = value;
-                Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
-              },
-              decoration: InputDecoration(
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
-                hintText: "Search room",
+      return Column(
+        children: <Widget>[
+          TextFormField(
+            onChanged: (value) {
+              roomToFind = value;
+            },
+            onFieldSubmitted: (value){
+              roomToFind = value;
+              Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
+            },
+            decoration: InputDecoration(
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
+              hintText: "Search room",
 
-               suffixIcon: IconButton(
-                 onPressed: (){
-                   Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
-                 },
+             suffixIcon: IconButton(
+               onPressed: (){
+                 Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
+               },
 
-                 icon: Icon(Icons.search_rounded),
-                 //size: 34.0,
-               ),
+               icon: Icon(Icons.search_rounded),
+               //size: 34.0,
+             ),
+              ),
+            ),
+
+          SizedBox(height: 10),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: ElevatedButton(
+                  child: Text('Buildings U & T'),
+                  onPressed: () {
+                    dispatchGetBuilding('U');
+                  },
                 ),
               ),
-
-            SizedBox(height: 10),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: ElevatedButton(
-                    child: Text('Buildings U & T'),
-                    onPressed: () {
-                      dispatchGetBuilding('U');
-                    },
-                  ),
+              SizedBox(width: 10.0),
+              Expanded(
+                child: ElevatedButton(
+                  child: Text('Building R'),
+                  onPressed: () {
+                    dispatchGetBuilding('R');
+                  },
                 ),
-                SizedBox(width: 10.0),
-                Expanded(
-                  child: ElevatedButton(
-                    child: Text('Building R'),
-                    onPressed: () {
-                      dispatchGetBuilding('R');
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       );
     }
 
