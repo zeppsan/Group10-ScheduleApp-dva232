@@ -160,7 +160,12 @@ class _LoginForm extends State<LoginForm> {
 
       if (responseData['access_token'] != null) {
         SharedPreferences localStorage = await SharedPreferences.getInstance();
+        //Set the recived token to localStorage
         await localStorage.setString('token', responseData['access_token']);
+        //Bool to check in settings to switch between logout/login
+        await localStorage.setBool('loggedIn', true);
+        //Remove the stored schedule and course list,
+        // to fill with the once from the database
         await localStorage.remove('rawSchedule');
         await localStorage.remove('course_list');
 
