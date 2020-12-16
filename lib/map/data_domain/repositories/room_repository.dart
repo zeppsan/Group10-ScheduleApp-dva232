@@ -31,19 +31,26 @@ class RoomAssetsDataSourceImpl implements RoomAssetsDataSource {
 
   @override
   Future<RoomModel> getRoom (String name)  async {
+    List<Coordinates> direction = List<Coordinates>();
     final String buildings = await rootBundle.loadString("assets/buildings_rooms.json");
     Map<String, dynamic> jsonBuildings = json.decode(buildings);
     for (Map<String, dynamic> building in jsonBuildings['buildings']) {
       for (Map<String, dynamic> room in building['rooms']) {
-        if (room['name'] == name) {
+        if (room['name'].toString().toLowerCase() == name) {
           //if room is found
           print('the room is found');
           print (room['position']['x']);
           print(room['position']['y']);
+          for(Map<String, dynamic> coordinate in room['path'])
+            {
+              direction.add(new Coordinates(x: coordinate['x'], y: coordinate['y']));
+            }
+
           return Future.value(RoomModel(
               building: Building (floors: building['floors'], name:building['name'], campus: building['campus']),
               name: room['name'],
               floor: room['floor'],
+              path: direction,
               position: Coordinates(
                   x: room['position']['x'], y: room['position']['y'])));
         }

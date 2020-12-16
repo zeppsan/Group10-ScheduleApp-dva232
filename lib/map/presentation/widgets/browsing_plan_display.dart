@@ -5,21 +5,21 @@ import 'package:schedule_dva232/map/data_domain/models/building.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
 import 'package:schedule_dva232/map/presentation/widgets/basic_map_widget.dart';
 
-class PlanDisplay extends StatefulWidget{
+class BrowsingPlanDisplay extends StatefulWidget{
   //int _currentFloor = 1;
   final Building building;
 
-  PlanDisplay(this.building);
+  BrowsingPlanDisplay(this.building);
 
   @override
-  _PlanDisplayState createState() => _PlanDisplayState();
+  _BrowsingPlanDisplayState createState() => _BrowsingPlanDisplayState();
 }
 
-class _PlanDisplayState extends State<PlanDisplay> {
+class _BrowsingPlanDisplayState extends State<BrowsingPlanDisplay> {
  int _currentFloor=1;
  String buildingFloor;
 
- _PlanDisplayState() {
+ _BrowsingPlanDisplayState() {
    print(_currentFloor);
    _currentFloor = 1;
 
@@ -59,33 +59,26 @@ class _PlanDisplayState extends State<PlanDisplay> {
     return Container(
       child: Column(
         children: [
-          Flexible (
-            flex: 4,
-            child: BasicMapWidget(basicMapToShow: buildingFloor),
-          ),
+          BasicMapWidget(basicMapToShow: buildingFloor),
+        Row(
+            children: <Widget> [
+              IconButton(
+                icon: Icon(Icons.arrow_back_rounded),
+                color: Theme
+                    .of(context)
+                    .accentColor,
+                onPressed: () { Previous(); },
+              ),
+              Expanded(child: SizedBox()),
+              IconButton(
+                icon: Icon(Icons.arrow_forward_rounded),
+                color: Theme
+                    .of(context)
+                    .accentColor,
+                onPressed: () { Next(); },
+              ),
 
-        Flexible (
-          flex:1,
-          child:Row(
-              children: <Widget> [
-                IconButton(
-                  icon: Icon(Icons.arrow_back_rounded),
-                  color: Theme
-                      .of(context)
-                      .accentColor,
-                  onPressed: () { Previous(); },
-                ),
-                Expanded(child: SizedBox()),
-                IconButton(
-                  icon: Icon(Icons.arrow_forward_rounded),
-                  color: Theme
-                      .of(context)
-                      .accentColor,
-                  onPressed: () { Next(); },
-                ),
-
-            ]
-          ),
+          ]
         )
         ],
       ),

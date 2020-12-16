@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/map/map.dart';
+import 'package:schedule_dva232/routing.dart';
 import 'package:schedule_dva232/schedule/addCourse.dart';
 import 'package:schedule_dva232/schedule/schedule.dart';
 import 'package:schedule_dva232/schedule/scheduleSettings.dart';

@@ -15,3 +15,4 @@ class GetPlanEvent extends BrowsingEvent {
   GetPlanEvent(this.currentFloor, this.building):super([currentFloor, building]);
 }
 
+class GetOriginalEvent extends BrowsingEvent {}

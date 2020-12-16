@@ -1,5 +1,6 @@
 //TODO: Change accordingly to UI design
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../../locationAnimation.dart';
 import 'widgets.dart';
 
@@ -8,30 +9,43 @@ class BasicMapWidget extends StatelessWidget {
   const BasicMapWidget ({Key key,this.basicMapToShow }):super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return  Padding(
-      padding: const EdgeInsets.fromLTRB(10.0, 0.0,10.0,0.0),
-      child: Container(
-        child: ClipRect(
-          child: InteractiveViewer(
-            minScale: 0.1,
-            maxScale: 3.0,
-            child: Image.asset(switchImage(basicMapToShow)),
+  Widget build(BuildContext context){
+    return  Container(
+      child: ClipRect(
+        child: Stack(
+          children: [
+             InteractiveViewer(
+              minScale: 0.1,
+              maxScale: 3.0,
+                child:
+                Image.asset(switchImage(basicMapToShow)),
+             ),
+            if (basicMapToShow!='basic' && basicMapToShow !='U' && basicMapToShow != 'R')
+              Positioned (
+                  top:10,
+                  left:10,
+                  child:Text( basicMapToShow,
+                      style: TextStyle (
+                        fontSize: 50,
+                        backgroundColor: Colors.white,
+                      )
+                  )
+              ),
+              ]
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
 String switchImage(String basicMapToShow) {
-
+String image;
   switch (basicMapToShow) {
     case 'basic':
-      return 'assets/basic.png';
+      return 'assets/basic.jpg';
   
     case 'U':
-      return 'assets/U.png';
+      return 'assets/U.jpg';
 
     case 'U1':
       return 'assets/U1.jpg';
@@ -43,7 +57,7 @@ String switchImage(String basicMapToShow) {
       return 'assets/U3.jpg';
 
     case 'R':
-      return 'assets/R.png';
+      return 'assets/R.jpg';
 
     case 'R1':
       return 'assets/R1.jpg';

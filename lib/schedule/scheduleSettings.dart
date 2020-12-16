@@ -5,9 +5,9 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:schedule_dva232/schedule/subfiles/colorPicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
-import 'package:schedule_dva232/schedule/colorPicker.dart';
 
 class ScheduleSettings extends StatefulWidget {
   @override
@@ -95,7 +95,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                                 margin: EdgeInsets.fromLTRB(15, 5, 15, 0),
                                 child: ListTile(
                                     title: Row(children: [
-                                      Text("${e}"),
+                                      Text("${e}".toUpperCase(), style: TextStyle(color: Colors.white),),
                                       BarColorPicker(
                                         colorListener: (int value) {
                                           currentColor.value = Color(value + 00000);

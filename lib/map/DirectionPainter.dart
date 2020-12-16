@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
+import 'package:schedule_dva232/map/data_domain/models/coordinates.dart';
 
 class DirectionPainter extends CustomPainter {
+
+  DirectionPainter({ @required this.direction});
+
+  List<Coordinates> direction = List<Coordinates>();
 
   @override
   void paint(Canvas canvas, Size size) {
 
-    double pointX = 872;
-    double pointY = 1613;
-
-    String room = "alfa";
+    int i = 0;
+    double pointX = direction[i].x;
+    double pointY = direction[i].y;
 
     Paint paint = Paint()
       ..color = Color(0xFF83fb91)
@@ -17,20 +21,13 @@ class DirectionPainter extends CustomPainter {
 
     Path path = Path();
 
-    if(room == "beta")
-    {
-      path.moveTo(pointX, pointY);
-      path.lineTo(872, 1454);
-      path.lineTo(960, 1454);
-      path.lineTo(960, 1290);
-    }
-    else if(room == "beta")
-    {
-      path.moveTo(pointX, pointY);
-      path.lineTo(142, 230);
-      path.lineTo(177, 230);
-      path.lineTo(177, 165);
-      path.lineTo(165, 165);
+    path.moveTo(pointX, pointY);
+
+   for(i = 1; i < direction.length; i++){
+
+     pointX = direction[i].x;
+     pointY = direction[i].y;
+      path.lineTo(pointX, pointY);
     }
 
     canvas.drawPath(path, paint);
