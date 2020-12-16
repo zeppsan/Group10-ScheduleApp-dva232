@@ -59,33 +59,27 @@ class _PlanDisplayState extends State<PlanDisplay> {
     return Container(
       child: Column(
         children: [
-          Flexible (
-            flex: 4,
-            child: BasicMapWidget(basicMapToShow: buildingFloor),
-          ),
+          BasicMapWidget(basicMapToShow: buildingFloor),
 
-        Flexible (
-          flex:1,
-          child:Row(
-              children: <Widget> [
-                IconButton(
-                  icon: Icon(Icons.arrow_back_rounded),
-                  color: Theme
-                      .of(context)
-                      .accentColor,
-                  onPressed: () { Previous(); },
-                ),
-                Expanded(child: SizedBox()),
-                IconButton(
-                  icon: Icon(Icons.arrow_forward_rounded),
-                  color: Theme
-                      .of(context)
-                      .accentColor,
-                  onPressed: () { Next(); },
-                ),
+        Row(
+            children: <Widget> [
+              IconButton(
+                icon: Icon(Icons.arrow_back_rounded),
+                color: Theme
+                    .of(context)
+                    .accentColor,
+                onPressed: () { Previous(); },
+              ),
+              Expanded(child: SizedBox()),
+              IconButton(
+                icon: Icon(Icons.arrow_forward_rounded),
+                color: Theme
+                    .of(context)
+                    .accentColor,
+                onPressed: () { Next(); },
+              ),
 
-            ]
-          ),
+          ]
         )
         ],
       ),

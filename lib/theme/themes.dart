@@ -70,7 +70,7 @@ class AppTheme{
     )
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-     style: ElevatedButton.styleFrom(primary: const Color(0xffeeb462),
+     style: ElevatedButton.styleFrom(primary: const Color(0xffeeb462), textStyle: TextStyle(color: const Color(0xff2c1d33)),
      shape: RoundedRectangleBorder(
        borderRadius: BorderRadius.circular(30.0),
      ),

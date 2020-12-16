@@ -34,9 +34,7 @@ class BrowsingPage extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
-
                 TopControlsWidgetForBrowsing(),
-
 
                  //TODO: change to appropriate widget
                 BlocBuilder<BrowsingLogic, BrowsingState>(
@@ -121,57 +119,54 @@ class _TopControlsWidgetForBrowsingState extends State<TopControlsWidgetForBrows
 
     @override
     Widget build(BuildContext context) {
-      return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              onChanged: (value) {
-                roomToFind = value;
-              },
-              onFieldSubmitted: (value){
-                roomToFind = value;
-                Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
-              },
-              decoration: InputDecoration(
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
-                hintText: "Search room",
+      return Column(
+        children: <Widget>[
+          TextFormField(
+            onChanged: (value) {
+              roomToFind = value;
+            },
+            onFieldSubmitted: (value){
+              roomToFind = value;
+              Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
+            },
+            decoration: InputDecoration(
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
+              hintText: "Search room",
 
-               suffixIcon: IconButton(
-                 onPressed: (){
-                   Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
-                 },
+             suffixIcon: IconButton(
+               onPressed: (){
+                 Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
+               },
 
-                 icon: Icon(Icons.search_rounded),
-                 //size: 34.0,
-               ),
+               icon: Icon(Icons.search_rounded),
+               //size: 34.0,
+             ),
+              ),
+            ),
+
+          SizedBox(height: 10),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: ElevatedButton(
+                  child: Text('Buildings U & T'),
+                  onPressed: () {
+                    dispatchGetBuilding('U');
+                  },
                 ),
               ),
-
-            SizedBox(height: 10),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: ElevatedButton(
-                    child: Text('Buildings U & T'),
-                    onPressed: () {
-                      dispatchGetBuilding('U');
-                    },
-                  ),
+              SizedBox(width: 10.0),
+              Expanded(
+                child: ElevatedButton(
+                  child: Text('Building R'),
+                  onPressed: () {
+                    dispatchGetBuilding('R');
+                  },
                 ),
-                SizedBox(width: 10.0),
-                Expanded(
-                  child: ElevatedButton(
-                    child: Text('Building R'),
-                    onPressed: () {
-                      dispatchGetBuilding('R');
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       );
     }
 
