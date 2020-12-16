@@ -73,9 +73,7 @@ class BrowsingPage extends StatelessWidget {
                       }
                     }
                 ),
-
             ]
-            //TODO:Common bottomWidget?
           ),
         )
       ),

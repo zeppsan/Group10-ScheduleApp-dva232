@@ -37,57 +37,50 @@ class SearchingPage extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
-              Flexible(
-                flex: 2,
-                child: TopControlsWidgetForSearching(inputString:roomToFind),
-              ),
-              Flexible(
-                flex: 7,
-                child: //TODO: change to appropriate widget
-                BlocBuilder<SearchingLogic, SearchingState>(
-                    builder: (context,state) {
-                      if (state is EmptyState) {
-                        print('in builder state is Empty. Searching for ' + roomToFind);
-                        BlocProvider.of<SearchingLogic>(context).add(GetRoomEvent(roomToFind));
-                        return Container();
-                      } else if (state is LoadingState) {
-                        print('in builder state is Loading');
-                        return LoadingWidget();
-                      } else if (state is ErrorState) {
-                        print('in builder state is Error');
-                        return MessageDisplay(message: state.message);
-                      } else if (state is RoomLoadedState) {
-                        print('in builder state is Loaded');
-                        return Container(
-                          child: Stack  (
-                              children: <Widget> [
-                                BasicMapWidget(basicMapToShow: state.room.building.name),
-                                Positioned(
-                                  top: 10,
-                                  left: 20,
-                                  child: ElevatedButton(
-                                    child: Text('Show room on the floor plan'),
-                                    onPressed: () { dispatchGetFloorPlan(context, state.room, state.room.floor); },
-                                  ),
-                                ),
+              TopControlsWidgetForSearching(inputString:roomToFind),
 
-                              ],
+              BlocBuilder<SearchingLogic, SearchingState>(
+                builder: (context,state) {
+                  if (state is EmptyState) {
+                    print('in builder state is Empty. Searching for ' + roomToFind);
+                    BlocProvider.of<SearchingLogic>(context).add(GetRoomEvent(roomToFind));
+                    return Container();
+                  } else if (state is LoadingState) {
+                    print('in builder state is Loading');
+                    return LoadingWidget();
+                  } else if (state is ErrorState) {
+                    print('in builder state is Error');
+                    return MessageDisplay(message: state.message);
+                  } else if (state is RoomLoadedState) {
+                    print('in builder state is Loaded');
+                    return Container(
+                      child: Stack  (
+                          children: <Widget> [
+                            BasicMapWidget(basicMapToShow: state.room.building.name),
+                            Positioned(
+                              top: 10,
+                              left: 20,
+                              child: ElevatedButton(
+                                child: Text('Show room on the floor plan'),
+                                onPressed: () { dispatchGetFloorPlan(context, state.room, state.room.floor); },
+                              ),
                             ),
-                        );
-                      } else if (state is PlanLoaded) {
-                        print('in builder state is PlanLoaded');
-                        return WillPopScope(
-                            onWillPop: () async { print('something');  dispatchGetRoom(context, state.room.name); return false;},
-                            child: SearchingPlanDisplay(state.room.floor, state.room),
-                        );
-                      } else {
-                        return MessageDisplay(message: 'Unexpected error');
-                      }
-                    }
-                ),
+
+                          ],
+                        ),
+                    );
+                  } else if (state is PlanLoaded) {
+                    print('in builder state is PlanLoaded');
+                    return WillPopScope(
+                        onWillPop: () async { print('something');  dispatchGetRoom(context, state.room.name); return false;},
+                        child: SearchingPlanDisplay(state.room.floor, state.room),
+                    );
+                  } else {
+                    return MessageDisplay(message: 'Unexpected error');
+                  }
+                }
               ),
             ]
-            //TODO:Common bottomWidget?
           ),
         )
       ),
@@ -148,6 +141,8 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
               ),
             ),
           ),
+          SizedBox(height: 10),
+          Row(),
         ],
       );
     }

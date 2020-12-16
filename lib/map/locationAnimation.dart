@@ -45,17 +45,18 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
 
   Widget build(BuildContext context) {
 
-    return ClipRect(
+    return Container(
+      child:ClipRect(
       child: InteractiveViewer(
         minScale: 0.1,
         maxScale: 3.0,
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,// * 0.55,
-          decoration: BoxDecoration(color: Colors.white),
+        //child:
+          //width: MediaQuery.of(context).size.width,
+          //height: MediaQuery.of(context).size.height,// * 0.55,
+          //decoration: BoxDecoration(color: Colors.white),
 
-          child: FittedBox(
-            fit: BoxFit.contain,
+          //child: FittedBox(
+            //fit: BoxFit.contain,
 
             child: Stack(
                 children: [
@@ -78,7 +79,7 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
                   ),
                 ]
             ),
-          ),
+          //),
         ),
       ),
     );
