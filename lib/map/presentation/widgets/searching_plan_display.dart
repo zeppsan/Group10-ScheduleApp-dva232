@@ -49,6 +49,7 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
 
     return Container(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           LocationAnimation(room: widget.room, showPosition: _showPosition, showPath: showPath, currentFloor: _currentFloor ),
           Row(

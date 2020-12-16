@@ -1,5 +1,6 @@
 //TODO: Change accordingly to UI design
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../../locationAnimation.dart';
 import 'widgets.dart';
 
@@ -11,13 +12,29 @@ class BasicMapWidget extends StatelessWidget {
   Widget build(BuildContext context){
     return  Container(
       child: ClipRect(
-        child: InteractiveViewer(
-          minScale: 0.1,
-          maxScale: 3.0,
-          child: Image.asset(switchImage(basicMapToShow)),
+        child: Stack(
+          children: [
+             InteractiveViewer(
+              minScale: 0.1,
+              maxScale: 3.0,
+                child:
+                Image.asset(switchImage(basicMapToShow)),
+             ),
+            if (basicMapToShow!='basic' && basicMapToShow !='U' && basicMapToShow != 'R')
+              Positioned (
+                  top:10,
+                  left:10,
+                  child:Text( basicMapToShow,
+                      style: TextStyle (
+                        fontSize: 50,
+                        backgroundColor: Colors.white,
+                      )
+                  )
+              ),
+              ]
+          ),
         ),
-      ),
-    );
+      );
   }
 }
 

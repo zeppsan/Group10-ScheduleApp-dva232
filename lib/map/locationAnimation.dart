@@ -50,43 +50,57 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
 
     return Container (
         child: ClipRect(
-      child: InteractiveViewer(
-        minScale: 0.1,
-        maxScale: 3.0,
-        /*child: Container(
+          child:Stack (
+            children: [
+              InteractiveViewer(
+                minScale: 0.1,
+                maxScale: 3.0,
+                /*child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,// * 0.55,
           decoration: BoxDecoration(color: Colors.white),
 */
-          child: FittedBox(
-            fit: BoxFit.contain,
+                child: FittedBox(
+                  fit: BoxFit.contain,
 
-            child: Stack(
-                children: [
-                  Image.asset(
-                    getFloorImage(widget.floorImage)),
-                  if(widget.showPosition)
-                  PositionedTransition(
-                    rect: RelativeRectTween(
-                      begin: RelativeRect.fromLTRB(x, y, 0, 0),
-                      end: RelativeRect.fromLTRB(x, y + 300, 0, 0),
-                    ).animate(CurvedAnimation( parent: controller, curve: Curves.bounceIn.flipped)),
+                  child: Stack(
+                      children: [
+                        Image.asset(
+                            getFloorImage(widget.floorImage)),
+                        if(widget.showPosition)
+                          PositionedTransition(
+                            rect: RelativeRectTween(
+                              begin: RelativeRect.fromLTRB(x, y, 0, 0),
+                              end: RelativeRect.fromLTRB(x, y + 300, 0, 0),
+                            ).animate(CurvedAnimation( parent: controller, curve: Curves.bounceIn.flipped)),
 
-                    child: Image.asset(
-                      'assets/test.png',
-                    ),
+                            child: Image.asset(
+                              'assets/test.png',
+                            ),
+                          ),
+                        if(widget.showPath)
+                          CustomPaint( painter: DirectionPainter(), ),
+
+                      ]
                   ),
-                  if(widget.showPath)
-                  CustomPaint(
-                    painter: DirectionPainter(),
-                  ),
-                ]
-            ),
-          ),
-        //),
-      ),
-    )
-    );
+                ),
+                //),
+              ),
+              Positioned (
+                  top:10,
+                  left:10,
+                  child:Text( widget.room.building.name + widget.currentFloor.toString(),
+                      style: TextStyle (
+                        fontSize: 50,
+                        backgroundColor: Colors.white,
+                      )
+                  )
+              ),
+            ]
+          )
+
+                  )
+                  );
   }
 }
 String getFloorImage(String building){
