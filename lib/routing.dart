@@ -43,18 +43,8 @@ class Roots {
       case '/thisweek':
         return MaterialPageRoute(builder: (_)=> Thisweek());
         break;
-      case '/map':
-        return MaterialPageRoute(builder: (_)=> IntroMapPage());
-        break;
       case '/browsing':
-        if(args is String) {
-          return MaterialPageRoute(
-            builder:(_)=> BrowsingPage(
-                buildingToFind: args,
-            ),
-          );
-        }
-        else return null;
+          return MaterialPageRoute(builder:(_)=> BrowsingPage());
         break;
       case '/searching':
           return MaterialPageRoute(
