@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Loading extends StatefulWidget {
   @override
   _LoadingState createState() => _LoadingState();
-
 }
 
 class _LoadingState extends State<Loading> {
@@ -31,7 +30,6 @@ class _LoadingState extends State<Loading> {
     print("LoginBool is ${localStorage.getBool('loggedIn')}");
     Navigator.pushReplacementNamed(context, '/login');
   }
-
 
   @override
   Widget build(BuildContext context) {

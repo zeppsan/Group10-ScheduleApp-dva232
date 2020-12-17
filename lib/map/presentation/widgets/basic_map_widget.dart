@@ -28,6 +28,7 @@ class BasicMapWidget extends StatelessWidget {
                       style: TextStyle (
                         fontSize: 50,
                         backgroundColor: Colors.white,
+                        color: Colors.deepPurple[100],
                       )
                   )
               ),
