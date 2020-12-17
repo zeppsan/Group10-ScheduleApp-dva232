@@ -19,6 +19,7 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
  int _currentFloor;
  bool _showPosition;
  bool _showPath = false;
+ bool _isShowPathButton=true;
  _SearchingPlanDisplayState(this._currentFloor);
 
  @override
@@ -33,7 +34,7 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
      if (_currentFloor <widget.room.building.floors)
        _currentFloor++;
      _showPosition= _currentFloor!= widget.room.floor ? false : true;
-     _showPath = _currentFloor != widget.room.floor ? false : true;
+     _showPath = false;
    });
  }
 
@@ -42,14 +43,20 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
      if (_currentFloor > 1)
        _currentFloor--;
      _showPosition = _currentFloor != widget.room.floor ? false : true;
-     _showPath = _currentFloor != widget.room.floor ? false : true;
+     _showPath = false;
    });
  }
 
  void ShowPath(){
    setState(() {
-     _showPath = _currentFloor != widget.room.floor ? false : true;
-     print (_showPath);
+     _isShowPathButton=false;
+     _showPath = true;
+   });
+ }
+ void HidePath(){
+   setState(() {
+     _isShowPathButton=true;
+     _showPath=false;
    });
  }
   @override
@@ -59,8 +66,14 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ElevatedButton( onPressed: () {ShowPath();},
-            child: Text('Show path'),
+          Row (
+            children: [
+              if (_currentFloor == widget.room.floor) Expanded (
+                child:ElevatedButton( onPressed: () {_isShowPathButton ? ShowPath():HidePath();},
+                  child: Text(_isShowPathButton? 'Show path' : 'Hide path'),
+                ),
+              )
+            ]
           ),
           LocationAnimation(room: widget.room, showPosition: _showPosition, showPath: _showPath, currentFloor: _currentFloor ),
           Row(

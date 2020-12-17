@@ -23,6 +23,12 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
   Future<bool> loadingSpinner;
   Map<String, Color> course_initColors;
 
+  /*
+  * COLORS SETTINGS
+  * */
+  final Color trashbinColor = Colors.grey[800];
+  final Color courseCodeColor = Colors.grey[800];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -95,8 +101,9 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                                 margin: EdgeInsets.fromLTRB(15, 5, 15, 0),
                                 child: ListTile(
                                     title: Row(children: [
-                                      Text("${e}".toUpperCase(), style: TextStyle(color: Colors.white),),
+                                      Text("${e}".toUpperCase(), style: TextStyle(color: courseCodeColor),),
                                       BarColorPicker(
+                                        cornerRadius: 10,
                                         colorListener: (int value) {
                                           currentColor.value = Color(value + 00000);
                                           setCourseColor(e, currentColor.value);
@@ -108,6 +115,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                                     ]),
                                     trailing: IconButton(
                                       icon: Icon(Icons.delete),
+                                      color: trashbinColor,
                                       onPressed: () {
                                         removeCourse(e);
                                         Future.delayed(
