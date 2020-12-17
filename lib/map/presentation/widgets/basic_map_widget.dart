@@ -44,7 +44,6 @@ String image;
   switch (basicMapToShow) {
     case 'basic':
       return 'assets/basic.png';
-  
     case 'U':
       return 'assets/u1test.png';
 
