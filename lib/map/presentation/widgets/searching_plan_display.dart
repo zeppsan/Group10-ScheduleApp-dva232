@@ -26,6 +26,7 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
  void initState() {
     setState(() {
       _showPosition=(widget.room.floor==_currentFloor );
+      _isShowPathButton = _showPath? false: true;
     });
  }
 
@@ -34,7 +35,7 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
      if (_currentFloor <widget.room.building.floors)
        _currentFloor++;
      _showPosition= _currentFloor!= widget.room.floor ? false : true;
-     _showPath = false;
+     _showPath = _currentFloor== widget.room.floor && !_isShowPathButton ? true : false;
    });
  }
 
@@ -43,7 +44,7 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
      if (_currentFloor > 1)
        _currentFloor--;
      _showPosition = _currentFloor != widget.room.floor ? false : true;
-     _showPath = false;
+     _showPath = _currentFloor== widget.room.floor && !_isShowPathButton ? true : false;
    });
  }
 
@@ -66,14 +67,21 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row (
-            children: [
-              if (_currentFloor == widget.room.floor) Expanded (
-                child:ElevatedButton( onPressed: () {_isShowPathButton ? ShowPath():HidePath();},
-                  child: Text(_isShowPathButton? 'Show path' : 'Hide path'),
-                ),
-              )
-            ]
+          Visibility(
+            maintainState: true,
+            maintainSize: true,
+            maintainAnimation: true,
+            visible: (_currentFloor == widget.room.floor),
+            child: Row (
+              children: [
+                Expanded (
+                  child:ElevatedButton( onPressed: () {_isShowPathButton ? ShowPath():HidePath();},
+                    child: Text(_isShowPathButton? 'Show path' : 'Hide path'),
+                  ),
+                )
+
+              ]
+            ),
           ),
           LocationAnimation(room: widget.room, showPosition: _showPosition, showPath: _showPath, currentFloor: _currentFloor ),
           Row(
