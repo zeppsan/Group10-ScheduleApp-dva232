@@ -203,11 +203,9 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     lightTheme = await localStorage.getBool('theme');
 
-
     parser = CourseParser(rawData: coursesToParse);
 
     await parser.parseRawData();
-
 
     return parser.events;
   }
@@ -240,14 +238,14 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                 Text(
                   '${course_code}',
                   style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black87,
                       fontWeight: FontWeight.bold,
                       fontSize: 18),
                 ),
                 Text(
                   '${startDate} -> ${endDate}',
                   style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black87,
                       fontWeight: FontWeight.bold,
                       fontSize: 18),
                 ),
@@ -260,7 +258,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                   flex: 1,
                   child: Text(
                     '${moment}',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black87),
                   ),
                 ),
                 Flexible(
@@ -269,7 +267,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                     padding: EdgeInsets.all(0),
                     child: Text(
                       'Room: ${room}',
-                      style: TextStyle(color: Colors.white, fontSize: 18, decoration: TextDecoration.underline),
+                      style: TextStyle(color: Colors.black87, fontSize: 18, decoration: TextDecoration.underline),
                     ),
                     onPressed: (){
                       Navigator.pushNamed(context, '/searching', arguments: "${room}");

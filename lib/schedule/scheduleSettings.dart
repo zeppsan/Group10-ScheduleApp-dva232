@@ -95,7 +95,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                                 margin: EdgeInsets.fromLTRB(15, 5, 15, 0),
                                 child: ListTile(
                                     title: Row(children: [
-                                      Text("${e}".toUpperCase(), style: TextStyle(color: Colors.white),),
+                                      Text("${e}".toUpperCase(), style: TextStyle(color: Colors.black),),
                                       BarColorPicker(
                                         colorListener: (int value) {
                                           currentColor.value = Color(value + 00000);
