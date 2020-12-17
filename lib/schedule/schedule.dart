@@ -20,30 +20,26 @@ class Schedule extends StatelessWidget {
     print("## in schedule ##");
     return Scaffold(
       appBar: AppBar(
-        title: Expanded(child: Text('Schedule')),
+        title: Text('Schedule'),
         actions: [
-          FlatButton.icon(
+          IconButton(
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/scheduleSettings');
             },
             icon: Icon(
               Icons.settings,
-              color: Colors.black,
+              color:  const Color(0xffdfb15b),
             ),
-            minWidth: 10 ,
 
-            label: Text(""),
           ),
-          FlatButton.icon(
+          IconButton(
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/scheduleSettings');
             },
             icon: Icon(
               Icons.notifications_none_rounded,
-              color: Colors.black,
+              color:  const Color(0xffdfb15b),
             ),
-            label: Text(""),
-            minWidth: 10 ,
           ),
         ],
       ),
