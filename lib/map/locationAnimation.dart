@@ -94,6 +94,7 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
                       style: TextStyle (
                         fontSize: 50,
                         backgroundColor: Colors.white,
+                        color: Colors.deepPurple[100],
                       )
                   )
               ),
