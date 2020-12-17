@@ -56,13 +56,19 @@ class SearchingPage extends StatelessWidget {
                     return Container(
                       child: Column  (
                           children: <Widget> [
-                            ElevatedButton(
-                                child: Text('Show room on the floor plan'),
-                                onPressed: () { dispatchGetFloorPlan(context, state.room, state.room.floor); },
-                              ),
-
                             BasicMapWidget(basicMapToShow: state.room.building.name),
-
+                            FlatButton(
+                              child:Row (
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text('Show on the floor plan'),
+                                    Icon(Icons.arrow_forward_rounded,
+                                      color: Theme.of(context).accentColor,
+                                    ),
+                                  ]
+                              ),
+                              onPressed: () { dispatchGetFloorPlan(context, state.room, state.room.floor); },
+                            ),
                           ],
                         ),
                     );

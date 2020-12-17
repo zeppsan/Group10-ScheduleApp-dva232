@@ -49,17 +49,21 @@ class BrowsingPage extends StatelessWidget {
                         return WillPopScope(
                           onWillPop: () async { dispatchGetOriginal(context); return false;},
                           child: Container(
-                            child: Stack (
+                            child: Column (
                                 children: <Widget>[
                                   BasicMapWidget(basicMapToShow: state.building.name),
-                                  Positioned(
-                                    top: 10,
-                                    left: 20,
-                                    child: ElevatedButton(
-                                      child: Text('To floor plans'),
+                                  FlatButton(
+                                      child:Row (
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Text('To floor plans'),
+                                          Icon(Icons.arrow_forward_rounded,
+                                            color: Theme.of(context).accentColor,
+                                          ),
+                                        ]
+                                      ),
                                       onPressed: () { dispatchGetFloorPlan(context, state.building, 1); },
                                     ),
-                                  ),
                                   ],
                                 ),
                           ),
