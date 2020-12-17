@@ -20,7 +20,7 @@ class Schedule extends StatelessWidget {
     print("## in schedule ##");
     return Scaffold(
       appBar: AppBar(
-        title: Text('Schedule'),
+        title: Expanded(child: Text('Schedule')),
         actions: [
           FlatButton.icon(
             onPressed: () {
@@ -28,9 +28,22 @@ class Schedule extends StatelessWidget {
             },
             icon: Icon(
               Icons.settings,
-              color: Colors.white,
+              color: Colors.black,
+            ),
+            minWidth: 10 ,
+
+            label: Text(""),
+          ),
+          FlatButton.icon(
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/scheduleSettings');
+            },
+            icon: Icon(
+              Icons.notifications_none_rounded,
+              color: Colors.black,
             ),
             label: Text(""),
+            minWidth: 10 ,
           ),
         ],
       ),
