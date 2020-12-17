@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:schedule_dva232/schedule/subfiles/colorPicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
+import 'subfiles/colorPicker.dart';
 
 class ScheduleSettings extends StatefulWidget {
   @override

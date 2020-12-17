@@ -22,7 +22,7 @@ class AppTheme{
     ),),*/
 
     appBarTheme: AppBarTheme(
-      color: const Color(0xffDED9F0),
+      color: const Color(0xffeeb462),
       iconTheme: IconThemeData(
         color: const Color(0xff2c1d33),
       ),
@@ -36,7 +36,7 @@ class AppTheme{
       
 
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(primary: const Color(0xffdfb15b),
+      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -44,11 +44,11 @@ class AppTheme{
     ),
 
       primaryIconTheme: IconThemeData(
-        color: const Color(0xffdfb15b),
+        color: const Color(0xff2c1d33),
       ),
 
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: const Color(0xffDED9F0),
+      backgroundColor: const Color(0xffeeb462),
       selectedIconTheme: IconThemeData(color: Colors.white),
       selectedItemColor:  Colors.white,
       unselectedIconTheme: IconThemeData(color: const Color(0xff2c1d33)),
