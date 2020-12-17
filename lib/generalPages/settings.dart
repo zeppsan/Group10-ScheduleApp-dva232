@@ -44,74 +44,16 @@ class _SettingsState extends State<Settings> {
                   break;
                 case ConnectionState.done:
                   if (snapshot.data == true) {
-                    return ElevatedButton(
-                        child: Text("Logout"),
-                        onPressed: () async {
-                          //Reset the stored schedule, token and loggedIn bool
-                          SharedPreferences localStorage = await SharedPreferences.getInstance();
-                          await localStorage.remove('token');
-                          await localStorage.remove('rawSchedule');
-                          await localStorage.setBool('loggedIn', false);
-                          //Push to home screen
-                          Navigator.pushReplacementNamed(context, '/');
-                        },
-                    );
-                  } else {
-                    return 
-                      Column(
-                      children: [
-                        SizedBox(height: 10.0,),
-                        ElevatedButton(
-                          child: Text("Login"),
-                          onPressed: () {
-                            //Push to home screen
-                            Navigator.pushReplacementNamed(context, '/');
-                          },
-                        ),
-                        ElevatedButton(
-                          child: Text("Register"),
-                          onPressed: () {
-                            //Push to home screen
-                            Navigator.pushReplacementNamed(context, '/');
-                          },
-                        ),
-                      ],
-                    );
+                    return loggedIn();
+                  }
+                  else {
+                    return notLoggedIn();
                   }
                   break;
                 default:
                   return Text("Unexpected error");
               }
             },
-          ),
-          SizedBox(height: 15.0,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text("Change Theme"),
-              Switch(
-                value: _darkMode,
-                onChanged: (value) async {
-                  SharedPreferences localStorage = await SharedPreferences.getInstance();
-                  if(localStorage.getBool('theme')) {
-                    //if lightmode when change set to false to get darkmode
-                    localStorage.setBool('theme', false);
-                  }
-                  else {
-                    //if darkmode when change set to true to get lightmode
-                    localStorage.setBool('theme', true);
-                  }
-
-                  getThemeManager(context).toggleDarkLightTheme();
-
-                  setState(() {
-                    _darkMode = value;
-                  });
-                },
-                activeColor: Colors.deepPurple,
-                activeTrackColor: Colors.black26,
-              )
-            ],
           ),
 
           /*******************************************
@@ -152,6 +94,113 @@ class _SettingsState extends State<Settings> {
     bool _loggedIn;
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     _loggedIn = localStorage.getBool('loggedIn');
+    print("_loggedIn in checkLogin: $_loggedIn");
     return Future.value(_loggedIn);
+  }
+
+  Widget loggedIn(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SizedBox(height: 10.0,),
+        GestureDetector(
+          child: Card(
+            child: Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Center(child: Text("LogOut"))
+            ),
+          ),
+          onTap: () async {
+            SharedPreferences localStorage = await SharedPreferences.getInstance();
+            await localStorage.remove('token');
+            await localStorage.remove('rawSchedule');
+            await localStorage.setBool('loggedIn', false);
+            //Push to home screen
+            Navigator.pushReplacementNamed(context, '/');
+          },
+        ),
+        GestureDetector(
+          child: Card(
+            child: Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Center(child: Text(_darkMode ? "LightMode" : "DarkMode"))
+            ),
+          ),
+          onTap: () async {
+            SharedPreferences localStorage =
+            await SharedPreferences.getInstance();
+            if (localStorage.getBool('theme')) {
+              //if lightmode when change set to false to get darkmode
+              localStorage.setBool('theme', false);
+            } else {
+              //if darkmode when change set to true to get lightmode
+              localStorage.setBool('theme', true);
+            }
+
+            getThemeManager(context).toggleDarkLightTheme();
+
+            setState(() {
+              _darkMode = !_darkMode;
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget notLoggedIn(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SizedBox(height: 10.0,),
+        GestureDetector(
+          child: Card(
+            child: Padding(
+              padding: EdgeInsets.all(20.0),
+                child: Center(child: Text("Login"))
+            ),
+          ),
+          onTap: () {
+            Navigator.pushReplacementNamed(context, '/', arguments: true);
+          },
+        ),
+        GestureDetector(
+          child: Card(
+            child: Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Center(child: Text("Register"))
+            ),
+          ),
+          onTap: () {
+            Navigator.pushReplacementNamed(context, '/', arguments: false);
+          },
+        ),
+        GestureDetector(
+          child: Card(
+            child: Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Center(child: Text(_darkMode ? "LightMode" : "DarkMode"))
+            ),
+          ),
+          onTap: () async {
+            SharedPreferences localStorage =
+                await SharedPreferences.getInstance();
+            if (localStorage.getBool('theme')) {
+              //if lightmode when change set to false to get darkmode
+              localStorage.setBool('theme', false);
+            } else {
+              //if darkmode when change set to true to get lightmode
+              localStorage.setBool('theme', true);
+            }
+
+            getThemeManager(context).toggleDarkLightTheme();
+
+            setState(() {
+              _darkMode = !_darkMode;
+            });
+          },
+        ),
+      ],
+    );
   }
 }
