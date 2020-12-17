@@ -43,6 +43,7 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
    setState(() {
      if (_currentFloor > 1)
        _currentFloor--;
+     else (Navigator.pushReplacementNamed(context, '/searching', arguments: widget.room.name));
      _showPosition = _currentFloor != widget.room.floor ? false : true;
      _showPath = _currentFloor== widget.room.floor && !_isShowPathButton ? true : false;
    });

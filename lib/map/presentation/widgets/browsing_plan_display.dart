@@ -49,6 +49,7 @@ class _BrowsingPlanDisplayState extends State<BrowsingPlanDisplay> {
        _currentFloor--;
        buildingFloor = widget.building.name + _currentFloor.toString();
      }
+     else Navigator.pushReplacementNamed(context, '/browsing', arguments: widget.building);
 
    });
  }
