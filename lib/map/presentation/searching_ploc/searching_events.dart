@@ -20,3 +20,7 @@ class GetPlanEvent extends SearchingEvent {
   GetPlanEvent(this.currentFloor, this.room):super([currentFloor, room]);
 }
 
+class GetKnownRoomEvent extends SearchingEvent {
+  final Room room;
+  GetKnownRoomEvent(this.room):super([room]);
+}

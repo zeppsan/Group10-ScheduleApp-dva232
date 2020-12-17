@@ -127,7 +127,7 @@ class _TopControlsWidgetForBrowsingState extends State<TopControlsWidgetForBrows
             },
             onFieldSubmitted: (value){
               roomToFind = value;
-              Navigator.of(context).pushReplacementNamed('/searching', arguments: roomToFind);
+              Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
             },
             decoration: InputDecoration(
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
@@ -135,7 +135,7 @@ class _TopControlsWidgetForBrowsingState extends State<TopControlsWidgetForBrows
 
              suffixIcon: IconButton(
                onPressed: (){
-                 Navigator.of(context).pushReplacementNamed('/searching', arguments: roomToFind);
+                 Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
                },
 
                icon: Icon(Icons.search_rounded),

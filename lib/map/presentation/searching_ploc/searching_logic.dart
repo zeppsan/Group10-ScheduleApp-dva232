@@ -50,5 +50,8 @@ class SearchingLogic extends Bloc<SearchingEvent, SearchingState> {
       yield LoadingState();
       yield PlanLoaded(room: event.room, currentFloor: event.currentFloor);
     }
+    else if (event is GetKnownRoomEvent) {
+      yield RoomLoadedState(room: event.room);
+    }
   }
 }

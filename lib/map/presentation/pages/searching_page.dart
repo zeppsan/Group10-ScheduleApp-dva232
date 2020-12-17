@@ -75,7 +75,7 @@ class SearchingPage extends StatelessWidget {
                   } else if (state is PlanLoaded) {
                     print('in builder state is PlanLoaded');
                     return WillPopScope(
-                        onWillPop: () async { print('something');  dispatchGetRoom(context, state.room.name); return false;},
+                        onWillPop: () async { dispatchGetKnownRoom(context, state.room); return false;},
                         child: SearchingPlanDisplay(state.room.floor, state.room),
                     );
                   } else {
@@ -99,6 +99,12 @@ class SearchingPage extends StatelessWidget {
     BlocProvider.of<SearchingLogic>(context)
         .add(GetRoomEvent(roomToFind));
   }
+  void dispatchGetKnownRoom(BuildContext context, Room room)
+  {
+    BlocProvider.of<SearchingLogic>(context)
+        .add(GetKnownRoomEvent(room));
+  }
+
 }
 
 
