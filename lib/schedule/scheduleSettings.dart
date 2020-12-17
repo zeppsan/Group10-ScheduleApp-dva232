@@ -97,6 +97,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                                     title: Row(children: [
                                       Text("${e}".toUpperCase(), style: TextStyle(color: Colors.black),),
                                       BarColorPicker(
+                                        cornerRadius: 10,
                                         colorListener: (int value) {
                                           currentColor.value = Color(value + 00000);
                                           setCourseColor(e, currentColor.value);
