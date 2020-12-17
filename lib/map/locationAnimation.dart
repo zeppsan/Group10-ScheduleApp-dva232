@@ -119,6 +119,15 @@ String getFloorImage(String building){
     case 'U3':
       return 'assets/U3.png';
 
+    case 'T1':
+      return 'assets/U1.png';
+
+    case 'T2':
+      return 'assets/U2.png';
+
+    case 'T3':
+      return 'assets/U3.png';
+
     case 'R1':
       return 'assets/R1.png';
 

@@ -20,7 +20,7 @@ class BasicMapWidget extends StatelessWidget {
                 child:
                 Image.asset(switchImage(basicMapToShow)),
              ),
-            if (basicMapToShow!='basic' && basicMapToShow !='U' && basicMapToShow != 'R')
+            if (basicMapToShow!='basic' && basicMapToShow !='U' && basicMapToShow != 'R' && basicMapToShow != 'T' )
               Positioned (
                   top:10,
                   left:10,
@@ -45,7 +45,7 @@ String image;
       return 'assets/basic.png';
   
     case 'U':
-      return 'assets/U.png';
+      return 'assets/u1test.png';
 
     case 'U1':
       return 'assets/U1.png';
@@ -54,6 +54,18 @@ String image;
       return 'assets/U2.png';
 
     case 'U3':
+      return 'assets/U3.png';
+
+    case 'T':
+      return 'assets/U.png';
+
+    case 'T1':
+      return 'assets/U1.png';
+
+    case 'T2':
+      return 'assets/U2.png';
+
+    case 'T3':
       return 'assets/U3.png';
 
     case 'R':

@@ -90,13 +90,12 @@ class _BarColorPickerState extends State<BarColorPicker> {
     switch (widget.pickMode) {
       case PickMode.Color:
         colors = const [
-          Color(0xffff0000),
-          Color(0xffffff00),
-          Color(0xff00ff00),
-          Color(0xff00ffff),
-          Color(0xff0000ff),
-          Color(0xffff00ff),
-          Color(0xffff0000)
+          Color(0xFFFF9AA2),
+          Color(0xFFFFB7B2),
+          Color(0xFFFFDAC1),
+          Color(0xFFE2F0CB),
+          Color(0xFFB5EAD7),
+          Color(0xFFC7CEEA),
         ];
         break;
       case PickMode.Grey:
@@ -208,7 +207,7 @@ class _BarColorPickerState extends State<BarColorPicker> {
     });
     switch (widget.pickMode) {
       case PickMode.Color:
-        Color color = HSVColor.fromAHSV(1.0, percent * 360, 1.0, 1.0).toColor();
+        Color color = HSVColor.fromAHSV(1.0, percent * 360, 0.3, 1.0).toColor();
         widget.colorListener(color.value);
         break;
       case PickMode.Grey:
