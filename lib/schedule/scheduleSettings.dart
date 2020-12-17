@@ -102,16 +102,18 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                                 margin: EdgeInsets.fromLTRB(15, 5, 15, 0),
                                 child: ListTile(
                                     title: Row(children: [
-                                      Text("${e}".toUpperCase(), style: TextStyle(color: courseCodeColor),),
-                                      BarColorPicker(
-                                        cornerRadius: 10,
-                                        colorListener: (int value) {
-                                          currentColor.value = Color(value + 00000);
-                                          setCourseColor(e, currentColor.value);
-                                          print("I did set the color ${value}");
-                                        },
-                                        thumbColor: Colors.white,
-                                        initialColor: (course_initColors[e] != null)? course_initColors[e] : Colors.lightBlueAccent,
+                                      Container(child: Text("${e}".toUpperCase(), style: TextStyle(color: courseCodeColor),)),
+                                      Expanded(
+                                        child: BarColorPicker(
+                                          cornerRadius: 10,
+                                          colorListener: (int value) {
+                                            currentColor.value = Color(value + 00000);
+                                            setCourseColor(e, currentColor.value);
+                                            print("I did set the color ${value}");
+                                          },
+                                          thumbColor: Colors.white,
+                                          initialColor: (course_initColors[e] != null)? course_initColors[e] : Colors.lightBlueAccent,
+                                        ),
                                       ),
                                     ]),
                                     trailing: IconButton(
