@@ -2,11 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
-import 'package:schedule_dva232/map/data_domain/models/coordinates.dart';
-
 import 'DirectionPainter.dart';
 import 'data_domain/models/room.dart';
-
 
 class LocationAnimation extends StatefulWidget {
   final Room room;
@@ -50,59 +47,54 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
   Widget build(BuildContext context) {
 
     return Container (
-        child: ClipRect(
-          child:Stack (
-            children: [
-              InteractiveViewer(
-                minScale: 0.1,
-                maxScale: 3.0,
-                /*child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,// * 0.55,
-          decoration: BoxDecoration(color: Colors.white),
-*/
-                child: FittedBox(
-                  fit: BoxFit.contain,
+      child: ClipRect(
+        child:Stack (
+          children: [
+            InteractiveViewer(
+              minScale: 0.1,
+              maxScale: 3.0,
+              /*child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,// * 0.55,
+                decoration: BoxDecoration(color: Colors.white),
+              */
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: Stack(
+                  children: [
+                    Image.asset(getFloorImage(widget.floorImage)),
+                    if(widget.showPosition)
+                    PositionedTransition(
+                      rect: RelativeRectTween(
+                        begin: RelativeRect.fromLTRB(x, y, 0, 0),
+                        end: RelativeRect.fromLTRB(x, y + 300, 0, 0),
+                      ).animate(CurvedAnimation( parent: controller, curve: Curves.bounceIn.flipped)),
 
-                  child: Stack(
-                      children: [
-                        Image.asset(
-                            getFloorImage(widget.floorImage)),
-                        if(widget.showPosition)
-                          PositionedTransition(
-                            rect: RelativeRectTween(
-                              begin: RelativeRect.fromLTRB(x, y, 0, 0),
-                              end: RelativeRect.fromLTRB(x, y + 300, 0, 0),
-                            ).animate(CurvedAnimation( parent: controller, curve: Curves.bounceIn.flipped)),
-
-                            child: Image.asset(
-                              'assets/test.png',
-                            ),
-                          ),
-                        if(widget.showPath)
-                          CustomPaint( painter: DirectionPainter(direction: widget.room.path), ),
-
-                      ]
-                  ),
+                      child: Image.asset(
+                        'assets/test.png',
+                      ),
+                    ),
+                    if(widget.showPath)
+                    CustomPaint( painter: DirectionPainter(direction: widget.room.path), ),
+                  ]
                 ),
-                //),
               ),
-              Positioned (
-                  top:10,
-                  left:10,
-                  child:Text( widget.room.building.name + widget.currentFloor.toString(),
-                      style: TextStyle (
-                        fontSize: 50,
-                        backgroundColor: Colors.white,
-                        color: Colors.deepPurple[100],
-                      )
-                  )
-              ),
-            ]
-          )
-
-                  )
-                  );
+            ),
+            Positioned (
+              top:10,
+              left:10,
+              child:Text( widget.room.building.name + widget.currentFloor.toString(),
+                style: TextStyle (
+                  fontSize: 50,
+                  backgroundColor: Colors.white,
+                  color: Colors.deepPurple[100],
+                )
+              )
+            ),
+          ]
+        )
+      )
+   );
   }
 }
 

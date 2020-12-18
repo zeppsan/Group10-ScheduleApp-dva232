@@ -20,6 +20,16 @@ class _RegisterForm extends State<RegisterForm> {
   var passwordConfirmation;
   bool _passwordVisible;
 
+  //Error messages
+  String _emailEmpty = "Please enter an email";
+  String _emailNotValid = "Please enter an valid email";
+
+  String _nameEmpty = "Please enter your name";
+
+  String _passwordEmpty = "Please enter a password";
+  String _passwordTooShort = "Password too short. Minimum 6 characters";
+  String _passwordNotMatch = "Passwords do not match";
+
   @override
   void initState() {
     _passwordVisible = false;
@@ -42,9 +52,9 @@ class _RegisterForm extends State<RegisterForm> {
             ),
             validator: (emailValue) {
               if (emailValue.isEmpty) {
-                return 'Please enter some text';
+                return _emailEmpty;
               } else if (isEmail(emailValue.toLowerCase()) == false) {
-                return 'Please enter an valid email';
+                return _emailNotValid;
               }
               email = emailValue;
               return null;
@@ -63,7 +73,7 @@ class _RegisterForm extends State<RegisterForm> {
             keyboardType: TextInputType.text,
             validator: (nameValue) {
               if (nameValue.isEmpty) {
-                return 'Please enter some text';
+                return _nameEmpty;
               }
               name = nameValue;
               return null;
@@ -96,9 +106,9 @@ class _RegisterForm extends State<RegisterForm> {
             obscureText: !_passwordVisible,
             validator: (passwordValue) {
               if (passwordValue.isEmpty) {
-                return 'Please enter some text';
+                return _passwordEmpty;
               } else if (passwordValue.length < 6) {
-                return 'Too short password. Min 6 characters';
+                return _passwordTooShort;
               }
               password = passwordValue;
               return null;
@@ -130,11 +140,11 @@ class _RegisterForm extends State<RegisterForm> {
             obscureText: !_passwordVisible,
             validator: (passwordConfirmationValue) {
               if (passwordConfirmationValue.isEmpty) {
-                return 'Please enter some text';
+                return _passwordEmpty;
               } else if (passwordConfirmationValue.length < 6) {
-                return 'Too short password. Min 6 characters';
+                return _passwordTooShort;
               } else if (passwordConfirmationValue != password) {
-                return 'Passwords do not match';
+                return _passwordNotMatch;
               }
               passwordConfirmation = passwordConfirmationValue;
               return null;

@@ -4,8 +4,8 @@ class Coordinates {
 
   Coordinates({this.x,this.y});
 
-  Map toJson() => {
+  /*Map toJson() => {
     'x': x,
     'y': y,
-  };
+  };*/
 }

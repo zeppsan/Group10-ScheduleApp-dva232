@@ -20,6 +20,13 @@ class _LoginForm extends State<LoginForm> {
   bool _passwordVisible;
   bool _rememberMe;
 
+  //Error messages
+  String _emailEmpty = "Please enter an email";
+  String _emailNotValid = "Please enter an valid email";
+
+  String _passwordEmpty = "Please enter a password";
+  String _passwordTooShort = "Password too short. Minimum 6 characters";
+
   @override
   void initState() {
     _passwordVisible = false;
@@ -43,9 +50,9 @@ class _LoginForm extends State<LoginForm> {
             keyboardType: TextInputType.emailAddress,
             validator: (emailValue) {
               if (emailValue.isEmpty) {
-                return 'Please enter some text';
+                return _emailEmpty;
               } else if (isEmail(emailValue.toLowerCase()) == false) {
-                return 'Please enter an valid email';
+                return _emailNotValid;
               }
 
               email = emailValue;
@@ -79,9 +86,9 @@ class _LoginForm extends State<LoginForm> {
             obscureText: !_passwordVisible,
             validator: (passwordValue) {
               if (passwordValue.isEmpty) {
-                return 'Please enter some text';
+                return _passwordEmpty;
               } else if (passwordValue.length < 6) {
-                return 'Too short password. Min 6 characters';
+                return _passwordTooShort;
               }
               password = passwordValue;
               return null;
