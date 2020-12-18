@@ -1,13 +1,8 @@
 import 'dart:async';
-import 'package:schedule_dva232/map/core/error/failure.dart';
 import 'package:schedule_dva232/map/core/util/input_converter.dart';
-import 'package:schedule_dva232/map/data_domain/models/building.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-
-import 'package:flutter/cupertino.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
-import 'package:schedule_dva232/map/data_domain/usecases/get_building_usecase.dart';
 import 'package:schedule_dva232/map/data_domain/usecases/get_room_usecase.dart';
 part 'searching_events.dart';
 part 'searching_states.dart';

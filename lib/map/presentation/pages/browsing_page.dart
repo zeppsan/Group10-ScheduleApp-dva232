@@ -39,7 +39,25 @@ class BrowsingPage extends StatelessWidget {
                   child: BlocBuilder<BrowsingLogic, BrowsingState>(
                       builder: (context,state) {
                         if (state is EmptyState) {
-                          return BasicMapWidget(basicMapToShow: 'basic');
+                          return Column(
+                            children: [
+                              Expanded(child: BasicMapWidget(basicMapToShow: 'basic')),
+                              Visibility(
+                                visible:false,
+                                maintainState: true,
+                                maintainAnimation:true,
+                                maintainSize:true,
+                                child:Row (
+                                    children: [
+                                      Text('To floor plans'),
+                                      Icon(Icons.arrow_forward_rounded,
+                                        color: Theme.of(context).accentColor)
+                                    ]
+                                ),
+                              )
+                            ],
+                          );
+
                         } else if (state is LoadingState) {
                           return LoadingWidget();
                         } else if (state is ErrorState) {
@@ -86,7 +104,6 @@ class BrowsingPage extends StatelessWidget {
   }
   void dispatchGetFloorPlan(BuildContext context, Building building, int floorToShow)
   {
-    print('before event fires: ' + building.name);
     BlocProvider.of<BrowsingLogic>(context)
         .add(GetPlanEvent(1, building));
   }

@@ -19,6 +19,10 @@ abstract class BuildingAssetsDataSource {
   Future <BuildingModel> getBuilding(String name);
 }
 
+abstract class BuildingCacheDataSource {
+  Future <BuildingModel> getLastBuilding();
+}
+
 class BuildingAssetsDataSourceImpl implements BuildingAssetsDataSource {
 
   @override
@@ -40,6 +44,7 @@ class BuildingAssetsDataSourceImpl implements BuildingAssetsDataSource {
 }
 
 
+
 class BuildingRepositoryImpl implements BuildingRepository {
   final BuildingAssetsDataSource assetsDataSource;
 
@@ -52,6 +57,7 @@ class BuildingRepositoryImpl implements BuildingRepository {
     //Get the building data from assets
     try {
       final buildingToCache = await assetsDataSource.getBuilding(name);
+      // Remember the building
       return Right(buildingToCache);
     }
     //If fails to get building data
@@ -59,5 +65,4 @@ class BuildingRepositoryImpl implements BuildingRepository {
       return Left(AssetsFailure());
     }
   }
-
 }

@@ -21,7 +21,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
   Future courseFuture;
   bool activeButton;
   Future addToList;
-  Future<bool> loadingSpinner;
+  bool loadingSpinner;
   Map<String, Color> course_initColors;
 
   /*
@@ -38,6 +38,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
     courseFuture = getCourseList();
     activeButton = true;
     course_initColors = Map<String, Color>();
+    loadingSpinner = false;
   }
 
   @override
@@ -61,7 +62,6 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
 
       body: Container(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
               margin: EdgeInsets.fromLTRB(15, 40, 15, 10),
@@ -70,6 +70,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                 decoration: InputDecoration(
                   hintText: 'Course Code',
                   border: OutlineInputBorder(),
+
                 ),
               ),
             ),
@@ -77,27 +78,30 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
               margin: EdgeInsets.fromLTRB(15, 0, 15, 10),
               child: ElevatedButton(
                   onPressed: () {
+                    setState(() {
+                      loadingSpinner = true;
+                    });
                     if (activeButton) {
                       activeButton = false;
                       addToList = addCourseToList(course_input.text);
                       FocusScope.of(context).unfocus();
                     }
+
                     addToList.whenComplete(() => {
                           setState(() {
+                            loadingSpinner = false;
                             courseFuture = getCourseList();
                           })
                         });
                   },
                   child: Text("Add course")),
             ),
+            (loadingSpinner)?CircularProgressIndicator():SizedBox(),
             Flexible(
               child: FutureBuilder(
                 future: courseFuture,
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return CircularProgressIndicator();
-                      break;
                     case ConnectionState.done:
                       if (snapshot.hasData) {
                         List<dynamic> courses = List<dynamic>();
@@ -119,7 +123,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                                         child: BarColorPicker(
                                           cornerRadius: 10,
                                           colorListener: (int value) {
-                                            currentColor.value = Color(value + 00000);
+                                            currentColor.value = Color(value);
                                             setCourseColor(e, currentColor.value);
                                             print("I did set the color ${value}");
                                           },
@@ -156,7 +160,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                       }
                       break;
                     default:
-                      return Text("WTF");
+                      return SizedBox();
                       break;
                   }
                 },

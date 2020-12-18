@@ -6,7 +6,6 @@ import 'package:schedule_dva232/map/presentation/browsing_ploc/browsing_logic.da
 import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'map/data_domain/repositories/room_repository.dart';
-import 'map/data_domain/usecases/get_room_list_usecase.dart';
 import 'map/data_domain/usecases/get_room_usecase.dart';
 
 final serviceLocator = GetIt.instance;
@@ -22,7 +21,6 @@ Future<void> init () async
   //Lazy is instantiated when called
   serviceLocator.registerLazySingleton(() => GetBuilding(serviceLocator()));
   serviceLocator.registerLazySingleton(()=> GetRoom(serviceLocator()));
-  serviceLocator.registerLazySingleton(()=> GetRoomList(serviceLocator()));
 
   //Repositories
   serviceLocator.registerLazySingleton<BuildingRepository>(() => BuildingRepositoryImpl(
@@ -33,9 +31,11 @@ Future<void> init () async
       assetsDataSource: serviceLocator()
     )
   );
+
   serviceLocator.registerLazySingleton<BuildingAssetsDataSource>(() =>
       BuildingAssetsDataSourceImpl(),
   );
+
   serviceLocator.registerLazySingleton<RoomAssetsDataSource>(() =>
       RoomAssetsDataSourceImpl(),
   );

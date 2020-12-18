@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //Domain Layer
 abstract class RoomRepository {
-  Future <Either<Failure, Room>> getRoom(String name);
+  Future <Either<Failure,Room>> getRoom(String name);
 
   Future <List<String>> getRoomList();
 }
@@ -21,6 +21,8 @@ abstract class RoomRepository {
 //Data Layer
 abstract class RoomAssetsDataSource {
   Future <RoomModel> getRoom(String name);
+}
+
   Future <List<String>> getRoomList();
 }
 
@@ -98,6 +100,7 @@ class RoomRepositoryImpl implements RoomRepository {
     //Get the room data from assets
     try {
       final roomToCache = await assetsDataSource.getRoom(name);
+      // Remember the room
       return Right(roomToCache);
     }
     //If fails to get room data
