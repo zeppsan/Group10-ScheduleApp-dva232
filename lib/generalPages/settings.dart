@@ -89,6 +89,31 @@ class _SettingsState extends State<Settings> {
                 Navigator.pushReplacementNamed(context, '/');
               },
             )*/
+            Row(
+              children: [
+                Text("Dark theme"),
+                Switch(
+                  value: _darkModeSwitch,
+                  onChanged: (value) async {
+                    SharedPreferences localStorage =
+                    await SharedPreferences.getInstance();
+                    if (localStorage.getBool('theme')) {
+                      //if lightmode when change set to false to get darkmode
+                      localStorage.setBool('theme', false);
+                    } else {
+                      //if darkmode when change set to true to get lightmode
+                      localStorage.setBool('theme', true);
+                    }
+                    //Change the theme
+                    getThemeManager(context).toggleDarkLightTheme();
+
+                    setState(() {
+                      _darkModeSwitch = value;
+                    });
+                  },
+                )
+              ],
+            ),
           ],
         ),
       ),
@@ -109,39 +134,13 @@ class _SettingsState extends State<Settings> {
         ElevatedButton(
           child: Text("Logout"),
           onPressed: () async {
-            SharedPreferences localStorage =
-                await SharedPreferences.getInstance();
+            SharedPreferences localStorage = await SharedPreferences.getInstance();
             await localStorage.remove('token');
             await localStorage.remove('rawSchedule');
             await localStorage.setBool('loggedIn', false);
             //Push to home screen
             Navigator.pushReplacementNamed(context, '/');
           },
-        ),
-        Row(
-          children: [
-            Text("Dark theme"),
-            Switch(
-              value: _darkModeSwitch,
-              onChanged: (value) async {
-                SharedPreferences localStorage =
-                    await SharedPreferences.getInstance();
-                if (localStorage.getBool('theme')) {
-                  //if lightmode when change set to false to get darkmode
-                  localStorage.setBool('theme', false);
-                } else {
-                  //if darkmode when change set to true to get lightmode
-                  localStorage.setBool('theme', true);
-                }
-                //Change the theme
-                getThemeManager(context).toggleDarkLightTheme();
-
-                setState(() {
-                  _darkModeSwitch = value;
-                });
-              },
-            )
-          ],
         ),
       ],
     );
@@ -155,31 +154,6 @@ class _SettingsState extends State<Settings> {
           onPressed: () {
             Navigator.pushReplacementNamed(context, '/');
           },
-        ),
-        Row(
-          children: [
-            Text("Dark theme"),
-            Switch(
-              value: _darkModeSwitch,
-              onChanged: (value) async {
-                SharedPreferences localStorage =
-                    await SharedPreferences.getInstance();
-                if (localStorage.getBool('theme')) {
-                  //if lightmode when change set to false to get darkmode
-                  localStorage.setBool('theme', false);
-                } else {
-                  //if darkmode when change set to true to get lightmode
-                  localStorage.setBool('theme', true);
-                }
-                //Change the theme
-                getThemeManager(context).toggleDarkLightTheme();
-
-                setState(() {
-                  _darkModeSwitch = value;
-                });
-              },
-            ),
-          ],
         ),
       ],
     );
