@@ -87,7 +87,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(" "+getday(pos)+"  "+getDayDate(pos).toString()+"/"+DateTime.now().month.toString(), //KOMMER EJ FUNGERA VID MÅNADSSKIFTE NY FUNKTION GET MONTH!!
-                            style: TextStyle(fontSize: 20, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462)),
+                            style: TextStyle(fontSize: 20, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462), fontWeight: FontWeight.bold),
                           ),
                           Container(
                             child: Builder(
@@ -106,7 +106,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                               style: TextStyle(fontSize: 15, color: Color(0xff2c1d33))
                                           ),
                                           title: Text(e.course_code.toUpperCase(),
-                                              style: TextStyle(color: Color(0xff2c1d33), fontWeight: FontWeight.bold)), //VET EJ OM DET VERKLIGEN BÖR VARA BOLD...
+                                              style: TextStyle(color: Color(0xff2c1d33),)),
                                           subtitle: Text(e.moment,
                                             style: TextStyle(fontSize: 15, color: Color(0xff2c1d33)),),
                                           trailing: FlatButton(

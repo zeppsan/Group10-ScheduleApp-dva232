@@ -63,7 +63,7 @@ class _SettingsState extends State<Settings> {
             /*******************************************
              * Only for testing
              *******************************************/
-            /*SizedBox(
+            SizedBox(
               height: 150.0,
             ),
             Text(
@@ -88,7 +88,7 @@ class _SettingsState extends State<Settings> {
               onPressed: () {
                 Navigator.pushReplacementNamed(context, '/');
               },
-            )*/
+            )
           ],
         ),
       ),

@@ -23,8 +23,8 @@ class NavigationBarLoggedIn extends StatelessWidget {
           label: 'Map',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'Settings',
+          icon: Icon(Icons.notifications_none_outlined),
+          label: 'Notices',
         ),
 
       ],
@@ -43,7 +43,7 @@ class NavigationBarLoggedIn extends StatelessWidget {
             _selectedItem = value;
             break;
           case 3:
-            Navigator.pushReplacementNamed(context, '/settings');
+            Navigator.pushReplacementNamed(context, '/settings'); //EMELIE MAY CHANGE TO RIGHT NOTICES
             _selectedItem = value;
             break;
         }
