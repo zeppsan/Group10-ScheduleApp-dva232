@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:schedule_dva232/schedule/subfiles/colorPicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
+import 'subfiles/colorPicker.dart';
 
 class ScheduleSettings extends StatefulWidget {
   @override
@@ -22,6 +23,12 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
   Future addToList;
   Future<bool> loadingSpinner;
   Map<String, Color> course_initColors;
+
+  /*
+  * COLORS SETTINGS
+  * */
+  final Color trashbinColor = Colors.grey[800];
+  final Color courseCodeColor = Colors.grey[800];
 
   @override
   void initState() {
@@ -39,7 +46,19 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Course Information"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/scheduleSettings');
+              },
+            icon: Icon(
+            Icons.notifications_none_rounded,
+            color:  const Color(0xffdfb15b),
+            ),
+          ),
+        ],
       ),
+
       body: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -95,19 +114,23 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                                 margin: EdgeInsets.fromLTRB(15, 5, 15, 0),
                                 child: ListTile(
                                     title: Row(children: [
-                                      Text("${e}".toUpperCase(), style: TextStyle(color: Colors.black),),
-                                      BarColorPicker(
-                                        colorListener: (int value) {
-                                          currentColor.value = Color(value + 00000);
-                                          setCourseColor(e, currentColor.value);
-                                          print("I did set the color ${value}");
-                                        },
-                                        thumbColor: Colors.white,
-                                        initialColor: (course_initColors[e] != null)? course_initColors[e] : Colors.lightBlueAccent,
+                                      Container(child: Text("${e}".toUpperCase(), style: TextStyle(color: courseCodeColor),)),
+                                      Expanded(
+                                        child: BarColorPicker(
+                                          cornerRadius: 10,
+                                          colorListener: (int value) {
+                                            currentColor.value = Color(value + 00000);
+                                            setCourseColor(e, currentColor.value);
+                                            print("I did set the color ${value}");
+                                          },
+                                          thumbColor: Colors.white,
+                                          initialColor: (course_initColors[e] != null)? course_initColors[e] : Colors.lightBlueAccent,
+                                        ),
                                       ),
                                     ]),
                                     trailing: IconButton(
                                       icon: Icon(Icons.delete),
+                                      color: trashbinColor,
                                       onPressed: () {
                                         removeCourse(e);
                                         Future.delayed(

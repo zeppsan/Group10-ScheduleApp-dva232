@@ -24,7 +24,7 @@ class _LoginMainState extends State<LoginMain> {
 
   //Light Theme Colors
   var _logoLight = Color(0xff2c1d33);
-  var _gradientStartLight = Color(0xFFC4BFDB);
+  var _gradientStartLight = Color(0xffeeb462);
   var _gradientEndLight = Color(0xFFFFFFFF);
 
   @override

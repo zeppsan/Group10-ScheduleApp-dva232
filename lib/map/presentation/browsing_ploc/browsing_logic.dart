@@ -23,7 +23,7 @@ class BrowsingLogic extends Bloc<BrowsingEvent, BrowsingState> {
   Stream<BrowsingState> mapEventToState(BrowsingEvent event) async* {
     // yield returns a value and DOES NOT terminate the function
     if (event is GetBuildingEvent) {
-      print ('getbuilding event');
+
       yield LoadingState();
       final failureOrBuilding = await getBuilding(event.name);
       yield failureOrBuilding.fold(
@@ -38,6 +38,10 @@ class BrowsingLogic extends Bloc<BrowsingEvent, BrowsingState> {
       {
         yield LoadingState();
         yield EmptyState();
+      }
+    else if (event is GetKnownBuildingEvent)
+      {
+        yield BuildingLoadedState(building: event.building);
       }
   }
 }

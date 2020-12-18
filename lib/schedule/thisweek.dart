@@ -5,11 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
-//import 'package:schedule_dva232/schedule/CourseParser.dart';
-//import 'package:schedule_dva232/schedule/CourseParser.dart';
-import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'CourseParser.dart';
+import 'package:schedule_dva232/schedule/subfiles/scheduleUpdater.dart';
 
 class Thisweek extends StatelessWidget {
   @override
@@ -40,7 +37,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
   @override
   void initState() {
     super.initState();
-    _checkSchedule = checkSchedule(); //get rawschedule
+    _checkSchedule = checkSchedule(context); //get rawschedule
   }
 
   Widget build(BuildContext context) {
@@ -52,7 +49,9 @@ class _fiveTopDaysState extends State<fiveTopDays> {
               return Text("Loading..", style: TextStyle(fontSize: 20,
                   color: lightTheme ? Color(0xff2c1d33) : Colors.white));
             default:
-              if (!snapshot.hasData) { //if no data == no schedule get button to addCourse
+              log(snapshot.data.toString());
+              log(snapshot.hasData.toString());
+              if (!snapshot.hasData || snapshot.data.toString() == "{}") { //if no data == no schedule get button to addCourse
                 return Container(
                   padding: EdgeInsets.fromLTRB(0, 150, 0, 0),
                   child: Column(
@@ -80,7 +79,8 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                       List<Lecture> _selectedLectures = snapshot.data[DateTime(DateTime.now().year, DateTime.now().month, getDayDate(pos))]; //get lectures for specific date
                       return Column(
                         children: <Widget>[
-                          Text(getday(pos), style: TextStyle(fontSize: 20, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462)),),
+                          Container(height: 10,),
+                          Text(getday(pos), style: TextStyle(fontSize: 22, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462)),),
 
                           Center(
                             child: Builder(
@@ -92,21 +92,21 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                         elevation: 10,
                                         shadowColor: Color(0xff2c1d33),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15),
+                                          borderRadius: BorderRadius.circular(15),  //VARFÖR FUNGERAR EJ DETTA!
                                         ),
                                         child: ListTile(
                                           leading: Text(e.getTime(e.startTime) + "\n    -\n" + e.getTime(e.endTime),
-                                              style: TextStyle(fontSize: 15, color: Colors.white)
+                                              style: TextStyle(fontSize: 15, color: Color(0xff2c1d33))
                                           ),
                                           title: Text(e.course_code.toUpperCase(),
-                                              style: TextStyle(color: Colors.white)),
+                                              style: TextStyle(color: Color(0xff2c1d33))),
                                           subtitle: Text(e.moment,
-                                            style: TextStyle(fontSize: 15, color: Colors.white),),
+                                            style: TextStyle(fontSize: 15, color: Color(0xff2c1d33)),),
                                           trailing: FlatButton(
                                             child: Text(e.location.toUpperCase(),
                                                 style: TextStyle(
                                                   fontSize: 15,
-                                                  color: Colors.white,
+                                                  color: Color(0xff2c1d33),
                                                   decoration: TextDecoration.underline,
                                                   decorationThickness: 1.5,)
                                             ),
@@ -140,14 +140,17 @@ class _fiveTopDaysState extends State<fiveTopDays> {
   }
 }
 
-Future<Map<DateTime, List<Lecture>>> checkSchedule() async{
+Future<Map<DateTime, List<Lecture>>> checkSchedule(context) async{
   SharedPreferences localStorage = await SharedPreferences.getInstance();
   lightTheme = await localStorage.getBool('theme');
-  if(localStorage.containsKey('rawSchedule')) {
+  Map<DateTime, List<Lecture>> result;
+  Future nogotfint = ScheduleUpdater.getEvents(context);
+  await nogotfint.whenComplete(() async{
     CourseParser parser = CourseParser(rawData: jsonDecode(localStorage.getString('rawSchedule')));
     await parser.parseRawData();
-    return parser.events;
-  }
+    result = parser.events;
+  });
+  return result;
 }
 
 String getday(int loopPos) {
@@ -181,7 +184,7 @@ String getday(int loopPos) {
 }
 
 int getDayDate(int loopPos){
-  var actualDay = DateTime.now().day + loopPos;
+  var actualDay = DateTime.now().day + loopPos;// inte över 30
   if (DateTime(DateTime.now().year, DateTime.now().month,actualDay).weekday>5 )  { //kanske fungerar får kolla imorgon om det är helg öka dagens datum med 2 kommer fucka för mer än mån-tis
       actualDay = actualDay+2;
   }
