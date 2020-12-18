@@ -212,7 +212,7 @@ void loadList () async {
           key: key,
           clearOnSubmit: false,
           suggestions: roomNames,
-          textInputAction: TextInputAction.done,
+          //textInputAction: TextInputAction.done,
           style: TextStyle(color: const Color(0xffeeb462), fontSize: 16.0),
           submitOnSuggestionTap: true,
           decoration: InputDecoration(
@@ -233,7 +233,7 @@ void loadList () async {
             return a.compareTo(b);
             },
             itemSubmitted: (item){
-              _onWillPop();
+             // _onWillPop();
               setState(() {
                 searchTextField.textField.controller.text = item;
                 roomToFind = item;
