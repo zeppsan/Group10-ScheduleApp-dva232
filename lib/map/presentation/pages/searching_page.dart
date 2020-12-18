@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
+import 'package:schedule_dva232/map/data_domain/repositories/room_repository.dart';
 import 'package:schedule_dva232/map/data_domain/usecases/get_room_list_usecase.dart';
 import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart';
 import 'package:schedule_dva232/map/presentation/widgets/searching_plan_display.dart';
@@ -126,7 +127,6 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
   GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
   String roomToFind;
 
-
   AutoCompleteTextField searchTextField;
 
   List<String> roomNames = List<String>();
@@ -142,27 +142,27 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
   String roomSuggestion;
 
 void loadList () async {
-
-  final GetRoomList getRoomList = ic.serviceLocator<GetRoomList>();
+  print('loadlist');
+  RoomAssetsDataSource source = RoomAssetsDataSourceImpl();
+  RoomRepository repository = new RoomRepositoryImpl(assetsDataSource: source);
+  final GetRoomList getRoomList = GetRoomList(repository);
   roomNames = await getRoomList();
-  print(roomNames);
-
 }
 
 
 
   @override
   void initState()  {
-
+  print ('init');
     loadList();
     _focusNode.addListener(() {
-      if(_focusNode.hasFocus) {
+      if(_focusNode.hasFocus && searchTextField.controller!=null ) {
         roomSuggestion = searchTextField.controller.text.toString();
         //test = "room found";
         this._overlayEntry = this._createOverlayEntry();
         Overlay.of(context).insert(this._overlayEntry);
       }
-      else {
+      else if (searchTextField.controller!=null ){
         this._overlayEntry.remove();
       }
     });

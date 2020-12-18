@@ -43,6 +43,7 @@ class RoomAssetsDataSourceImpl implements RoomAssetsDataSource {
 
   @override
   Future<RoomModel> getRoom(String name) async {
+
     List<Coordinates> direction = List<Coordinates>();
     final String buildings = await rootBundle.loadString(
         "assets/buildings_rooms.json");
@@ -84,8 +85,8 @@ class RoomRepositoryImpl implements RoomRepository {
   });
 
   @override
-  Future<List<String>> getRoomList() async {
-      final roomlist = await assetsDataSource.getRoomList();
+  Future <List<String>> getRoomList() async {
+      final List<String> roomlist = await assetsDataSource.getRoomList();
       return roomlist;
   }
 
