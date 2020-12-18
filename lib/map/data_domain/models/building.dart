@@ -21,7 +21,7 @@ class BuildingModel extends Building {
     @required int floors,
   }):super(name: name,campus: campus,floors: floors);
 
-  factory BuildingModel.fromJson(Map<String, dynamic> jsonBuilding) {
+  /*factory BuildingModel.fromJson(Map<String, dynamic> jsonBuilding) {
     return BuildingModel (floors: jsonBuilding['floors'],campus: jsonBuilding['campus'],name: jsonBuilding['name']);
   }
   Map<String, dynamic> toJson() {
@@ -30,5 +30,5 @@ class BuildingModel extends Building {
       "campus": campus,
       "floors": floors,
     };
-  }
+  }*/
 }

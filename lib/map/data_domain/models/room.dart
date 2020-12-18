@@ -29,7 +29,7 @@ class Room {
       @required List<Coordinates> path,
     }) :super(name: name, floor: floor, position: position, building: building, path: path );
 
-    Map<String, dynamic> toJson() {
+   /* Map<String, dynamic> toJson() {
       return {
         "name": name,
         "path": path,
@@ -55,5 +55,5 @@ class Room {
           floor: jsonRoom ['floor'],
           position: Coordinates(
              x: jsonRoom['position']['x'], y: jsonRoom['position']['y']));
-    }
+    }*/
   }
