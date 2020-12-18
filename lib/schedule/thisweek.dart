@@ -5,7 +5,7 @@ import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
-
+import 'package:schedule_dva232/generalPages/settings.dart';
 
 var prevDay =1;
 bool lightTheme = true;
@@ -20,6 +20,7 @@ class Thisweek extends StatelessWidget {
       appBar: AppBar(
         title:  Text('This Week'),
       ),
+      endDrawer: Settings(),
       body: Container(
         child: fiveTopDays(),
       ),
