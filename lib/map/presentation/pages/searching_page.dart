@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
-import 'package:schedule_dva232/map/data_domain/models/building.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
 import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart';
-import 'package:schedule_dva232/map/presentation/widgets/browsing_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/searching_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
-import 'package:schedule_dva232/map/locationAnimation.dart';
 
 //TODO: Should probably be Stateful
 class SearchingPage extends StatelessWidget {
@@ -19,7 +16,6 @@ class SearchingPage extends StatelessWidget {
   @override build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset:false,
-      //TODO: Is there common AppBar to Share?
       appBar: AppBar(
         title: Text('Map'),
       ),
@@ -36,52 +32,51 @@ class SearchingPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               TopControlsWidgetForSearching(inputString:roomToFind),
 
-              BlocBuilder<SearchingLogic, SearchingState>(
-                builder: (context,state) {
-                  if (state is EmptyState) {
-                    print('in builder state is Empty. Searching for ' + roomToFind);
-                    BlocProvider.of<SearchingLogic>(context).add(GetRoomEvent(roomToFind));
-                    return Container();
-                  } else if (state is LoadingState) {
-                    print('in builder state is Loading');
-                    return LoadingWidget();
-                  } else if (state is ErrorState) {
-                    print('in builder state is Error');
-                    return MessageDisplay(message: state.message);
-                  } else if (state is RoomLoadedState) {
-                    print('in builder state is Loaded');
-                    return Container(
-                      child: Column  (
+              Expanded(
+                child: BlocBuilder<SearchingLogic, SearchingState>(
+                  builder: (context,state) {
+                    if (state is EmptyState) {
+                      BlocProvider.of<SearchingLogic>(context).add(GetRoomEvent(roomToFind));
+                      return Container();
+                    } else if (state is LoadingState) {
+                      return LoadingWidget();
+                    } else if (state is ErrorState) {
+                      return MessageDisplay(message: state.message);
+                    } else if (state is RoomLoadedState) {
+                      return Container(
+                        child: Column  (
+                          mainAxisSize: MainAxisSize.max,
                           children: <Widget> [
-                            BasicMapWidget(basicMapToShow: state.room.building.name),
+                            Expanded(child: BasicMapWidget(basicMapToShow: state.room.building.name)),
                             FlatButton(
                               child:Row (
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text('Show on the floor plan'),
-                                    Icon(Icons.arrow_forward_rounded,
-                                      color: Theme.of(context).accentColor,
-                                    ),
-                                  ]
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text('Show on the floor plan'),
+                                  Icon(Icons.arrow_forward_rounded,
+                                    color: Theme.of(context).accentColor,
+                                  ),
+                                ]
                               ),
                               onPressed: () { dispatchGetFloorPlan(context, state.room, state.room.floor); },
                             ),
                           ],
                         ),
-                    );
-                  } else if (state is PlanLoaded) {
-                    print('in builder state is PlanLoaded');
-                    return WillPopScope(
-                        onWillPop: () async { dispatchGetKnownRoom(context, state.room); return false;},
-                        child: SearchingPlanDisplay(state.room.floor, state.room),
-                    );
-                  } else {
-                    return MessageDisplay(message: 'Unexpected error');
+                      );
+                    } else if (state is PlanLoaded) {
+                      return WillPopScope(
+                          onWillPop: () async { dispatchGetKnownRoom(context, state.room); return false;},
+                          child: SearchingPlanDisplay(state.room.floor, state.room),
+                      );
+                    } else {
+                      return MessageDisplay(message: 'Unexpected error');
+                    }
                   }
-                }
+                ),
               ),
             ]
           ),
@@ -107,10 +102,6 @@ class SearchingPage extends StatelessWidget {
 
 }
 
-
-//TODO: Change accordingly to UI design
-// TODO:This should probably be Stateless. Probably create another file.
-//TODO: How to combine with the same for intro and searching (ontap actions are different)
 class TopControlsWidgetForSearching extends StatefulWidget {
   String inputString;
   TopControlsWidgetForSearching({ Key key, this.inputString}): super(key: key);
@@ -121,12 +112,14 @@ class TopControlsWidgetForSearching extends StatefulWidget {
 
 class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSearching> {
   String roomToFind;
+
   _TopControlsWidgetForSearchingState({this.roomToFind});
+
     @override
     Widget build(BuildContext context) {
       var txt=TextEditingController();
       txt.text=roomToFind;
-      print('building TopControlsWidget');
+
       return Column(
         children: <Widget>[
           TextFormField(
@@ -151,7 +144,6 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
             ),
           ),
           SizedBox(height: 10),
-          Row(),
         ],
       );
     }

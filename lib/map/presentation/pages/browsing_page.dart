@@ -8,7 +8,6 @@ import 'package:schedule_dva232/map/presentation/browsing_ploc/browsing_logic.da
 import 'package:schedule_dva232/map/presentation/widgets/browsing_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
 
-//TODO: Should probably be Stateful
 class BrowsingPage extends StatelessWidget {
   final String buildingToFind;
   const BrowsingPage({Key key,  this.buildingToFind}):super(key:key);
@@ -16,7 +15,6 @@ class BrowsingPage extends StatelessWidget {
   @override build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset:false,
-      //TODO: Is there common AppBar to Share?
       appBar: AppBar(
         title: Text('Map'),
       ),
@@ -33,49 +31,52 @@ class BrowsingPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
                 TopControlsWidgetForBrowsing(),
 
-                 //TODO: change to appropriate widget
-                BlocBuilder<BrowsingLogic, BrowsingState>(
-                    builder: (context,state) {
-                      if (state is EmptyState) {
-                        return BasicMapWidget(basicMapToShow: 'basic');
-                      } else if (state is LoadingState) {
-                        return LoadingWidget();
-                      } else if (state is ErrorState) {
-                        return MessageDisplay(message: state.message);
-                      } else if (state is BuildingLoadedState) {
-                        return WillPopScope(
-                          onWillPop: () async { dispatchGetOriginal(context); return false;},
-                          child: Container(
-                            child: Column (
+                Expanded(
+                  child: BlocBuilder<BrowsingLogic, BrowsingState>(
+                      builder: (context,state) {
+                        if (state is EmptyState) {
+                          return BasicMapWidget(basicMapToShow: 'basic');
+                        } else if (state is LoadingState) {
+                          return LoadingWidget();
+                        } else if (state is ErrorState) {
+                          return MessageDisplay(message: state.message);
+                        } else if (state is BuildingLoadedState) {
+                          return WillPopScope(
+                            onWillPop: () async { dispatchGetOriginal(context); return false;},
+                            child: Container(
+                              child: Column (
+                                mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
-                                  BasicMapWidget(basicMapToShow: state.building.name),
+                                  Expanded (child: BasicMapWidget(basicMapToShow: state.building.name)),
                                   FlatButton(
-                                      child:Row (
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
-                                          Text('To floor plans'),
-                                          Icon(Icons.arrow_forward_rounded,
-                                            color: Theme.of(context).accentColor,
-                                          ),
-                                        ]
-                                      ),
-                                      onPressed: () { dispatchGetFloorPlan(context, state.building, 1); },
+                                    child:Row (
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text('To floor plans'),
+                                        Icon(Icons.arrow_forward_rounded,
+                                          color: Theme.of(context).accentColor,
+                                        ),
+                                      ]
                                     ),
-                                  ],
-                                ),
-                          ),
-                        );
-                      } else if (state is PlanLoaded) {
-                        return WillPopScope(
-                          onWillPop: () async { dispatchGetBuilding(context, state.building); return false;},
-                          child: BrowsingPlanDisplay( state.building));
-                      } else {
-                        return MessageDisplay(message: 'Unexpected error');
+                                    onPressed: () { dispatchGetFloorPlan(context, state.building, 1); },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        } else if (state is PlanLoaded) {
+                          return WillPopScope(
+                            onWillPop: () async { dispatchGetBuilding(context, state.building); return false;},
+                            child: BrowsingPlanDisplay( state.building));
+                        } else {
+                          return MessageDisplay(message: 'Unexpected error');
+                        }
                       }
-                    }
+                  ),
                 ),
             ]
           ),
@@ -102,10 +103,6 @@ class BrowsingPage extends StatelessWidget {
 
 }
 
-
-//TODO: Change accordingly to UI design
-// TODO:This should probably be Stateless. Probably create another file.
-//TODO: How to combine with the same for intro and searching (ontap actions are different)
 class TopControlsWidgetForBrowsing extends StatefulWidget {
 
   const TopControlsWidgetForBrowsing({ Key key}): super(key: key);

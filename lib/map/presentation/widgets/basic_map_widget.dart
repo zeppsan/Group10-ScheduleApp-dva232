@@ -1,4 +1,3 @@
-//TODO: Change accordingly to UI design
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../locationAnimation.dart';
@@ -52,31 +51,31 @@ class _BasicMapWidget extends State<BasicMapWidget> {
   @override
   Widget build(BuildContext context){
     return  Container(
-      child: ClipRect(
-        child: Stack(
-          children: [
-             InteractiveViewer(
-              minScale: 0.1,
-              maxScale: 3.0,
-                child:
-                Image.asset(switchImage(widget.basicMapToShow)),
-             ),
-            if (widget.basicMapToShow!='basic' && widget.basicMapToShow !='U' && widget.basicMapToShow != 'R' && widget.basicMapToShow != 'T' )
-              Positioned (
-                  top:10,
-                  left:10,
-                  child:Text( widget.basicMapToShow,
-                      style: TextStyle (
-                        fontSize: 50,
-                        backgroundColor: Colors.white,
-                        color: Colors.deepPurple[100],
-                      )
-                  )
-              ),
-              ]
+        child: ClipRect(
+          child: Stack(
+            children: [
+               InteractiveViewer(
+                minScale: 0.1,
+                maxScale: 3.0,
+                  child:
+                  Image.asset(switchImage(widget.basicMapToShow)),
+               ),
+              if (widget.basicMapToShow!='basic' && widget.basicMapToShow !='U' && widget.basicMapToShow != 'R' && widget.basicMapToShow != 'T' )
+                Positioned (
+                    top:10,
+                    left:10,
+                    child:Text( widget.basicMapToShow,
+                        style: TextStyle (
+                          fontSize: 50,
+                          backgroundColor: Colors.white,
+                          color: Colors.deepPurple[100],
+                        )
+                    )
+                ),
+                ]
+            ),
           ),
-        ),
-      );
+    );
   }
 }
 
