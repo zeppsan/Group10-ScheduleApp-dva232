@@ -77,8 +77,8 @@ class AppTheme{
     ),
     ),
 
-    iconTheme: IconThemeData(
-      color: Colors.white,
+    primaryIconTheme: IconThemeData(
+      color: Color(0xffeeb462),
     ),
     /*textTheme: TextTheme(
       headline6: TextStyle(color: Colors.blue,),
