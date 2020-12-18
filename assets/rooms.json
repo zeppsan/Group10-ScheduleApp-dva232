@@ -1,0 +1,19 @@
+{
+	"rooms": [
+		{
+			"name": "alfa"
+		},
+		{
+			"name": "beta"
+		},
+		{
+			"name": "gamma"
+		},
+		{
+			"name": "lambda"
+		},
+		{
+			"name": "kappa"
+		}
+	]
+}
