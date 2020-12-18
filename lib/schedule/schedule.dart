@@ -27,7 +27,7 @@ class Schedule extends StatelessWidget {
               Navigator.pushReplacementNamed(context, '/scheduleSettings');
             },
             icon: Icon(
-              Icons.settings,
+              Icons.add,
               color:  const Color(0xffdfb15b),
             ),
 
