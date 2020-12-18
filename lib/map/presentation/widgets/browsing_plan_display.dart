@@ -1,10 +1,7 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
-import 'package:schedule_dva232/map/data_domain/models/room.dart';
-import 'package:schedule_dva232/map/data_domain/usecases/get_last_building_usecase.dart';
 import 'package:schedule_dva232/map/presentation/browsing_ploc/browsing_logic.dart';
 import 'package:schedule_dva232/map/presentation/widgets/basic_map_widget.dart';
 

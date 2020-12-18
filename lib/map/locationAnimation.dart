@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
-import 'package:schedule_dva232/map/data_domain/models/coordinates.dart';
-
 import 'DirectionPainter.dart';
 import 'data_domain/models/room.dart';
 

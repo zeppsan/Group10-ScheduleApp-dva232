@@ -8,7 +8,6 @@ import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.
 import 'package:schedule_dva232/map/presentation/widgets/searching_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
 
-//TODO: Should probably be Stateful
 class SearchingPage extends StatelessWidget {
   final String roomToFind;
   const SearchingPage({Key key,  this.roomToFind}):super(key:key);
