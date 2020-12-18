@@ -97,11 +97,12 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                   return Column(
                                     children: _selectedLectures.map((e) {
                                       return Card(
-                                        elevation: 10,
+                                        elevation: 5,
                                         shadowColor: lightTheme ? Color(0xff2c1d33): Colors.grey, //CHECK WITH SCHEDULE WHAT COLORS!!
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15), //MAKE THIS WORK!!
+                                          borderRadius: BorderRadius.circular(10), //MAKE THIS WORK!!
                                         ),
+                                        color: e.color,
                                         child: ListTile(
                                           leading: Text(e.getTime(e.startTime) + "\n    -\n" + e.getTime(e.endTime),
                                               style: TextStyle(fontSize: 15, color: Color(0xff2c1d33))
@@ -122,7 +123,6 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                               Navigator.pushNamed((context), '/searching', arguments: e.location.toLowerCase());
                                             },
                                           ),
-                                          tileColor: e.color,
                                         ),
                                       );
                                     }).toList(),
@@ -234,6 +234,7 @@ String getday(int loopPos) {
 }
 int getDayDate(int loopPos){
   var actualDay = DateTime.now().day + loopPos;// inte över 30
+
   if (DateTime(DateTime.now().year, DateTime.now().month,actualDay).weekday>5)  { //Om helg eller om dagen i loopen innan är större än idag....
     actualDay = actualDay+2;
   }
