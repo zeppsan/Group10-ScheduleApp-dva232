@@ -14,6 +14,7 @@ import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.
 import 'package:schedule_dva232/map/presentation/widgets/searching_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
 import 'package:schedule_dva232/map/locationAnimation.dart';
+import 'package:schedule_dva232/generalPages/settings.dart';
 //import 'package:schedule_dva232/map/data_domain/models/roomNames.dart';
 
 class SearchingPage extends StatelessWidget {
@@ -26,6 +27,7 @@ class SearchingPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Map'),
       ),
+      endDrawer: Settings(),
       body: buildBody(context),
       bottomNavigationBar: NavigationBarLoggedIn(),
     );

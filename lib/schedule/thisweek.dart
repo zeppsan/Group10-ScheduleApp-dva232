@@ -5,7 +5,7 @@ import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
-
+import 'package:schedule_dva232/generalPages/settings.dart';
 
 var prevDay =1;
 bool lightTheme = true;
@@ -20,6 +20,7 @@ class Thisweek extends StatelessWidget {
       appBar: AppBar(
         title:  Text('This Week'),
       ),
+      endDrawer: Settings(),
       body: Container(
         child: fiveTopDays(),
       ),
@@ -87,7 +88,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(" "+getday(pos)+"  "+getDayDate(pos).toString()+"/"+DateTime.now().month.toString(), //KOMMER EJ FUNGERA VID MÅNADSSKIFTE NY FUNKTION GET MONTH!!
-                            style: TextStyle(fontSize: 20, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462)),
+                            style: TextStyle(fontSize: 20, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462), fontWeight: FontWeight.bold),
                           ),
                           Container(
                             child: Builder(
@@ -106,7 +107,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                               style: TextStyle(fontSize: 15, color: Color(0xff2c1d33))
                                           ),
                                           title: Text(e.course_code.toUpperCase(),
-                                              style: TextStyle(color: Color(0xff2c1d33), fontWeight: FontWeight.bold)), //VET EJ OM DET VERKLIGEN BÖR VARA BOLD...
+                                              style: TextStyle(color: Color(0xff2c1d33),)),
                                           subtitle: Text(e.moment,
                                             style: TextStyle(fontSize: 15, color: Color(0xff2c1d33)),),
                                           trailing: FlatButton(

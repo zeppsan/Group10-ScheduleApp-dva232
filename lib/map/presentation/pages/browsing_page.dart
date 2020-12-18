@@ -7,6 +7,7 @@ import 'package:schedule_dva232/injection_container.dart' as ic;
 import 'package:schedule_dva232/map/presentation/browsing_ploc/browsing_logic.dart';
 import 'package:schedule_dva232/map/presentation/widgets/browsing_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
+import 'package:schedule_dva232/generalPages/settings.dart';
 
 class BrowsingPage extends StatelessWidget {
   final String buildingToFind;
@@ -18,6 +19,7 @@ class BrowsingPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Map'),
       ),
+      endDrawer: Settings(),
       body: buildBody(context),
       bottomNavigationBar: NavigationBarLoggedIn(),
     );
