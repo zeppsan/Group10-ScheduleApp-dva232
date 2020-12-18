@@ -21,8 +21,6 @@ abstract class RoomRepository {
 //Data Layer
 abstract class RoomAssetsDataSource {
   Future <RoomModel> getRoom(String name);
-}
-
   Future <List<String>> getRoomList();
 }
 
@@ -39,7 +37,6 @@ class RoomAssetsDataSourceImpl implements RoomAssetsDataSource {
         roomNames.add(room['name']);
       }
     }
-
     return Future.value(roomNames);
   }
 
@@ -88,11 +85,8 @@ class RoomRepositoryImpl implements RoomRepository {
 
   @override
   Future<List<String>> getRoomList() async {
-
       final roomlist = await assetsDataSource.getRoomList();
-
       return roomlist;
-
   }
 
   @override
