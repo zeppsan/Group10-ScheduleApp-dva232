@@ -14,17 +14,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 //Domain Layer
 abstract class RoomRepository {
   Future <Either<Failure,Room>> getRoom(String name);
-  Future <Either<Failure,Room>> getLastRoom();
 }
 
 //Data Layer
 abstract class RoomAssetsDataSource {
   Future <RoomModel> getRoom(String name);
-}
-
-abstract class RoomCacheDataSource {
-  Future <RoomModel> getLastRoom();
-  Future<void> cacheRoom(RoomModel roomToCache);
 }
 
 class RoomAssetsDataSourceImpl implements RoomAssetsDataSource {
@@ -61,34 +55,10 @@ class RoomAssetsDataSourceImpl implements RoomAssetsDataSource {
   }
 }
 
-class RoomCacheDataSourceImpl implements RoomCacheDataSource {
-  final SharedPreferences sharedPreferences;
-  RoomCacheDataSourceImpl({@required this.sharedPreferences});
-  @override
-  Future<RoomModel> getLastRoom() {
-    final jsonStringBuilding = sharedPreferences.getString('CACHED_ROOM');
-    if(jsonStringBuilding != null) {
-      return Future.value(RoomModel.fromJson(json.decode(jsonStringBuilding)));
-    }
-    else {
-      throw CacheException();
-    }
-  }
-
-  @override
-  Future<void> cacheRoom(RoomModel roomToCache) {
-    return sharedPreferences.setString('CACHED_ROOM', json.encode(roomToCache.toJson()));
-  }
-}
-
-
-
 class RoomRepositoryImpl implements RoomRepository {
-  final RoomCacheDataSource cacheDataSource;
   final RoomAssetsDataSource assetsDataSource;
 
   RoomRepositoryImpl({
-    @required this.cacheDataSource,
     @required this.assetsDataSource
   });
 
@@ -98,22 +68,11 @@ class RoomRepositoryImpl implements RoomRepository {
     try {
       final roomToCache = await assetsDataSource.getRoom(name);
       // Remember the room
-      cacheDataSource.cacheRoom(roomToCache);
       return Right(roomToCache);
     }
     //If fails to get room data
     on AssetsException {
       return Left(AssetsFailure());
-    }
-  }
-  @override
-  Future<Either<Failure, Room>> getLastRoom() async {
-    try {
-      final cacheRoom = await cacheDataSource.getLastRoom();
-      return Right(cacheRoom);
-    }
-    on CacheException {
-      return Left(CacheFailure());
     }
   }
 }

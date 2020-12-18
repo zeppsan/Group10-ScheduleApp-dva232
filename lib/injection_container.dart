@@ -24,24 +24,18 @@ Future<void> init () async
 
   //Repositories
   serviceLocator.registerLazySingleton<BuildingRepository>(() => BuildingRepositoryImpl(
-      cacheDataSource: serviceLocator(),
       assetsDataSource: serviceLocator()
     )
   );
   serviceLocator.registerLazySingleton<RoomRepository>(() => RoomRepositoryImpl(
-      cacheDataSource: serviceLocator(),
       assetsDataSource: serviceLocator()
     )
   );
-  serviceLocator.registerLazySingleton<BuildingCacheDataSource>(() =>
-    BuildingCacheDataSourceImpl(sharedPreferences: serviceLocator()),
-  );
+
   serviceLocator.registerLazySingleton<BuildingAssetsDataSource>(() =>
       BuildingAssetsDataSourceImpl(),
   );
-  serviceLocator.registerLazySingleton<RoomCacheDataSource>(() =>
-      RoomCacheDataSourceImpl(sharedPreferences: serviceLocator()),
-  );
+
   serviceLocator.registerLazySingleton<RoomAssetsDataSource>(() =>
       RoomAssetsDataSourceImpl(),
   );
