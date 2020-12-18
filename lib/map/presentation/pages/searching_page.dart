@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
@@ -10,6 +14,7 @@ import 'package:schedule_dva232/map/presentation/widgets/browsing_plan_display.d
 import 'package:schedule_dva232/map/presentation/widgets/searching_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
 import 'package:schedule_dva232/map/locationAnimation.dart';
+import 'package:schedule_dva232/map/data_domain/models/roomNames.dart';
 
 //TODO: Should probably be Stateful
 class SearchingPage extends StatelessWidget {
@@ -101,6 +106,7 @@ class SearchingPage extends StatelessWidget {
 //TODO: How to combine with the same for intro and searching (ontap actions are different)
 class TopControlsWidgetForSearching extends StatefulWidget {
   String inputString;
+
   TopControlsWidgetForSearching({ Key key, this.inputString}): super(key: key);
 
   @override
@@ -108,16 +114,118 @@ class TopControlsWidgetForSearching extends StatefulWidget {
 }
 
 class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSearching> {
+
+  final FocusNode _focusNode = FocusNode();
+
+  OverlayEntry _overlayEntry;
+
+  GlobalKey<AutoCompleteTextFieldState<RoomNames>> key = new GlobalKey();
   String roomToFind;
+
+  AutoCompleteTextField searchTextField;
+
+  static List<RoomNames> roomList = new List<RoomNames>();
+
+  String roomSuggestion;
+
+
+  void getRoomList ()  async {
+    final String buildings = await rootBundle.loadString("assets/rooms.json");
+    Map<String, dynamic> jsonBuildings = json.decode(buildings);
+    for (Map<String, dynamic> room in jsonBuildings['rooms']) {
+
+            roomList.add(new RoomNames.fromJson(room));
+          }
+          print(roomList[0].name);
+        }
+
+
+  @override
+  void initState() {
+    getRoomList();
+    _focusNode.addListener(() {
+      if(_focusNode.hasFocus) {
+        roomSuggestion = searchTextField.controller.text.toString();
+        //test = "room found";
+        this._overlayEntry = this._createOverlayEntry();
+        Overlay.of(context).insert(this._overlayEntry);
+      }
+      else {
+        this._overlayEntry.remove();
+      }
+    });
+  }
+
+  OverlayEntry _createOverlayEntry () {
+    RenderBox renderBox = context.findRenderObject();
+    var size = renderBox.size;
+    var offset = renderBox.localToGlobal(Offset.zero);
+
+    return OverlayEntry(
+        builder: (context) => Positioned(
+          left: offset.dx,
+          top: offset.dy + size.height + 5.0,
+          //width: MediaQuery.of(context).size.width,
+          //height: MediaQuery.of(context).size.height,
+          child: ListView.builder(
+                  shrinkWrap: true,
+                  itemBuilder: (context, item) {
+                    return
+                          ListTile(
+                          title: Text(roomSuggestion, style: TextStyle(fontSize: 16.0)),
+                    );
+                  },
+                ),
+            ),
+       // )
+    );
+  }
+
   _TopControlsWidgetForSearchingState({this.roomToFind});
     @override
     Widget build(BuildContext context) {
-      var txt=TextEditingController();
-      txt.text=roomToFind;
+      //var txt=TextEditingController();
+      //txt.text=roomToFind;
       print('building TopControlsWidget');
       return Column(
         children: <Widget>[
-          TextFormField(
+          searchTextField = AutoCompleteTextField<RoomNames>(
+          focusNode: this._focusNode,
+          key: key,
+          clearOnSubmit: false,
+          suggestions: roomList,
+          textInputAction: TextInputAction.done,
+          style: TextStyle(color: Colors.black, fontSize: 16.0),
+          submitOnSuggestionTap: true,
+          decoration: InputDecoration(
+            suffixIcon: IconButton(
+              onPressed: (){
+                roomToFind = searchTextField.controller.text.toString();
+                dispatchGetRoom(roomToFind);
+              },
+              icon: Icon(Icons.search_rounded),),
+            contentPadding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 20.0),
+            hintText:  "Search room",
+            hintStyle: TextStyle(color: Colors.black),
+          ),
+            itemFilter: (item, query){
+            return item.name.toLowerCase().startsWith(query.toLowerCase());
+            },
+            itemSorter: (a, b){
+            return a.name.compareTo(b.name);
+            },
+            itemSubmitted: (item){
+              setState(() {
+                searchTextField.textField.controller.text = item.name;
+                roomToFind = item.name;
+                dispatchGetRoom(roomToFind);
+              });
+            },
+            itemBuilder: (context, item) {
+            return row(item);
+            },
+      ),
+          /*TextFormField(
             controller: txt,
             onChanged: (value) {
               roomToFind = value;
@@ -139,7 +247,7 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
             ),
           ),
           SizedBox(height: 10),
-          Row(),
+          Row(),*/
         ],
       );
     }
@@ -152,5 +260,18 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
   void dispatchGetPlanEvent(int _currentFloor, Room room) {
     BlocProvider.of<SearchingLogic>(context)
         .add(GetPlanEvent(_currentFloor, room));
+  }
+
+  Widget row(RoomNames room) {
+      return Card(
+          color: const Color(0xffeeb462),
+    child: Column(
+        mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(room.name, style: TextStyle(fontSize: 20.0)),
+        Padding(padding: EdgeInsets.fromLTRB(5.0, 10.0, 10.0, 5.0),),
+      ]
+      )
+      );
   }
 }
