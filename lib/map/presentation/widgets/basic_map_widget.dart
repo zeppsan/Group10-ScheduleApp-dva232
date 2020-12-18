@@ -22,7 +22,7 @@ class _BasicMapWidget extends State<BasicMapWidget> {
     super.initState();
     print('loading images');
     basic = Image.asset('assets/basic.png');
-    u_building = Image.asset('assets/u1test.png');
+    u_building = Image.asset('assets/U.png');
     r_building = Image.asset('assets/R.png');
     u1 = Image.asset('assets/U1.png');
     u2 = Image.asset('assets/U2.png');
@@ -86,7 +86,7 @@ String image;
     case 'basic':
       return 'assets/basic.png';
     case 'U':
-      return 'assets/u1test.png';
+      return 'assets/U.png';
 
     case 'U1':
       return 'assets/U1.png';
