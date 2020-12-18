@@ -43,7 +43,7 @@ class NavigationBarLoggedIn extends StatelessWidget {
             _selectedItem = value;
             break;
           case 3:
-            Navigator.pushReplacementNamed(context, '/settings'); //EMELIE MAY CHANGE TO RIGHT NOTICES
+            Navigator.pushReplacementNamed(context, '/addCourse'); //EMELIE MAY CHANGE TO RIGHT NOTICES
             _selectedItem = value;
             break;
         }
