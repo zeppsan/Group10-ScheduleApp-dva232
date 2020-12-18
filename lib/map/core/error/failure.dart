@@ -3,6 +3,4 @@ abstract class Failure{
 }
 class AssetsFailure extends Failure {}
 
-class CacheFailure extends Failure {}
-
 class InvalidInputFailure extends Failure {}

@@ -12,6 +12,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'subfiles/CourseParser.dart';
 import 'package:http/http.dart' as http;
 import 'subfiles/scheduleUpdater.dart';
+import 'package:schedule_dva232/generalPages/settings.dart';
 
 // Schedule Page
 class Schedule extends StatelessWidget {
@@ -21,13 +22,14 @@ class Schedule extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Schedule'),
-        actions: [
+        //Old view with add courses and notifications
+        /*actions: [
           IconButton(
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/scheduleSettings');
             },
             icon: Icon(
-              Icons.settings,
+              Icons.add,
               color:  const Color(0xffdfb15b),
             ),
 
@@ -41,8 +43,9 @@ class Schedule extends StatelessWidget {
               color:  const Color(0xffdfb15b),
             ),
           ),
-        ],
+        ],*/
       ),
+      endDrawer: Settings(),
       body: Container(
           height: MediaQuery.of(context).size.height,
           child: scheduleModule(),
@@ -163,10 +166,33 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                     child: TableCalendar(
                       calendarStyle: CalendarStyle(
                         // Left color is light theme, right is darktheme
-                          selectedColor: (lightTheme)?Color(0xffDED9F0):Color(0xffeeb462),
-                          todayColor: (lightTheme)?Color(0xffDED9F0):Color(0xffeeb462),
+                          selectedColor: Color(0xffeeb462),
+                          selectedStyle: TextStyle(
+                              color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          todayColor: (lightTheme)? Colors.transparent : Colors.transparent,
+                          todayStyle: TextStyle(
+                              color: Color(0xffeeb462),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                          ),
                           markersColor: (lightTheme)? Colors.black : Colors.white,
-                          markersMaxAmount: 1
+                          markersMaxAmount: 1,
+                      ),
+                      headerStyle: HeaderStyle(
+                        formatButtonDecoration: BoxDecoration(
+                          color: Color(0xffeeb462),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              topRight: Radius.circular(15),
+                              bottomLeft: Radius.circular(15),
+                              bottomRight: Radius.circular(15)),
+                        ),
+                        formatButtonTextStyle: TextStyle(
+                          color: Colors.black
+                        ),
                       ),
                       initialCalendarFormat: CalendarFormat.twoWeeks,
                       availableCalendarFormats: { CalendarFormat.month:'Month',  CalendarFormat.week:'week', CalendarFormat.twoWeeks:'Two Weeks',},
@@ -234,7 +260,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
               bottomRight: Radius.circular(10)),
           boxShadow: [
             BoxShadow(
-              color: lightTheme? Colors.grey.withOpacity(0.5) : Colors.grey.withOpacity(0.3) ,
+              color: lightTheme? Colors.grey.withOpacity(0.5) : Colors.grey.withOpacity(0.1) ,
               spreadRadius: 5,
               blurRadius: 7,
               offset: Offset(0, 3), // changes position of shadow
@@ -254,7 +280,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                       fontSize: 18),
                 ),
                 Text(
-                  '${startDate} -> ${endDate}',
+                  '${startDate} - ${endDate}',
                   style: TextStyle(
                       color: lectureTextColor,
                       fontWeight: FontWeight.bold,
@@ -277,7 +303,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                   child: FlatButton(
                     padding: EdgeInsets.all(0),
                     child: Text(
-                      'Room: ${room}',
+                      '${room}',
                       style: TextStyle(color: lectureTextColor, fontSize: 18, decoration: TextDecoration.underline),
                     ),
                     onPressed: (){

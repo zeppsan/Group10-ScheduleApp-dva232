@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:schedule_dva232/map/core/util/input_converter.dart';
 import 'package:schedule_dva232/map/data_domain/repositories/building_repository.dart';
 import 'package:schedule_dva232/map/data_domain/usecases/get_building_usecase.dart';
+import 'package:schedule_dva232/map/data_domain/usecases/get_room_list_usecase.dart';
 import 'package:schedule_dva232/map/presentation/browsing_ploc/browsing_logic.dart';
 import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,27 +22,22 @@ Future<void> init () async
   //Lazy is instantiated when called
   serviceLocator.registerLazySingleton(() => GetBuilding(serviceLocator()));
   serviceLocator.registerLazySingleton(()=> GetRoom(serviceLocator()));
+  serviceLocator.registerSingleton(()=> GetRoomList(serviceLocator()));
 
   //Repositories
   serviceLocator.registerLazySingleton<BuildingRepository>(() => BuildingRepositoryImpl(
-      cacheDataSource: serviceLocator(),
       assetsDataSource: serviceLocator()
     )
   );
   serviceLocator.registerLazySingleton<RoomRepository>(() => RoomRepositoryImpl(
-      cacheDataSource: serviceLocator(),
       assetsDataSource: serviceLocator()
     )
   );
-  serviceLocator.registerLazySingleton<BuildingCacheDataSource>(() =>
-    BuildingCacheDataSourceImpl(sharedPreferences: serviceLocator()),
-  );
+
   serviceLocator.registerLazySingleton<BuildingAssetsDataSource>(() =>
       BuildingAssetsDataSourceImpl(),
   );
-  serviceLocator.registerLazySingleton<RoomCacheDataSource>(() =>
-      RoomCacheDataSourceImpl(sharedPreferences: serviceLocator()),
-  );
+
   serviceLocator.registerLazySingleton<RoomAssetsDataSource>(() =>
       RoomAssetsDataSourceImpl(),
   );

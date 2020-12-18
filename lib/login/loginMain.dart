@@ -90,7 +90,7 @@ class _LoginMainState extends State<LoginMain> {
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(MediaQuery.of(context).size.width, 50.0),
                   ),
-                  child: Text(_login ? "Register" : "Login",
+                  child: Text(_login ? "Register" : "Back to login",
                       textAlign: TextAlign.center),
                   onPressed: () {
                     setState(() {

@@ -29,31 +29,5 @@ class Room {
       @required List<Coordinates> path,
     }) :super(name: name, floor: floor, position: position, building: building, path: path );
 
-    Map<String, dynamic> toJson() {
-      return {
-        "name": name,
-        "path": path,
-        "floor": floor,
-        "position": {
-          "x": position.x,
-          "y": position.y
-        },
-        "building_name": building.name,
-        "building_campus": building.campus,
-        "building_floors": building.floors
-      };
     }
 
-    factory RoomModel.fromJson(Map<String, dynamic> jsonRoom) {
-      return RoomModel(
-          building: Building(
-            floors:jsonRoom['building_floors'],
-            campus:jsonRoom['building_campus'],
-            name:jsonRoom['building_name']),
-          name: jsonRoom ['name'],
-          path: jsonRoom ['path'],
-          floor: jsonRoom ['floor'],
-          position: Coordinates(
-             x: jsonRoom['position']['x'], y: jsonRoom['position']['y']));
-    }
-  }

@@ -33,7 +33,9 @@ class AppTheme{
     ),
 
     /* Calendar Styling */
+
       
+
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),
@@ -77,8 +79,8 @@ class AppTheme{
     ),
     ),
 
-    iconTheme: IconThemeData(
-      color: Colors.white,
+    primaryIconTheme: IconThemeData(
+      color: Color(0xffeeb462),
     ),
     /*textTheme: TextTheme(
       headline6: TextStyle(color: Colors.blue,),

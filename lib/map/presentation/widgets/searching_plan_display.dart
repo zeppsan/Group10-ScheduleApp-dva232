@@ -1,9 +1,8 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:schedule_dva232/map/data_domain/models/building.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
-
+import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart';
 import '../../locationAnimation.dart';
 
 class SearchingPlanDisplay extends StatefulWidget{
@@ -43,6 +42,8 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
    setState(() {
      if (_currentFloor > 1)
        _currentFloor--;
+     else
+       BlocProvider.of<SearchingLogic>(context).add(GetKnownRoomEvent(widget.room));
      _showPosition = _currentFloor != widget.room.floor ? false : true;
      _showPath = _currentFloor== widget.room.floor && !_isShowPathButton ? true : false;
    });
@@ -54,6 +55,7 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
      _showPath = true;
    });
  }
+
  void HidePath(){
    setState(() {
      _isShowPathButton=true;
@@ -79,34 +81,34 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
                     child: Text(_isShowPathButton? 'Show path' : 'Hide path'),
                   ),
                 )
-
               ]
             ),
           ),
-          LocationAnimation(room: widget.room, showPosition: _showPosition, showPath: _showPath, currentFloor: _currentFloor ),
+          Expanded(child: LocationAnimation(room: widget.room, showPosition: _showPosition, showPath: _showPath, currentFloor: _currentFloor )),
           Row(
-          children: <Widget> [
-            IconButton(
-              icon: Icon(Icons.arrow_back_rounded),
-              color: Theme
-                .of(context)
-                .accentColor,
-              onPressed: () { Previous(); },
-            ),
-            Expanded(child: SizedBox()),
-            IconButton(
-              icon: Icon(Icons.arrow_forward_rounded),
-              color: Theme
-              .of(context)
-              .accentColor,
-            onPressed: () { Next(); },
-            ),
-          ]
-        ),
-      ]
-    )
-  );
-    //Container
+            children: <Widget> [
+              IconButton(
+                icon: Icon(Icons.arrow_back_rounded),
+                color: Theme.of(context).accentColor,
+                onPressed: () { Previous(); },
+              ),
+              Expanded(child: SizedBox()),
+              Visibility (
+                visible: _currentFloor!=widget.room.building.floors,
+                maintainState: true,
+                maintainAnimation: true,
+                maintainSize: true,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_forward_rounded),
+                  color: Theme.of(context).accentColor,
+                  onPressed: () { Next(); },
+                ),
+              )
+            ]
+          ),
+        ]
+      )
+    );
   }
 }
 
