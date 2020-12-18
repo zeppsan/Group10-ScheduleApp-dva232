@@ -171,6 +171,8 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
           top: offset.dy + size.height + 5.0,
           //width: MediaQuery.of(context).size.width,
           //height: MediaQuery.of(context).size.height,
+          child: WillPopScope(
+            onWillPop: _onWillPop,
           child: ListView.builder(
                   shrinkWrap: true,
                   itemBuilder: (context, item) {
@@ -180,6 +182,7 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
                     );
                   },
                 ),
+          ),
             ),
        // )
     );
@@ -200,7 +203,7 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
           clearOnSubmit: false,
           suggestions: roomList,
           textInputAction: TextInputAction.done,
-          style: TextStyle(color: Colors.black, fontSize: 16.0),
+          style: TextStyle(color: const Color(0xffeeb462), fontSize: 16.0),
           submitOnSuggestionTap: true,
           decoration: InputDecoration(
             suffixIcon: IconButton(
@@ -211,7 +214,7 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
               icon: Icon(Icons.search_rounded),),
             contentPadding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 20.0),
             hintText:  "Search room",
-            hintStyle: TextStyle(color: Colors.black),
+            hintStyle: TextStyle(color: const Color(0xffeeb462)),
           ),
             itemFilter: (item, query){
             return item.name.toLowerCase().startsWith(query.toLowerCase());
@@ -220,6 +223,7 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
             return a.name.compareTo(b.name);
             },
             itemSubmitted: (item){
+              _onWillPop();
               setState(() {
                 searchTextField.textField.controller.text = item.name;
                 roomToFind = item.name;
@@ -279,4 +283,14 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
       )
       );
   }
+
+  Future<bool> _onWillPop() {
+    if(_overlayEntry != null){
+      _overlayEntry.remove();
+      _overlayEntry = null;
+      return Future.value(false);
+    }
+    return Future.value(true);
+  }
 }
+
