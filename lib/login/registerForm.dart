@@ -32,6 +32,7 @@ class _RegisterForm extends State<RegisterForm> {
 
   @override
   void initState() {
+    super.initState();
     _passwordVisible = false;
   }
 

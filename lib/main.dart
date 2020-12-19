@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_dva232/map/map.dart';
 import 'package:schedule_dva232/routing.dart';
-import 'package:schedule_dva232/schedule/addCourse.dart';
-import 'package:schedule_dva232/schedule/schedule.dart';
-import 'package:schedule_dva232/schedule/scheduleSettings.dart';
-import 'package:schedule_dva232/schedule/thisweek.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 import 'package:schedule_dva232/theme/themes.dart';
-import 'package:schedule_dva232/generalPages/settings.dart';
-import 'package:schedule_dva232/login/loginMain.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'login/loading.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
-import 'package:schedule_dva232/routing.dart';
 
 var theme;
 
