@@ -108,8 +108,8 @@ class AppTheme{
 
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: const Color(0xff2c1d33),
-        selectedIconTheme: IconThemeData(color: const Color(0xff95d1a3)),
-        selectedItemColor: const Color(0xff95d1a3),
+        selectedIconTheme: IconThemeData(color: Colors.white),
+        selectedItemColor: Colors.white,
         unselectedIconTheme: IconThemeData(color: const Color(0xffeeb462)),
         unselectedItemColor: const Color(0xffeeb462)
       )
