@@ -34,8 +34,13 @@ class AppTheme{
 
     /* Calendar Styling */
 
-      
-
+      ///TODO: Color for inputfields when active
+    inputDecorationTheme: InputDecorationTheme(
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.white, width: 2.0),
+        borderRadius: BorderRadius.circular(25.0),
+      )
+    ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),textStyle: TextStyle(color: Colors.white),
@@ -79,6 +84,14 @@ class AppTheme{
      ),
     ),
     ),
+
+      ///TODO: Color for inputfields when active
+      inputDecorationTheme: InputDecorationTheme(
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.white, width: 2.0),
+            borderRadius: BorderRadius.circular(25.0),
+          )
+      ),
 
     primaryIconTheme: IconThemeData(
       color: Color(0xffeeb462),

@@ -91,6 +91,7 @@ class _RegisterForm extends State<RegisterForm> {
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
               suffixIcon: IconButton(
+                color: Colors.white,
                 icon: Icon(
                   //If _passwordVisible is true show the visibility icon else visibility_off
                   _passwordVisible ? Icons.visibility : Icons.visibility_off,
@@ -125,6 +126,7 @@ class _RegisterForm extends State<RegisterForm> {
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
               suffixIcon: IconButton(
+                color: Colors.white,
                 icon: Icon(
                   //If _passwordVisible is true show the visibility icon else visibility_off
                   _passwordVisible ? Icons.visibility : Icons.visibility_off,

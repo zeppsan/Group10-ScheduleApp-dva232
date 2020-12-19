@@ -57,12 +57,12 @@ class _LoginMainState extends State<LoginMain> {
       child: ListView(
         children: [
           Container(
-            padding: EdgeInsets.all(50.0),
+            padding: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 50.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
+                /*Padding(
                   child: Text(
                     "MaShRoom",
                     style: TextStyle(
@@ -70,7 +70,8 @@ class _LoginMainState extends State<LoginMain> {
                         color: _darkTheme ? _logoDark : _logoLight),
                   ),
                   padding: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 100.0),
-                ),
+                ),*/
+                Image.asset('assets/logo/MainLogoDarkTheme.png', width: 340.0, height: 340.0),
                 Visibility(
                   child: AnimatedOpacity(
                     child: LoginForm(),

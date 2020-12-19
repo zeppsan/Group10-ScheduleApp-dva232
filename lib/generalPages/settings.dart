@@ -27,6 +27,10 @@ class _SettingsState extends State<Settings> {
             SizedBox(
               height: 40.0,
             ),
+            Image.asset('assets/logo/LogoLightTheme.png', width: 80.0, height: 80.0),
+            SizedBox(
+              height: 20.0,
+            ),
             FutureBuilder(
               //Will change the button label depending on if the user is logged in or not
               future: _loggedIn,
@@ -55,9 +59,9 @@ class _SettingsState extends State<Settings> {
                 }
               },
             ),
-            ListTile(
-              leading: Text("Manage courses"),
-              onTap: () {
+            ElevatedButton(
+              child: Text("Manage courses"),
+              onPressed: () {
                 Navigator.pushReplacementNamed(context, '/scheduleSettings');
               },
             ),

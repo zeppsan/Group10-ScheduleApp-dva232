@@ -71,6 +71,7 @@ class _LoginForm extends State<LoginForm> {
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
               suffixIcon: IconButton(
+                color: Colors.white,
                 icon: Icon(
                   //If _passwordVisible is true show the visibility icon else visibility_off
                   _passwordVisible ? Icons.visibility : Icons.visibility_off,
@@ -100,6 +101,8 @@ class _LoginForm extends State<LoginForm> {
             children: [
               Text("Remember Me"),
               Checkbox(
+                activeColor: Colors.white,
+                checkColor: Color(0xff2c1d33),
                 value: _rememberMe,
                 onChanged: (bool newValue){
                   setState(() {
