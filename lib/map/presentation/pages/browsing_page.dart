@@ -8,20 +8,30 @@ import 'package:schedule_dva232/map/presentation/browsing_ploc/browsing_logic.da
 import 'package:schedule_dva232/map/presentation/widgets/browsing_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
 import 'package:schedule_dva232/generalPages/settings.dart';
+import 'package:sizer/sizer.dart';
 
 class BrowsingPage extends StatelessWidget {
   final String buildingToFind;
   const BrowsingPage({Key key,  this.buildingToFind}):super(key:key);
 
   @override build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset:false,
-      appBar: AppBar(
-        title: Text('Map'),
-      ),
-      endDrawer: Settings(),
-      body: buildBody(context),
-      bottomNavigationBar: NavigationBarLoggedIn(),
+    return LayoutBuilder(
+      builder:(context,constraints) {
+        return OrientationBuilder(
+            builder: (context, orientation) {
+              SizerUtil().init(constraints, orientation);
+              return Scaffold(
+                resizeToAvoidBottomInset: false,
+                appBar: AppBar(
+                  title: Text('Map'),
+                ),
+                endDrawer: Settings(),
+                body: buildBody(context),
+                bottomNavigationBar: NavigationBarLoggedIn(),
+              );
+            }
+        );
+      }
     );
   }
 
@@ -170,7 +180,10 @@ class _TopControlsWidgetForBrowsingState extends State<TopControlsWidgetForBrows
             children: <Widget>[
               Expanded(
                 child: ElevatedButton(
-                  child: Text('Buildings U & T'),
+                  child: Text('Buildings U & T',
+                  style: TextStyle (
+                    fontSize: 12.0.sp,
+                  )),
                   onPressed: () {
                     dispatchGetBuilding('U');
                   },
@@ -179,7 +192,9 @@ class _TopControlsWidgetForBrowsingState extends State<TopControlsWidgetForBrows
               SizedBox(width: 10.0),
               Expanded(
                 child: ElevatedButton(
-                  child: Text('Building R'),
+                  child: Text('Building R',style: TextStyle (
+                    fontSize: 12.0.sp,
+                  )),
                   onPressed: () {
                     dispatchGetBuilding('R');
                   },
