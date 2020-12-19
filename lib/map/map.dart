@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:schedule_dva232/map/DirectionPainter.dart';
 import 'package:schedule_dva232/map/locationAnimation.dart';
+import 'package:schedule_dva232/generalPages/settings.dart';
 
 import 'dart:ui';
 
@@ -50,6 +51,7 @@ class _MapState extends State<MdhMap> with TickerProviderStateMixin {
       appBar: AppBar(
         title: Center(child: Text("Map")),
       ),
+      endDrawer: Settings(),
       body: Container(
         //color: Colors.blueGrey,
         child: Padding(

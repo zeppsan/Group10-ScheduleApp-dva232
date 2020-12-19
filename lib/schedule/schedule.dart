@@ -12,6 +12,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'subfiles/CourseParser.dart';
 import 'package:http/http.dart' as http;
 import 'subfiles/scheduleUpdater.dart';
+import 'package:schedule_dva232/generalPages/settings.dart';
 
 // Schedule Page
 class Schedule extends StatelessWidget {
@@ -21,13 +22,14 @@ class Schedule extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Schedule'),
-        actions: [
+        //Old view with add courses and notifications
+        /*actions: [
           IconButton(
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/scheduleSettings');
             },
             icon: Icon(
-              Icons.settings,
+              Icons.add,
               color:  const Color(0xffdfb15b),
             ),
 
@@ -41,8 +43,9 @@ class Schedule extends StatelessWidget {
               color:  const Color(0xffdfb15b),
             ),
           ),
-        ],
+        ],*/
       ),
+      endDrawer: Settings(),
       body: Container(
           height: MediaQuery.of(context).size.height,
           child: scheduleModule(),
