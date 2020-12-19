@@ -22,7 +22,7 @@ Future<void> init () async
   //Lazy is instantiated when called
   serviceLocator.registerLazySingleton(() => GetBuilding(serviceLocator()));
   serviceLocator.registerLazySingleton(()=> GetRoom(serviceLocator()));
-  serviceLocator.registerSingleton(()=> GetRoomList(serviceLocator()));
+  serviceLocator.registerLazySingleton(()=> GetRoomList(serviceLocator()));
 
   //Repositories
   serviceLocator.registerLazySingleton<BuildingRepository>(() => BuildingRepositoryImpl(

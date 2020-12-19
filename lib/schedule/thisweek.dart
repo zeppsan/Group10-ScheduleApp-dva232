@@ -87,6 +87,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
+                          Container(height: 15,),
                           Text(" "+getday(pos)+"  "+getDayDate(pos).toString()+"/"+DateTime.now().month.toString(), //KOMMER EJ FUNGERA VID MÅNADSSKIFTE NY FUNKTION GET MONTH!!
                             style: TextStyle(fontSize: 20, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462), fontWeight: FontWeight.bold),
                           ),
@@ -97,11 +98,12 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                   return Column(
                                     children: _selectedLectures.map((e) {
                                       return Card(
-                                        elevation: 10,
+                                        elevation: 5,
                                         shadowColor: lightTheme ? Color(0xff2c1d33): Colors.grey, //CHECK WITH SCHEDULE WHAT COLORS!!
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15), //MAKE THIS WORK!!
+                                          borderRadius: BorderRadius.circular(10), //MAKE THIS WORK!!
                                         ),
+                                        color: e.color,
                                         child: ListTile(
                                           leading: Text(e.getTime(e.startTime) + "\n    -\n" + e.getTime(e.endTime),
                                               style: TextStyle(fontSize: 15, color: Color(0xff2c1d33))
@@ -122,7 +124,6 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                               Navigator.pushNamed((context), '/searching', arguments: e.location.toLowerCase());
                                             },
                                           ),
-                                          tileColor: e.color,
                                         ),
                                       );
                                     }).toList(),
@@ -132,45 +133,56 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                   var text;
                                   switch(rand.nextInt(10)){
                                     case 0:
-                                      text = "There is nothing here.\n Have fun!";
+                                      text = "There is nothing here.\nHave fun!";
                                       break;
                                     case 1:
-                                      text = "Everything but grade 3 is a luxury\n Please go do something else!";
+                                      text = "Everything but grade 3 is a luxury\nPlease go do something else!";
                                       break;
                                     case 2:
-                                      text = "No classes today.\n Maybe you should do some homework.";
+                                      text = "No classes today.\nMaybe you should do some homework.";
                                       break;
                                     case 3:
-                                      text = "There is always retakes..\n maybe this is a sign to partaay";
+                                      text = "There is always retakes..\nmaybe this is a sign to partaay";
                                       break;
                                     case 4:
-                                      text = "Seems like there are no classes today.\n Lucky you!";
+                                      text = "Seems like there are no classes today.\nLucky you!";
                                       break;
                                     case 5:
-                                      text = "There is always retakes..\n but it's always nice to pass the first exam";
+                                      text = "There is always retakes..\nbut it's always nice to pass the first exam";
                                       break;
                                     case 6:
-                                      text = "Finally! No classes!\n What to do know?";
+                                      text = "Finally! No classes!\nWhat to do know?";
                                       break;
                                     case 7:
-                                      text = "Today's schedule is  empty.\n This is the day to focus on you!";
+                                      text = "Today's schedule is  empty.\nThis is the day to focus on you!";
                                       break;
                                     case 8:
-                                      text = "You seem to be free from school today.\n Maybe you should contact your friends!";
+                                      text = "You seem to be free from school today.\nMaybe you should contact your friends!";
                                       break;
                                     case 9:
-                                      text = "A day with no classes?\n But there is always something to do... Hit the books!";
+                                      text = "A day with no classes?\nBut there is always something to do... Hit the books!";
                                       break;
                                   }
-                                  return Text(" "+text,//maybe add \n
-                                    style: TextStyle(color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462), fontSize: 17, ),
-                                      textAlign: TextAlign.left,
+                                  return Card(
+                                    elevation: 5,
+                                    shadowColor: lightTheme ? Color(0xff2c1d33): Colors.grey, //CHECK WITH SCHEDULE WHAT COLORS!!
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10), //MAKE THIS WORK!!
+                                    ),
+                                    child: ListTile(
+                                      title: Text(text,//maybe add \n
+                                        style: TextStyle(color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462), fontSize: 17, ),
+                                          textAlign: TextAlign.left,
+                                      ),
+                                      trailing: Icon(Icons.emoji_emotions_outlined,size: 30,
+                                      color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462),),
+                                    ),
                                   );
                                 }
                               },
                             ),
                           ),
-                          Container(height: 40,),
+                          Container(height: 25,),
                         ],
                       );
                     }
@@ -234,6 +246,7 @@ String getday(int loopPos) {
 }
 int getDayDate(int loopPos){
   var actualDay = DateTime.now().day + loopPos;// inte över 30
+
   if (DateTime(DateTime.now().year, DateTime.now().month,actualDay).weekday>5)  { //Om helg eller om dagen i loopen innan är större än idag....
     actualDay = actualDay+2;
   }
