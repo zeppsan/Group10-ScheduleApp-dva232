@@ -14,6 +14,7 @@ class _SettingsState extends State<Settings> {
 
   @override
   void initState() {
+    super.initState();
     _loggedIn = checkLogin();
     _darkModeSwitch = LoginMain.darkTheme;
   }

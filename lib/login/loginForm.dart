@@ -29,6 +29,7 @@ class _LoginForm extends State<LoginForm> {
 
   @override
   void initState() {
+    super.initState();
     _passwordVisible = false;
     _rememberMe = false;
   }

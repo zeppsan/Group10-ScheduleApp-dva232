@@ -29,6 +29,7 @@ class _LoginMainState extends State<LoginMain> {
 
   @override
   void initState() {
+    super.initState();
     _login = true;
     _register = false;
     _darkTheme = LoginMain.darkTheme;
@@ -135,8 +136,8 @@ class _LoginMainState extends State<LoginMain> {
       //If the user has ticked the remember box get the email and password
       if (localStorage.getString('email') != null) {
         var newLogin = 'https://qvarnstrom.tech/api/auth/login';
-        String email = await localStorage.getString('email');
-        String password = await localStorage.getString('password');
+        String email = localStorage.getString('email');
+        String password = localStorage.getString('password');
 
         Map data = {
           'email': '$email',
