@@ -65,7 +65,6 @@ class _BasicMapWidget extends State<BasicMapWidget> {
                     child:Text( widget.basicMapToShow,
                         style: TextStyle (
                           fontSize: 50,
-                          backgroundColor: Colors.white,
                           color: Colors.deepPurple[100],
                         )
                     )

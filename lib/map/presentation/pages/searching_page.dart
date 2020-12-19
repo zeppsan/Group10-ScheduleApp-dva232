@@ -56,13 +56,15 @@ class SearchingPage extends StatelessWidget {
                     } else if (state is ErrorState) {
                       return MessageDisplay(message: state.message);
                     } else if (state is RoomLoadedState) {
-                      return Container(
-                        child: Column  (
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget> [
-                            Expanded(child: BasicMapWidget(basicMapToShow: state.room.building.name)),
-                            FlatButton(
+                      return Column  (
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget> [
+                          Expanded(child: BasicMapWidget(basicMapToShow: state.room.building.name)),
+                          Align(
+                            alignment:Alignment.centerRight,
+                            child: FlatButton(
                               child:Row (
+                                mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text('Show on the floor plan'),
@@ -73,8 +75,8 @@ class SearchingPage extends StatelessWidget {
                               ),
                               onPressed: () { dispatchGetFloorPlan(context, state.room, state.room.floor); },
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       );
                     } else if (state is PlanLoaded) {
                       return WillPopScope(
@@ -154,7 +156,6 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
             clearOnSubmit: false,
             submitOnSuggestionTap: true,
             suggestions: roomNames,
-            style: TextStyle(color: Colors.black, fontSize: 16.0),
             decoration: InputDecoration(
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
               suffixIcon: IconButton(
@@ -184,6 +185,7 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
               return row(item);
             },
           ),
+          SizedBox(height: 10),
         ],
       );
   }

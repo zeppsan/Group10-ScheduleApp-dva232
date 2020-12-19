@@ -58,7 +58,7 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
                 height: MediaQuery.of(context).size.height,// * 0.55,
                 decoration: BoxDecoration(color: Colors.white),
               */
-              child: FittedBox(
+               child: FittedBox(
                 fit: BoxFit.contain,
                 child: Stack(
                   children: [
@@ -86,7 +86,6 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
               child:Text( widget.room.building.name + widget.currentFloor.toString(),
                 style: TextStyle (
                   fontSize: 50,
-                  backgroundColor: Colors.white,
                   color: Colors.deepPurple[100],
                 )
               )
