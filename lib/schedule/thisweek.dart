@@ -114,7 +114,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                     children: _selectedLectures.map((e) {
                                       return Card(
                                         elevation: 5,
-                                        shadowColor: lightTheme ? Color(0xff2c1d33): Colors.grey, //CHECK WITH SCHEDULE WHAT COLORS!!
+                                        shadowColor: Color(0xff2c1d33), //glow->//lightTheme ? Color(0xff2c1d33): Colors.grey, //CHECK WITH SCHEDULE WHAT COLORS!!
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(10), //MAKE THIS WORK!!
                                         ),
@@ -180,7 +180,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                   }
                                   return Card(
                                     elevation: 5,
-                                    shadowColor: lightTheme ? Color(0xff2c1d33): Colors.grey, //CHECK WITH SCHEDULE WHAT COLORS!!
+                                    shadowColor: Color(0xff2c1d33),//glow->//lightTheme ? Color(0xff2c1d33): Colors.grey, //CHECK WITH SCHEDULE WHAT COLORS!!
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10), //MAKE THIS WORK!!
                                     ),
