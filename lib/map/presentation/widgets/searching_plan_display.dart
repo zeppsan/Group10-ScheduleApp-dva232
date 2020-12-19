@@ -77,8 +77,10 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
             child: Row (
               children: [
                 Expanded (
-                  child:ElevatedButton( onPressed: () {_isShowPathButton ? ShowPath():HidePath();},
-                    child: Text(_isShowPathButton? 'Show path' : 'Hide path'),
+                  child:ElevatedButton(
+                    onPressed: () {_isShowPathButton ? ShowPath():HidePath();},
+                    child: Text(_isShowPathButton? 'Show path' : 'Hide path',
+                    ),
                   ),
                 )
               ]

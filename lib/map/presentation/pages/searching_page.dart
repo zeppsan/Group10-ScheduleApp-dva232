@@ -56,13 +56,15 @@ class SearchingPage extends StatelessWidget {
                     } else if (state is ErrorState) {
                       return MessageDisplay(message: state.message);
                     } else if (state is RoomLoadedState) {
-                      return Container(
-                        child: Column  (
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget> [
-                            Expanded(child: BasicMapWidget(basicMapToShow: state.room.building.name)),
-                            FlatButton(
+                      return Column  (
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget> [
+                          Expanded(child: BasicMapWidget(basicMapToShow: state.room.building.name)),
+                          Align(
+                            alignment:Alignment.centerRight,
+                            child: FlatButton(
                               child:Row (
+                                mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text('Show on the floor plan'),
@@ -73,8 +75,8 @@ class SearchingPage extends StatelessWidget {
                               ),
                               onPressed: () { dispatchGetFloorPlan(context, state.room, state.room.floor); },
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       );
                     } else if (state is PlanLoaded) {
                       return WillPopScope(
@@ -121,155 +123,85 @@ class TopControlsWidgetForSearching extends StatefulWidget {
 }
 
 class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSearching> {
-
-  final FocusNode _focusNode = FocusNode();
-
-  OverlayEntry _overlayEntry;
-
-  GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
+  List<String> roomNames;
   String roomToFind;
-
   AutoCompleteTextField searchTextField;
-
-  List<String> roomNames = List<String>();
-
-  //final GetRoomList getRoomList = ic.serviceLocator<GetRoomList>();
-  //Future<List<String>> roomNames = getList();
-
-
-  /*
-
-  roomNames =  await getRoomList();*/
-
-  String roomSuggestion;
-
-void loadList () async {
-  print('loadlist');
-  RoomAssetsDataSource source = RoomAssetsDataSourceImpl();
-  RoomRepository repository = new RoomRepositoryImpl(assetsDataSource: source);
-  final GetRoomList getRoomList = GetRoomList(repository);
-  roomNames = await getRoomList();
-}
-
-
-
-  @override
-  void initState()  {
-  print ('init');
-    loadList();
-    _focusNode.addListener(() {
-      if(_focusNode.hasFocus && searchTextField.controller!=null ) {
-        roomSuggestion = searchTextField.controller.text.toString();
-        //test = "room found";
-        this._overlayEntry = this._createOverlayEntry();
-        Overlay.of(context).insert(this._overlayEntry);
-      }
-      else if (searchTextField.controller!=null ){
-        this._overlayEntry.remove();
-      }
-    });
-  }
-
-  OverlayEntry _createOverlayEntry () {
-    RenderBox renderBox = context.findRenderObject();
-    var size = renderBox.size;
-    var offset = renderBox.localToGlobal(Offset.zero);
-
-    return OverlayEntry(
-        builder: (context) => Positioned(
-          left: offset.dx,
-          top: offset.dy + size.height + 5.0,
-          //width: MediaQuery.of(context).size.width,
-          //height: MediaQuery.of(context).size.height,
-          child: WillPopScope(
-            onWillPop: _onWillPop,
-          child: ListView.builder(
-                  shrinkWrap: true,
-                  itemBuilder: (context, item) {
-                    return
-                          ListTile(
-                          title: Text(roomSuggestion, style: TextStyle(fontSize: 16.0)),
-                    );
-                  },
-                ),
-          ),
-            ),
-       // )
-    );
-  }
-
+  GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
   _TopControlsWidgetForSearchingState({this.roomToFind});
 
-    @override
-    Widget build(BuildContext context) {
-      //var txt=TextEditingController();
-      //txt.text=roomToFind;
-      print('building TopControlsWidget');
-      return Column(
+  void loadList() async {
+    print('kor func');
+    var getRoomList = ic.serviceLocator.get<GetRoomList>();
+    roomNames = await getRoomList();
+    print(roomNames);
+    setState((){});
+  }
+
+  @override
+  void initState() {
+    loadList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print (roomNames);
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          searchTextField = AutoCompleteTextField<String>(
-          focusNode: this._focusNode,
-          key: key,
-          clearOnSubmit: false,
-          suggestions: roomNames,
-          //textInputAction: TextInputAction.done,
-          style: TextStyle(color: const Color(0xffeeb462), fontSize: 16.0),
-          submitOnSuggestionTap: true,
-          decoration: InputDecoration(
-            suffixIcon: IconButton(
+          roomNames==null
+              ? CircularProgressIndicator()
+              : searchTextField = AutoCompleteTextField<String>(
+            key: key,
+            clearOnSubmit: false,
+            submitOnSuggestionTap: true,
+            suggestions: roomNames,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
+              suffixIcon: IconButton(
               onPressed: (){
                 roomToFind = searchTextField.controller.text.toString();
                 dispatchGetRoom(roomToFind);
               },
               icon: Icon(Icons.search_rounded),),
-            contentPadding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 20.0),
-            hintText:  "Search room",
-            hintStyle: TextStyle(color: const Color(0xffeeb462)),
-          ),
-            itemFilter: (item, query){
-            return item.toLowerCase().startsWith(query.toLowerCase());
+              contentPadding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 20.0),
+              hintText:  "Search room",
+              hintStyle: TextStyle(color: const Color(0xffeeb462)),
+              ),
+            itemFilter: (item, query) {
+              return item.toLowerCase().startsWith(query.toLowerCase());
             },
-            itemSorter: (a, b){
-            return a.compareTo(b);
+            itemSorter: (a, b) {
+              return a.compareTo(b);
             },
-            itemSubmitted: (item){
-             // _onWillPop();
+            itemSubmitted: (item) {
               setState(() {
                 searchTextField.textField.controller.text = item;
                 roomToFind = item;
-                dispatchGetRoom(roomToFind);
               });
-            },
-            itemBuilder: (context, item) {
-            return row(item);
-            },
-      ),
-          /*TextFormField(
-            controller: txt,
-            onChanged: (value) {
-              roomToFind = value;
-            },
-            onFieldSubmitted: (value){
-              roomToFind = value;
               dispatchGetRoom(roomToFind);
             },
-            decoration: InputDecoration(
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
-              hintText: "Search room",
-
-              suffixIcon: IconButton(
-                onPressed: (){ dispatchGetRoom(roomToFind);
-                },
-                icon: Icon(Icons.search_rounded),
-                //size: 34.0,
-              ),
-            ),
+            itemBuilder: (context, item) {
+              return row(item);
+            },
           ),
           SizedBox(height: 10),
-          Row(),*/
         ],
       );
-    }
+  }
+
+  Widget row(String room) {
+    return Card(
+        color: const Color(0xffeeb462),
+        child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(room, style: TextStyle(fontSize: 20.0)),
+              Padding(padding: EdgeInsets.fromLTRB(5.0, 10.0, 10.0, 5.0),),
+            ]
+        )
+    );
+  }
 
     void dispatchGetRoom(String roomToFind) {
     BlocProvider.of<SearchingLogic>(context)
@@ -279,28 +211,6 @@ void loadList () async {
   void dispatchGetPlanEvent(int _currentFloor, Room room) {
     BlocProvider.of<SearchingLogic>(context)
         .add(GetPlanEvent(_currentFloor, room));
-  }
-
-  Widget row(String room) {
-      return Card(
-          color: const Color(0xffeeb462),
-    child: Column(
-        mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(room, style: TextStyle(fontSize: 20.0)),
-        Padding(padding: EdgeInsets.fromLTRB(5.0, 10.0, 10.0, 5.0),),
-      ]
-      )
-      );
-  }
-
-  Future<bool> _onWillPop() {
-    if(_overlayEntry != null){
-      _overlayEntry.remove();
-      _overlayEntry = null;
-      return Future.value(false);
-    }
-    return Future.value(true);
   }
 }
 

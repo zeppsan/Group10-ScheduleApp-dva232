@@ -8,20 +8,30 @@ import 'package:schedule_dva232/map/presentation/browsing_ploc/browsing_logic.da
 import 'package:schedule_dva232/map/presentation/widgets/browsing_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
 import 'package:schedule_dva232/generalPages/settings.dart';
+import 'package:sizer/sizer.dart';
 
 class BrowsingPage extends StatelessWidget {
   final String buildingToFind;
   const BrowsingPage({Key key,  this.buildingToFind}):super(key:key);
 
   @override build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset:false,
-      appBar: AppBar(
-        title: Text('Map'),
-      ),
-      endDrawer: Settings(),
-      body: buildBody(context),
-      bottomNavigationBar: NavigationBarLoggedIn(),
+    return LayoutBuilder(
+      builder:(context,constraints) {
+        return OrientationBuilder(
+            builder: (context, orientation) {
+              SizerUtil().init(constraints, orientation);
+              return Scaffold(
+                resizeToAvoidBottomInset: false,
+                appBar: AppBar(
+                  title: Text('Map'),
+                ),
+                endDrawer: Settings(),
+                body: buildBody(context),
+                bottomNavigationBar: NavigationBarLoggedIn(),
+              );
+            }
+        );
+      }
     );
   }
 
@@ -42,6 +52,7 @@ class BrowsingPage extends StatelessWidget {
                       builder: (context,state) {
                         if (state is EmptyState) {
                           return Column(
+                            mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(child: BasicMapWidget(basicMapToShow: 'basic')),
                               Visibility(
@@ -49,12 +60,13 @@ class BrowsingPage extends StatelessWidget {
                                 maintainState: true,
                                 maintainAnimation:true,
                                 maintainSize:true,
-                                child:Row (
+                                child: FlatButton (
+                                  child: Row (
                                     children: [
                                       Text('To floor plans'),
-                                      Icon(Icons.arrow_forward_rounded,
-                                        color: Theme.of(context).accentColor)
+                                      Icon(Icons.arrow_forward_rounded)
                                     ]
+                                  ),
                                 ),
                               )
                             ],
@@ -67,25 +79,28 @@ class BrowsingPage extends StatelessWidget {
                         } else if (state is BuildingLoadedState) {
                           return WillPopScope(
                             onWillPop: () async { dispatchGetOriginal(context); return false;},
-                            child: Container(
-                              child: Column (
-                                mainAxisSize: MainAxisSize.max,
-                                children: <Widget>[
-                                  Expanded (child: BasicMapWidget(basicMapToShow: state.building.name)),
-                                  FlatButton(
-                                    child:Row (
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text('To floor plans'),
-                                        Icon(Icons.arrow_forward_rounded,
-                                          color: Theme.of(context).accentColor,
-                                        ),
-                                      ]
-                                    ),
-                                    onPressed: () { dispatchGetFloorPlan(context, state.building, 1); },
+                            child: Column (
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                Expanded (child: BasicMapWidget(basicMapToShow: state.building.name)),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: FlatButton(
+                                      child:Row (
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            Text('To floor plans'),
+                                            Icon(Icons.arrow_forward_rounded,
+                                              color: Theme.of(context).accentColor,
+                                            ),
+                                          ]
+                                      ),
+                                      onPressed: () { dispatchGetFloorPlan(context, state.building, 1); },
+
                                   ),
-                                ],
-                              ),
+                                )
+                              ],
                             ),
                           );
                         } else if (state is PlanLoaded) {
@@ -165,7 +180,10 @@ class _TopControlsWidgetForBrowsingState extends State<TopControlsWidgetForBrows
             children: <Widget>[
               Expanded(
                 child: ElevatedButton(
-                  child: Text('Buildings U & T'),
+                  child: Text('Buildings U & T',
+                  style: TextStyle (
+                    fontSize: 12.0.sp,
+                  )),
                   onPressed: () {
                     dispatchGetBuilding('U');
                   },
@@ -174,7 +192,9 @@ class _TopControlsWidgetForBrowsingState extends State<TopControlsWidgetForBrows
               SizedBox(width: 10.0),
               Expanded(
                 child: ElevatedButton(
-                  child: Text('Building R'),
+                  child: Text('Building R',style: TextStyle (
+                    fontSize: 12.0.sp,
+                  )),
                   onPressed: () {
                     dispatchGetBuilding('R');
                   },

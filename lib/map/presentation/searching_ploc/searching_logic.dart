@@ -18,6 +18,7 @@ class SearchingLogic extends Bloc<SearchingEvent, SearchingState> {
   SearchingLogic({
     @required this.getRoom,
     @required this.inputConverter,
+
   }) : super(EmptyState());
 
   @override
