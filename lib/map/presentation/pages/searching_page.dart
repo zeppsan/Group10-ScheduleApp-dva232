@@ -158,7 +158,7 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
 
   @override
   Widget build(BuildContext context) {
-      return Column(
+      return Container();/*Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           roomNames == null ? CircularProgressIndicator() : roomToFind != null ? Container()
@@ -203,7 +203,7 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
           ),
           SizedBox(height: 10),
         ],
-      );
+      );*/
     }
 
     Widget row(String room) {

@@ -124,28 +124,6 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
               return row(item);
             },
           ),
-         /* TextFormField(
-            onChanged: (value) {
-              roomToFind = value;
-            },
-            onFieldSubmitted: (value){
-              roomToFind = value;
-              Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
-            },
-            decoration: InputDecoration(
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
-              hintText: "Search room",
-
-              suffixIcon: IconButton(
-                onPressed: (){
-                  Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
-                },
-
-                icon: Icon(Icons.search_rounded),
-                //size: 34.0,
-              ),
-            ),
-          ),*/
 
           Visibility(
             maintainState: true,

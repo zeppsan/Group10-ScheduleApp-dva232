@@ -205,7 +205,6 @@ class _TopControlsWidgetForBrowsingState extends State<TopControlsWidgetForBrows
               roomToFind = item;
               Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
             });
-            //dispatchGetRoom(roomToFind);
           },
           itemBuilder: (context, item) {
             return row(item);
@@ -260,70 +259,6 @@ class _TopControlsWidgetForBrowsingState extends State<TopControlsWidgetForBrows
       ),
     );
   }
-  /*String roomToFind;
-
-    @override
-    Widget build(BuildContext context) {
-      return Column(
-        children: <Widget>[
-          TextFormField(
-            onChanged: (value) {
-              roomToFind = value;
-            },
-            onFieldSubmitted: (value){
-              roomToFind = value;
-              Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
-            },
-            decoration: InputDecoration(
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
-              hintText: "Search room",
-
-             suffixIcon: IconButton(
-               onPressed: (){
-                 Navigator.of(context).pushNamed('/searching', arguments: roomToFind);
-               },
-
-               icon: Icon(Icons.search_rounded),
-               //size: 34.0,
-             ),
-              ),
-            ),
-
-          SizedBox(height: 10),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: ElevatedButton(
-                  child: Text('Buildings U & T',
-                  style: TextStyle (
-                    fontSize: 12.0.sp,
-                  )),
-                  onPressed: () {
-                    dispatchGetBuilding('U');
-                  },
-                ),
-              ),
-              SizedBox(width: 10.0),
-              Expanded(
-                child: ElevatedButton(
-                  child: Text('Building R',style: TextStyle (
-                    fontSize: 12.0.sp,
-                  )),
-                  onPressed: () {
-                    dispatchGetBuilding('R');
-                  },
-                ),
-              ),
-            ],
-          ),
-        ],
-      );
-    }
-
-    void dispatchGetBuilding(String buildingToFind) {
-    BlocProvider.of<BrowsingLogic>(context)
-        .add(GetBuildingEvent(buildingToFind));
-  }*/
 
   void dispatchGetBuilding(String buildingToFind) {
     BlocProvider.of<BrowsingLogic>(context)

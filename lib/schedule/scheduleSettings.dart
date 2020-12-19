@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/schedule/subfiles/colorPicker.dart';
+import 'package:schedule_dva232/schedule/thisweek.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'subfiles/colorPicker.dart';
@@ -69,8 +70,10 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                 controller: course_input,
                 decoration: InputDecoration(
                   hintText: 'Course Code',
+                  hintStyle: TextStyle(fontWeight: FontWeight.bold,
+                      color: lightTheme ? const Color(0xff2c1d33) : const Color(
+                          0xffeeb462)),
                   border: OutlineInputBorder(),
-
                 ),
               ),
             ),
