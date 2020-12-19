@@ -10,6 +10,7 @@ import 'package:schedule_dva232/schedule/thisweek.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'subfiles/colorPicker.dart';
+import 'package:schedule_dva232/generalPages/settings.dart';
 
 class ScheduleSettings extends StatefulWidget {
   @override
@@ -49,6 +50,19 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
       appBar: AppBar(
         title: Text("Course Information"),
         actions: [
+          Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: Icon(Icons.more_vert_outlined),
+                  onPressed: () {
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                );
+              }
+          ),
+        ],
+        //OLD
+        /*actions: [
           IconButton(
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/scheduleSettings');
@@ -58,9 +72,9 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
             color:  const Color(0xffdfb15b),
             ),
           ),
-        ],
+        ],*/
       ),
-
+      endDrawer: Settings(),
       body: Container(
         child: Column(
           children: [

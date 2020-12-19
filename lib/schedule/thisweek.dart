@@ -19,6 +19,18 @@ class Thisweek extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title:  Text('This Week'),
+        actions: [
+          Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: Icon(Icons.more_vert_outlined),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              );
+            }
+          ),
+        ],
       ),
       endDrawer: Settings(),
       body: Container(
@@ -50,7 +62,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
         builder: (BuildContext context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             default:
               if (!snapshot.hasData || snapshot.data.toString() == "{}") { //if no data in map or has no data show nothing
                 return  Center(
@@ -84,11 +96,14 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                     itemCount: 5,
                     itemBuilder: (context, pos) {
                       List<Lecture> _selectedLectures = snapshot.data[DateTime(DateTime.now().year, DateTime.now().month, getDayDate(pos))]; //get lectures for specific date
+                      //print(DateTime(DateTime.now().year, DateTime.now().month,getDayDate(pos)).month);
+
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(height: 15,),
-                          Text(" "+getday(pos)+"  "+getDayDate(pos).toString()+"/"+DateTime(DateTime.now().year, DateTime.now().month,getDayDate(pos)).month.toString(),
+
+                      Text(" "+getday(pos)+"  "+getDayDate(pos).toString()+"/"+/*DateTime(DateTime.now().year, DateTime.now().month,getDayDate(pos)).month*/getMonth(pos).toString(),
                             style: TextStyle(fontSize: 20, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462), fontWeight: FontWeight.bold),
                           ),
                           Container(
@@ -250,6 +265,11 @@ int getDayDate(int loopPos){
   if (DateTime(DateTime.now().year, DateTime.now().month,actualDay).weekday>5)  { //Om helg eller om dagen i loopen innan är större än idag....
     actualDay = actualDay+2;
   }
+  if(DateTime(DateTime.now().year, DateTime.now().month,prevDay).month != DateTime(DateTime.now().year, DateTime.now().month,actualDay).month){
+   //print(DateTime(DateTime.now().year, DateTime.now().month,actualDay).month);
+    //prevDay =1;
+    return DateTime(DateTime.now().year, DateTime.now().month,actualDay).day;
+  }
   if( prevDay > actualDay && loopPos>1)
     actualDay +=2;
 
@@ -257,8 +277,8 @@ int getDayDate(int loopPos){
 
   return actualDay;
 }
-/*
+
 int getMonth(int loopPos){
-  var date = DateTime(DateTime.now().year, DateTime.now().month,getDayDate(loopPos)).month;
+  var date = DateTime(DateTime.now().year, DateTime.now().month,getDayDate(loopPos));
   return date.month;
-}*/
+}

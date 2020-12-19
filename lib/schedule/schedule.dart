@@ -22,6 +22,18 @@ class Schedule extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Schedule'),
+        actions: [
+          Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: Icon(Icons.more_vert_outlined),
+                  onPressed: () {
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                );
+              }
+          ),
+        ],
         //Old view with add courses and notifications
         /*actions: [
           IconButton(

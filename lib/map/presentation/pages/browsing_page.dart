@@ -27,6 +27,18 @@ class BrowsingPage extends StatelessWidget {
                 resizeToAvoidBottomInset: false,
                 appBar: AppBar(
                   title: Text('Map'),
+                  actions: [
+                    Builder(
+                        builder: (BuildContext context) {
+                          return IconButton(
+                            icon: Icon(Icons.more_vert_outlined),
+                            onPressed: () {
+                              Scaffold.of(context).openEndDrawer();
+                            },
+                          );
+                        }
+                    ),
+                  ],
                 ),
                 endDrawer: Settings(),
                 body: buildBody(context),
