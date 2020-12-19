@@ -6,6 +6,7 @@ import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import 'package:schedule_dva232/generalPages/settings.dart';
+import 'package:schedule_dva232/schedule/subfiles/scheduleUpdater.dart';
 
 var prevDay =1;
 bool lightTheme = true;
@@ -53,7 +54,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
   @override
   void initState() {
     super.initState();
-    _checkSchedule = checkSchedule(); //get Future<Map<DateTime, List<Lecture>>> events from CourseParser
+    _checkSchedule = checkSchedule(context); //get Future<Map<DateTime, List<Lecture>>> events from CourseParser
   }
 
   Widget build(BuildContext context) {
@@ -96,14 +97,13 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                     itemCount: 5,
                     itemBuilder: (context, pos) {
                       List<Lecture> _selectedLectures = snapshot.data[DateTime(DateTime.now().year, DateTime.now().month, getDayDate(pos))]; //get lectures for specific date
-                      //print(DateTime(DateTime.now().year, DateTime.now().month,getDayDate(pos)).month);
-
+                      var dayDate = getDayDate(pos);
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(height: 15,),
 
-                      Text(" "+getday(pos)+"  "+getDayDate(pos).toString()+"/"+/*DateTime(DateTime.now().year, DateTime.now().month,getDayDate(pos)).month*/getMonth(pos).toString(),
+                      Text(" "+getday(pos)+"  "+dayDate.toString()+"/"+getMonth(pos, dayDate).toString(),
                             style: TextStyle(fontSize: 20, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462), fontWeight: FontWeight.bold),
                           ),
                           Container(
@@ -209,18 +209,10 @@ class _fiveTopDaysState extends State<fiveTopDays> {
   }
 }
 
-Future<Map<DateTime, List<Lecture>>> checkSchedule() async{
+Future<Map<DateTime, List<Lecture>>> checkSchedule(context) async{
   SharedPreferences localStorage = await SharedPreferences.getInstance();
   lightTheme = await localStorage.getBool('theme');
-  if(localStorage.containsKey('rawSchedule')) {
-    CourseParser parser = CourseParser(rawData: jsonDecode(localStorage.getString('rawSchedule')));
-    await parser.parseRawData();
-    return parser.events;
-  }
-}
-/*
-Future<Map<DateTime, List<Lecture>>> checkSchedule(context) async{
-  //SharedPreferences localStorage = await SharedPreferences.getInstance();
+
   Map<DateTime, List<Lecture>> result;
   Future nogotfint = ScheduleUpdater.getEvents(context);
   await nogotfint.whenComplete(() async{
@@ -229,7 +221,7 @@ Future<Map<DateTime, List<Lecture>>> checkSchedule(context) async{
     result = parser.events;
   });
   return result;
-}*/
+}
 
 String getday(int loopPos) {
   var daynr = DateTime.now().weekday +loopPos;
@@ -278,7 +270,9 @@ int getDayDate(int loopPos){
   return actualDay;
 }
 
-int getMonth(int loopPos){
-  var date = DateTime(DateTime.now().year, DateTime.now().month,getDayDate(loopPos));
-  return date.month;
+int getMonth(var loopPos, var day){
+  if(prevDay > day ){
+    return DateTime(DateTime.now().year, DateTime.now().month+1,day).month;
+  }
+  return DateTime(DateTime.now().year, DateTime.now().month,day).month;
 }
