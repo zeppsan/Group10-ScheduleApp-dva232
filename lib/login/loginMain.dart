@@ -57,7 +57,7 @@ class _LoginMainState extends State<LoginMain> {
       child: ListView(
         children: [
           Container(
-            padding: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 50.0),
+            padding: EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
