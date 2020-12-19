@@ -6,9 +6,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/schedule/subfiles/colorPicker.dart';
+import 'package:schedule_dva232/schedule/thisweek.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'subfiles/colorPicker.dart';
+import 'package:schedule_dva232/generalPages/settings.dart';
 
 class ScheduleSettings extends StatefulWidget {
   @override
@@ -48,6 +50,19 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
       appBar: AppBar(
         title: Text("Course Information"),
         actions: [
+          Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: Icon(Icons.more_vert_outlined),
+                  onPressed: () {
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                );
+              }
+          ),
+        ],
+        //OLD
+        /*actions: [
           IconButton(
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/scheduleSettings');
@@ -57,9 +72,9 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
             color:  const Color(0xffdfb15b),
             ),
           ),
-        ],
+        ],*/
       ),
-
+      endDrawer: Settings(),
       body: Container(
         child: Column(
           children: [
@@ -69,8 +84,10 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                 controller: course_input,
                 decoration: InputDecoration(
                   hintText: 'Course Code',
+                  hintStyle: TextStyle(fontWeight: FontWeight.bold,
+                      color: lightTheme ? const Color(0xff2c1d33) : const Color(
+                          0xffeeb462)),
                   border: OutlineInputBorder(),
-
                 ),
               ),
             ),

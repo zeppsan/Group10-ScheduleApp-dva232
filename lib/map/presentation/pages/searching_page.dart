@@ -15,6 +15,7 @@ import 'package:schedule_dva232/map/presentation/widgets/searching_plan_display.
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
 import 'package:schedule_dva232/map/locationAnimation.dart';
 import 'package:schedule_dva232/generalPages/settings.dart';
+import 'package:schedule_dva232/schedule/thisweek.dart';
 //import 'package:schedule_dva232/map/data_domain/models/roomNames.dart';
 
 class SearchingPage extends StatelessWidget {
@@ -26,6 +27,18 @@ class SearchingPage extends StatelessWidget {
       resizeToAvoidBottomInset:false,
       appBar: AppBar(
         title: Text('Map'),
+        actions: [
+          Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: Icon(Icons.more_vert_outlined),
+                  onPressed: () {
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                );
+              }
+          ),
+        ],
       ),
       endDrawer: Settings(),
       body: buildBody(context),
@@ -67,9 +80,23 @@ class SearchingPage extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Text('Show on the floor plan'),
+                                  RichText(
+                                    text: TextSpan(
+                                      style: new TextStyle(
+                                        fontSize: 14.0,
+                                        color: lightTheme? Colors.black : Colors.white,
+                                      ),
+                                      children: <TextSpan>[
+                                        new TextSpan(text: 'Show '),
+                                        new TextSpan(text: state.room.name, style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)),
+                                        new TextSpan(text: ' on floor plan'),
+                                      ],
+                                    )
+                                  ),
+
+                               //Text('Show $roomToFind on floor plan'),
                                   Icon(Icons.arrow_forward_rounded,
-                                    color: Theme.of(context).accentColor,
+                                    color: lightTheme? const Color(0xff2c1d33) : Theme.of(context).accentColor,
                                   ),
                                 ]
                               ),
@@ -130,10 +157,8 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
   _TopControlsWidgetForSearchingState({this.roomToFind});
 
   void loadList() async {
-    print('kor func');
     var getRoomList = ic.serviceLocator.get<GetRoomList>();
     roomNames = await getRoomList();
-    print(roomNames);
     setState((){});
   }
 
@@ -145,29 +170,32 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
 
   @override
   Widget build(BuildContext context) {
-    print (roomNames);
-    return Column(
+      return Container();/*Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          roomNames==null
-              ? CircularProgressIndicator()
+          roomNames == null ? CircularProgressIndicator() : roomToFind != null ? Container()
               : searchTextField = AutoCompleteTextField<String>(
             key: key,
             clearOnSubmit: false,
             submitOnSuggestionTap: true,
             suggestions: roomNames,
             decoration: InputDecoration(
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(32.0),),
               suffixIcon: IconButton(
-              onPressed: (){
-                roomToFind = searchTextField.controller.text.toString();
-                dispatchGetRoom(roomToFind);
-              },
-              icon: Icon(Icons.search_rounded),),
-              contentPadding: EdgeInsets.fromLTRB(10.0, 30.0, 10.0, 20.0),
-              hintText:  "Search room",
-              hintStyle: TextStyle(color: const Color(0xffeeb462)),
-              ),
+                onPressed: () {
+                  roomToFind = searchTextField.controller.text.toString();
+                  dispatchGetRoom(roomToFind);
+                },
+                icon: Icon(Icons.search_rounded),
+                color: lightTheme ? const Color(0xff2c1d33) : const Color(
+                    0xffeeb462),),
+              //contentPadding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
+              hintText: "Search room",
+              hintStyle: TextStyle(fontWeight: FontWeight.bold,
+                  color: lightTheme ? const Color(0xff2c1d33) : const Color(
+                      0xffeeb462)),
+            ),
             itemFilter: (item, query) {
               return item.toLowerCase().startsWith(query.toLowerCase());
             },
@@ -187,30 +215,37 @@ class _TopControlsWidgetForSearchingState extends State<TopControlsWidgetForSear
           ),
           SizedBox(height: 10),
         ],
-      );
-  }
+      );*/
+    }
 
-  Widget row(String room) {
-    return Card(
-        color: const Color(0xffeeb462),
-        child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(room, style: TextStyle(fontSize: 20.0)),
-              Padding(padding: EdgeInsets.fromLTRB(5.0, 10.0, 10.0, 5.0),),
-            ]
-        )
-    );
-  }
+    Widget row(String room) {
+      return Container(
+        padding: EdgeInsets.all(15.0),
+        decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(color: Colors.grey.withOpacity(0.3))),
+        ),
+        child: Row(
+          children: [
+            Container(
+              child: Text(room, style: TextStyle(
+                  fontSize: 20.0,
+                  color: lightTheme ? const Color(0xff2c1d33) : const Color(
+                      0xffeeb462))),
+            ),
+          ],
+        ),
+      );
+    }
 
     void dispatchGetRoom(String roomToFind) {
-    BlocProvider.of<SearchingLogic>(context)
-        .add(GetRoomEvent(roomToFind));
-  }
+      BlocProvider.of<SearchingLogic>(context)
+          .add(GetRoomEvent(roomToFind));
+    }
 
-  void dispatchGetPlanEvent(int _currentFloor, Room room) {
-    BlocProvider.of<SearchingLogic>(context)
-        .add(GetPlanEvent(_currentFloor, room));
-  }
+    void dispatchGetPlanEvent(int _currentFloor, Room room) {
+      BlocProvider.of<SearchingLogic>(context)
+          .add(GetPlanEvent(_currentFloor, room));
+    }
 }
 

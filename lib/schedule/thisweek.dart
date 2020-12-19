@@ -6,6 +6,7 @@ import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import 'package:schedule_dva232/generalPages/settings.dart';
+import 'package:schedule_dva232/schedule/subfiles/scheduleUpdater.dart';
 
 var prevDay =1;
 bool lightTheme = true;
@@ -19,6 +20,18 @@ class Thisweek extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title:  Text('This Week'),
+        actions: [
+          Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: Icon(Icons.more_vert_outlined),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              );
+            }
+          ),
+        ],
       ),
       endDrawer: Settings(),
       body: Container(
@@ -41,7 +54,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
   @override
   void initState() {
     super.initState();
-    _checkSchedule = checkSchedule(); //get Future<Map<DateTime, List<Lecture>>> events from CourseParser
+    _checkSchedule = checkSchedule(context); //get Future<Map<DateTime, List<Lecture>>> events from CourseParser
   }
 
   Widget build(BuildContext context) {
@@ -50,7 +63,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
         builder: (BuildContext context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             default:
               if (!snapshot.hasData || snapshot.data.toString() == "{}") { //if no data in map or has no data show nothing
                 return  Center(
@@ -84,11 +97,13 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                     itemCount: 5,
                     itemBuilder: (context, pos) {
                       List<Lecture> _selectedLectures = snapshot.data[DateTime(DateTime.now().year, DateTime.now().month, getDayDate(pos))]; //get lectures for specific date
+                      var dayDate = getDayDate(pos);
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(height: 15,),
-                          Text(" "+getday(pos)+"  "+getDayDate(pos).toString()+"/"+DateTime.now().month.toString(), //KOMMER EJ FUNGERA VID MÅNADSSKIFTE NY FUNKTION GET MONTH!!
+
+                      Text(" "+getday(pos)+"  "+dayDate.toString()+"/"+getMonth(pos, dayDate).toString(),
                             style: TextStyle(fontSize: 20, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462), fontWeight: FontWeight.bold),
                           ),
                           Container(
@@ -99,7 +114,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                     children: _selectedLectures.map((e) {
                                       return Card(
                                         elevation: 5,
-                                        shadowColor: lightTheme ? Color(0xff2c1d33): Colors.grey, //CHECK WITH SCHEDULE WHAT COLORS!!
+                                        shadowColor: Color(0xff2c1d33), //glow->//lightTheme ? Color(0xff2c1d33): Colors.grey, //CHECK WITH SCHEDULE WHAT COLORS!!
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(10), //MAKE THIS WORK!!
                                         ),
@@ -165,7 +180,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                   }
                                   return Card(
                                     elevation: 5,
-                                    shadowColor: lightTheme ? Color(0xff2c1d33): Colors.grey, //CHECK WITH SCHEDULE WHAT COLORS!!
+                                    shadowColor: Color(0xff2c1d33),//glow->//lightTheme ? Color(0xff2c1d33): Colors.grey, //CHECK WITH SCHEDULE WHAT COLORS!!
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10), //MAKE THIS WORK!!
                                     ),
@@ -194,18 +209,10 @@ class _fiveTopDaysState extends State<fiveTopDays> {
   }
 }
 
-Future<Map<DateTime, List<Lecture>>> checkSchedule() async{
+Future<Map<DateTime, List<Lecture>>> checkSchedule(context) async{
   SharedPreferences localStorage = await SharedPreferences.getInstance();
   lightTheme = await localStorage.getBool('theme');
-  if(localStorage.containsKey('rawSchedule')) {
-    CourseParser parser = CourseParser(rawData: jsonDecode(localStorage.getString('rawSchedule')));
-    await parser.parseRawData();
-    return parser.events;
-  }
-}
-/*
-Future<Map<DateTime, List<Lecture>>> checkSchedule(context) async{
-  //SharedPreferences localStorage = await SharedPreferences.getInstance();
+
   Map<DateTime, List<Lecture>> result;
   Future nogotfint = ScheduleUpdater.getEvents(context);
   await nogotfint.whenComplete(() async{
@@ -214,7 +221,7 @@ Future<Map<DateTime, List<Lecture>>> checkSchedule(context) async{
     result = parser.events;
   });
   return result;
-}*/
+}
 
 String getday(int loopPos) {
   var daynr = DateTime.now().weekday +loopPos;
@@ -250,10 +257,22 @@ int getDayDate(int loopPos){
   if (DateTime(DateTime.now().year, DateTime.now().month,actualDay).weekday>5)  { //Om helg eller om dagen i loopen innan är större än idag....
     actualDay = actualDay+2;
   }
+  if(DateTime(DateTime.now().year, DateTime.now().month,prevDay).month != DateTime(DateTime.now().year, DateTime.now().month,actualDay).month){
+   //print(DateTime(DateTime.now().year, DateTime.now().month,actualDay).month);
+    //prevDay =1;
+    return DateTime(DateTime.now().year, DateTime.now().month,actualDay).day;
+  }
   if( prevDay > actualDay && loopPos>1)
     actualDay +=2;
 
   prevDay = actualDay;
 
   return actualDay;
+}
+
+int getMonth(var loopPos, var day){
+  if(prevDay > day ){
+    return DateTime(DateTime.now().year, DateTime.now().month+1,day).month;
+  }
+  return DateTime(DateTime.now().year, DateTime.now().month,day).month;
 }

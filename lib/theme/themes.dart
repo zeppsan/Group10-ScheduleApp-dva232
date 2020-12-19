@@ -41,6 +41,9 @@ class AppTheme{
         borderRadius: BorderRadius.circular(25.0),
       )
     ),
+      primaryColorLight: const Color(0xff2c1d33),
+
+    accentColor: const Color(0xff2c1d33),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),textStyle: TextStyle(color: Colors.white),
@@ -93,6 +96,8 @@ class AppTheme{
           )
       ),
 
+    accentColor: Color(0xffeeb462),
+    primaryColorDark: Color(0xffeeb462),
     primaryIconTheme: IconThemeData(
       color: Color(0xffeeb462),
     ),
