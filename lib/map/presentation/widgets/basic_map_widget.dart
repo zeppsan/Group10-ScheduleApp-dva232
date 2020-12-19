@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:schedule_dva232/schedule/thisweek.dart';
 
 class BasicMapWidget extends StatefulWidget {
   final String basicMapToShow;
@@ -65,7 +66,7 @@ class _BasicMapWidget extends State<BasicMapWidget> {
                     child:Text( widget.basicMapToShow,
                         style: TextStyle (
                           fontSize: 50,
-                          color: Colors.deepPurple[100],
+                          color: lightTheme ? const Color(0xff2c1d33) : const Color(0xffeeb462),
                         )
                     )
                 ),

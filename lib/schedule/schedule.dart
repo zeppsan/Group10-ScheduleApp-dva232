@@ -166,15 +166,15 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                     child: TableCalendar(
                       calendarStyle: CalendarStyle(
                         // Left color is light theme, right is darktheme
-                          selectedColor: Color(0xffeeb462),
+                          selectedColor: (lightTheme)? const Color(0xff2c1d33) : const Color(0xffeeb462),
                           selectedStyle: TextStyle(
-                              color: Colors.black,
+                              color: (lightTheme)? Colors.white : Colors.black,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                           todayColor: (lightTheme)? Colors.transparent : Colors.transparent,
                           todayStyle: TextStyle(
-                              color: Color(0xffeeb462),
+                              color: (lightTheme)? const Color(0xff2c1d33) : const Color(0xffeeb462),
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                           ),
@@ -183,7 +183,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                       ),
                       headerStyle: HeaderStyle(
                         formatButtonDecoration: BoxDecoration(
-                          color: Color(0xffeeb462),
+                          color: (lightTheme)? const Color(0xff2c1d33) : const Color(0xffeeb462),
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(15),
                               topRight: Radius.circular(15),
@@ -191,7 +191,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                               bottomRight: Radius.circular(15)),
                         ),
                         formatButtonTextStyle: TextStyle(
-                          color: Colors.black
+                          color: (lightTheme)? Colors.white : Colors.black
                         ),
                       ),
                       initialCalendarFormat: CalendarFormat.twoWeeks,
