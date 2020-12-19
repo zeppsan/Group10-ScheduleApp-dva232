@@ -88,7 +88,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(height: 15,),
-                          Text(" "+getday(pos)+"  "+getDayDate(pos).toString()+"/"+DateTime.now().month.toString(), //KOMMER EJ FUNGERA VID MÅNADSSKIFTE NY FUNKTION GET MONTH!!
+                          Text(" "+getday(pos)+"  "+getDayDate(pos).toString()+"/"+DateTime(DateTime.now().year, DateTime.now().month,getDayDate(pos)).month.toString(),
                             style: TextStyle(fontSize: 20, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462), fontWeight: FontWeight.bold),
                           ),
                           Container(
@@ -257,3 +257,8 @@ int getDayDate(int loopPos){
 
   return actualDay;
 }
+/*
+int getMonth(int loopPos){
+  var date = DateTime(DateTime.now().year, DateTime.now().month,getDayDate(loopPos)).month;
+  return date.month;
+}*/
