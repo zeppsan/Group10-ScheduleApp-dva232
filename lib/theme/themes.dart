@@ -77,11 +77,11 @@ class AppTheme{
       ),
     centerTitle: true,
     textTheme: TextTheme(
-        headline6: TextStyle(color: const Color(0xffeeb462),fontSize: 20,)
+        headline6: TextStyle(color: const Color(0xffeeb462),fontSize: 20)
     )
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-     style: ElevatedButton.styleFrom(onPrimary: Color(0xff2c1d33), primary: const Color(0xffeeb462), textStyle: TextStyle(color: const Color(0xff2c1d33)),
+     style: ElevatedButton.styleFrom(onPrimary: Color(0xff2c1d33), primary: const Color(0xffeeb462), textStyle: TextStyle(color: const Color(0xff2c1d33),inherit: false),
      shape: RoundedRectangleBorder(
        borderRadius: BorderRadius.circular(30.0),
      ),
