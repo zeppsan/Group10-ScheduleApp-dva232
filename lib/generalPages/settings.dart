@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/login/loginMain.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked_themes/stacked_themes.dart';
-import '../appComponents/bottomNavigationLoggedIn.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -56,13 +54,36 @@ class _SettingsState extends State<Settings> {
                 }
               },
             ),
-            ElevatedButton(
-              child: Text("Manage courses"),
-              onPressed: () {
+            ListTile(
+              leading: Text("Manage courses"),
+              onTap: () {
                 Navigator.pushReplacementNamed(context, '/scheduleSettings');
               },
             ),
-            Row(
+            ListTile(
+              leading: Text("Dark theme"),
+              trailing: Switch(
+                value: _darkModeSwitch,
+                onChanged: (value) async {
+                  SharedPreferences localStorage =
+                  await SharedPreferences.getInstance();
+                  if (localStorage.getBool('theme')) {
+                    //if lightmode when change set to false to get darkmode
+                    localStorage.setBool('theme', false);
+                  } else {
+                    //if darkmode when change set to true to get lightmode
+                    localStorage.setBool('theme', true);
+                  }
+                  //Change the theme
+                  getThemeManager(context).toggleDarkLightTheme();
+
+                  setState(() {
+                    _darkModeSwitch = value;
+                  });
+                },
+              ),
+            ),
+           /* Row(
               children: [
                 Text("Dark theme"),
                 Switch(
@@ -86,7 +107,7 @@ class _SettingsState extends State<Settings> {
                   },
                 ),
               ],
-            ),
+            ),*/
 
             /*******************************************
              * Only for testing
@@ -156,6 +177,7 @@ class _SettingsState extends State<Settings> {
         ElevatedButton(
           child: Text("Login"),
           onPressed: () {
+            ///TODO: Change push
             Navigator.pushReplacementNamed(context, '/');
           },
         ),
