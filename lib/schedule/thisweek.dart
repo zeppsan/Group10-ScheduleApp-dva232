@@ -9,9 +9,8 @@ import 'dart:math';
 import 'package:schedule_dva232/generalPages/settings.dart';
 import 'package:schedule_dva232/schedule/subfiles/scheduleUpdater.dart';
 
-bool lightTheme = true;
 Random rand = new Random();
-
+bool lightTheme = true;
 
 class Thisweek extends StatelessWidget {
 
@@ -61,7 +60,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
 
   Widget build(BuildContext context) {
 
-    // This future waits untill the shcedule-update-check is done.
+    // This future waits until the shcedule-update-check is done.
     return FutureBuilder(
       future: _scheduleFetcher,
       builder: (context, snapshot){
@@ -108,14 +107,13 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                         return ListView.builder(
                             itemCount: 5,
                             itemBuilder: (context, pos) {
-                              List<Lecture> _selectedLectures = snapshot.data[DateTime(DateTime.now().year, DateTime.now().month, getDayDate(pos))]; //get lectures for specific date
+                              List<Lecture> _selectedLectures = snapshot.data[DateTime(DateTime.now().year, DateTime.now().month, getDayLecture(pos))]; //get lectures for specific date
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Container(height: 15,),
 
-                                  Text(/*" "+getday(pos)+"  "+getDayDate(pos).toString()+"/"+getMonth(pos).toString()*/
-                                    "${getday(pos)}   ${getDayDate(pos).toString()}/${getMonth(pos).toString()}",
+                                  Text(getday(pos)+" "+getDayDate(pos),
                                     style: TextStyle(fontSize: 20, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462), fontWeight: FontWeight.bold),
                                   ),
                                   Container(
@@ -220,14 +218,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
             );
             break;
           default:
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(),
-                ],
-              ),
-            );
+            return Center(child:CircularProgressIndicator());
             break;
         }
       },
@@ -245,7 +236,6 @@ Future<Map<DateTime, List<Lecture>>> checkSchedule(context) async{
   await parser.parseRawData();
   result = parser.events;
 
-
   return result;
 }
 
@@ -256,25 +246,21 @@ Future<List<dynamic>> fetchNewSchedule(context)async{
 
 String getday(int loopPos) {
   var daynr = DateTime.now().weekday +loopPos;
-  if (daynr == DateTime.now().weekday && daynr < 5)
+
+  if (daynr == DateTime.now().weekday && daynr <6)
     return "Today";
 
-
-  if (DateTime.now().weekday == 6)  { //om det är lördag
-   for(int i = daynr-5; i<=daynr-5;  i++){
-      daynr=i;
-    }
-  }
-  if (DateTime.now().weekday == 7 )  { //om det är söndag
+  if (DateTime.now().weekday == 7 )  { //if sunday
     for(int i = daynr-6; i<=daynr-6 ;  i++){
       daynr=i;
     }
   }
-  if(daynr>5){
+  if(daynr>5 && DateTime.now().weekday != 7){
     for(int i = daynr-5; i<=daynr-5;  i++){
       daynr=i;
     }
   }
+
   switch(daynr){
     case 1:
       return "Monday";
@@ -293,25 +279,25 @@ String getday(int loopPos) {
       break;
   }
 }
-int getDayDate(int loopPos){
-  var actualDay = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day+loopPos).day;// inte över 30
 
-  var prevDAY = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day+loopPos-1).weekday;
+String getDayDate(int loopPos){
+  var actualDay = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day+loopPos);
 
-  if (DateTime.now().weekday == 6 || prevDAY >=5) // if saturday
-    actualDay = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day+2+loopPos).day;
-  else if(DateTime.now().weekday == 7) // if sunday
-    actualDay = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day+1+loopPos).day;
+  if(DateTime.now().weekday == 7) // if sunday
+    actualDay = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day+loopPos+1);
+  if(DateTime.now().weekday+loopPos>5  && DateTime.now().weekday != 7)
+    actualDay = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day+2+loopPos);
 
-
-  return actualDay;
-
+  return "${actualDay.day}/${actualDay.month}";
 }
 
-int getMonth(var loopPos){
-  var month = DateTime(DateTime.now().year, DateTime.now().month,DateTime.now().day +loopPos).month;
-  if(DateTime(DateTime.now().year, DateTime.now().month,DateTime.now().day +loopPos-1).day > DateTime(DateTime.now().year, DateTime.now().month,DateTime.now().day +loopPos+1).day ){
-    month =  DateTime(DateTime.now().year, DateTime.now().month+1,DateTime.now().day +loopPos).month;
-  }
-  return month;
+int getDayLecture(int loopPos){
+  var actualDay = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day+loopPos);
+
+  if(DateTime.now().weekday == 7) // if sunday
+    actualDay = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day+loopPos+1);
+  if(DateTime.now().weekday+loopPos>5  && DateTime.now().weekday != 7)
+    actualDay = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day+2+loopPos);
+
+  return actualDay.day;
 }
