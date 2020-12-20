@@ -103,7 +103,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                         children: <Widget>[
                           Container(height: 15,),
 
-                      Text(" "+getday(pos)+"  "+dayDate.toString()+"/"+getMonth(pos, dayDate).toString(),
+                      Text("${getday(pos)} ${dayDate.toString()}/${getMonth(pos, dayDate).toString()}",
                             style: TextStyle(fontSize: 20, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462), fontWeight: FontWeight.bold),
                           ),
                           Container(
