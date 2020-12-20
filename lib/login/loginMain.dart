@@ -18,12 +18,10 @@ class _LoginMainState extends State<LoginMain> {
   bool _darkTheme;
 
   //DarkTheme Colors
-  var _logoDark = Color(0xffeeb462);
   var _gradientStartDark = Color(0xff2c1d33);
   var _gradientEndDark = Colors.black;
 
   //Light Theme Colors
-  var _logoLight = Color(0xff2c1d33);
   var _gradientStartLight = Color(0xffeeb462);
   var _gradientEndLight = Color(0xFFFFFFFF);
 
@@ -62,30 +60,13 @@ class _LoginMainState extends State<LoginMain> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                /*Padding(
-                  child: Text(
-                    "MaShRoom",
-                    style: TextStyle(
-                        fontSize: 36.0,
-                        color: _darkTheme ? _logoDark : _logoLight),
-                  ),
-                  padding: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 100.0),
-                ),*/
                 Image.asset('assets/logo/MainLogoDarkTheme.png', width: 340.0, height: 340.0),
                 Visibility(
-                  child: AnimatedOpacity(
-                    child: LoginForm(),
-                    opacity: _login ? 1.0 : 0.0,
-                    duration: Duration(milliseconds: 10000),
-                  ),
+                  child: LoginForm(),
                   visible: _login,
                 ),
                 Visibility(
-                  child: AnimatedOpacity(
-                    child: RegisterForm(),
-                    opacity: _register ? 1.0 : 0.0,
-                    duration: Duration(milliseconds: 10000),
-                  ),
+                  child: RegisterForm(),
                   visible: _register,
                 ),
                 ElevatedButton(
@@ -114,14 +95,11 @@ class _LoginMainState extends State<LoginMain> {
 
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     String token = localStorage.getString('token');
-    print("StoredToken: $token");
 
     //Token = null then the user haven't logged in
     if (token == null) {
       return;
     }
-
-    print("Refresh token");
 
     var response = await http.post(url, headers: {
       "Content-Type": "application/json",
@@ -133,7 +111,6 @@ class _LoginMainState extends State<LoginMain> {
 
     //The token is not valid. Need to update
     if (response.statusCode == 401) {
-      print("CheckLogin status 401");
       //If the user has ticked the remember box get the email and password
       if (localStorage.getString('email') != null) {
         var newLogin = 'https://qvarnstrom.tech/api/auth/login';
@@ -148,7 +125,6 @@ class _LoginMainState extends State<LoginMain> {
         var body = json.encode(data);
 
         //Fake the login and get the an new token.
-        print("Fake login");
         var responseNewLogin = await http.post(newLogin,
             headers: {"Content-Type": "application/json"}, body: body);
 
@@ -162,7 +138,6 @@ class _LoginMainState extends State<LoginMain> {
     }
     //The old token was valid and have now been updated
     else if (response.statusCode == 200) {
-      print("CheckLogin status 200");
       Map responseData = jsonDecode(response.body);
 
       localStorage.setString('token', responseData['access_token']);

@@ -187,10 +187,6 @@ class _RegisterForm extends State<RegisterForm> {
 
   void postRequest(
       {var name, var email, var password, var passwordConfirmation}) async {
-    print(name);
-    print(email);
-    print(password);
-    print(passwordConfirmation);
     var url = 'https://qvarnstrom.tech/api/auth/register';
 
     Map data = {
@@ -213,7 +209,6 @@ class _RegisterForm extends State<RegisterForm> {
           duration: const Duration(seconds: 3),
         ));
       });
-      print("Email taken");
     } else if (response.statusCode == 201) {
       //TODO: Message to user. Autofill the loginboxes?
       setState(() {
@@ -223,10 +218,6 @@ class _RegisterForm extends State<RegisterForm> {
         ));
         Navigator.pushReplacementNamed(context, "/");
       });
-      print("Registration complete");
     }
-
-    print("${response.statusCode}");
-    print("${response.body}");
   }
 }

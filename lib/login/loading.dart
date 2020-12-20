@@ -26,8 +26,6 @@ class _LoadingState extends State<Loading> {
       LoginMain.darkTheme = false;
     }
 
-    print("Darkmode variable ${LoginMain.darkTheme}");
-    print("LoginBool is ${localStorage.getBool('loggedIn')}");
     Navigator.pushReplacementNamed(context, '/login');
   }
 
