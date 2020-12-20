@@ -1,23 +1,14 @@
-import 'dart:convert';
-
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
-import 'package:schedule_dva232/map/data_domain/repositories/room_repository.dart';
-import 'package:schedule_dva232/map/data_domain/usecases/get_room_list_usecase.dart';
 import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart';
-import 'package:schedule_dva232/map/presentation/widgets/Search_bar_widget.dart';
 import 'package:schedule_dva232/map/presentation/widgets/searching_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
-import 'package:schedule_dva232/map/locationAnimation.dart';
 import 'package:schedule_dva232/generalPages/settings.dart';
 import 'package:schedule_dva232/schedule/thisweek.dart';
-//import 'package:schedule_dva232/map/data_domain/models/roomNames.dart';
 
 class SearchingPage extends StatelessWidget {
   final String roomToFind;

@@ -1,11 +1,9 @@
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
-import 'package:schedule_dva232/map/data_domain/usecases/get_room_list_usecase.dart';
 import 'package:schedule_dva232/map/presentation/browsing_ploc/browsing_logic.dart';
 import 'package:schedule_dva232/map/presentation/widgets/Search_bar_widget.dart';
 import 'package:schedule_dva232/map/presentation/widgets/browsing_plan_display.dart';
@@ -78,6 +76,7 @@ class BrowsingPage extends StatelessWidget {
                                 maintainAnimation:true,
                                 maintainSize:true,
                                 child: FlatButton (
+                                  onPressed: () {  },
                                   child: Row (
                                     children: [
                                       Text('To floor plans'),

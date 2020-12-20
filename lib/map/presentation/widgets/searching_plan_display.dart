@@ -1,14 +1,10 @@
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
-import 'package:schedule_dva232/map/data_domain/usecases/get_room_list_usecase.dart';
 import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart';
 import 'package:schedule_dva232/schedule/thisweek.dart';
 import '../../locationAnimation.dart';
-import 'package:schedule_dva232/injection_container.dart' as ic;
-
 import 'Search_bar_widget.dart';
 
 class SearchingPlanDisplay extends StatefulWidget{
