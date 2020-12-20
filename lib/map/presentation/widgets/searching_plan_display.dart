@@ -9,6 +9,8 @@ import 'package:schedule_dva232/schedule/thisweek.dart';
 import '../../locationAnimation.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
 
+import 'Search_bar_widget.dart';
+
 class SearchingPlanDisplay extends StatefulWidget{
   int _currentFloor;
   final Room room;
@@ -73,6 +75,7 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          SearchBarWidget(mode: 'searching', roomToFind:widget.room.name),
           Visibility(
             maintainState: true,
             maintainSize: true,

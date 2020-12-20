@@ -107,7 +107,6 @@ class SearchingPage extends StatelessWidget {
                       return Column  (
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget> [
-                          SearchBarWidget(mode: 'searching', roomToFind:roomToFind),
                           Expanded(
                             child: WillPopScope(
                               onWillPop: () async { dispatchGetKnownRoom(context, state.room); return false;},
