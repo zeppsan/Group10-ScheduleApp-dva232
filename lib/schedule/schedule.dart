@@ -221,6 +221,12 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                       }).toList(),
                     ),
                   ),
+                  FlatButton(
+                    child: Text('test'),
+                    onPressed: (){
+                      CourseParser.searchForChanges();
+                    },
+                  )
                 ],
               );
               break;

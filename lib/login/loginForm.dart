@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart';
+import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 
 // Create a Form widget.
 class LoginForm extends StatefulWidget {
@@ -181,7 +182,6 @@ class _LoginForm extends State<LoginForm> {
           localStorage.setString('email', email);
           localStorage.setString('password', password);
         }
-
         Navigator.pushReplacementNamed(context, '/thisweek');
       }
     } else if (response.statusCode == 401) {
