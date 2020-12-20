@@ -148,8 +148,6 @@ class _LoginForm extends State<LoginForm> {
   }
 
   void postRequest({var email, var password}) async {
-    print(email);
-    print(password);
     var url = 'https://qvarnstrom.tech/api/auth/login';
 
     Map data = {
@@ -164,11 +162,7 @@ class _LoginForm extends State<LoginForm> {
         headers: {"Content-Type": "application/json"}, body: body);
 
     if (response.statusCode == 200) {
-      print("${response.statusCode}");
-      print("${response.body}");
-
       Map responseData = jsonDecode(response.body);
-      print(responseData['access_token']);
 
       if (responseData['access_token'] != null) {
         SharedPreferences localStorage = await SharedPreferences.getInstance();

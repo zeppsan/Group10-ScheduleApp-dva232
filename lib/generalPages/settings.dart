@@ -153,7 +153,6 @@ class _SettingsState extends State<Settings> {
     bool _loggedIn;
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     _loggedIn = localStorage.getBool('loggedIn');
-    print("_loggedIn in checkLogin: $_loggedIn");
     return Future.value(_loggedIn);
   }
 

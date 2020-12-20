@@ -21,11 +21,12 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   AutoCompleteTextField searchTextField;
   var txt=TextEditingController();
 
-
   GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
 
   _SearchBarWidgetState(this.roomToFind);
 
+
+  //Get room names to list as suggestions
   void loadList() async {
     var getRoomList = ic.serviceLocator.get<GetRoomList>();
     roomNames = await getRoomList();
@@ -39,6 +40,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     txt.text=roomToFind;
   }
 
+  //Autocomplete the search fwith room names
   @override
   Widget build(BuildContext context) {
     return roomNames == null

@@ -24,6 +24,7 @@ class Schedule extends StatelessWidget {
     print("## in schedule ##");
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         title: Text('Schedule'),
         actions: [
           Builder(
