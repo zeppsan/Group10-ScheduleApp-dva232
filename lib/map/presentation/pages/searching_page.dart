@@ -22,6 +22,12 @@ class SearchingPage extends StatelessWidget {
         centerTitle: false,
         title: Text('Map'),
         actions: [
+          IconButton(
+            icon:Icon(Icons.notifications_none_outlined),
+            onPressed: (){
+              Navigator.pushReplacementNamed(context, '/thisweek');
+            },
+          ),
           Builder(
               builder: (BuildContext context) {
                 return IconButton(

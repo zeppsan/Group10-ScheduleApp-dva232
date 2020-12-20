@@ -21,6 +21,12 @@ class Thisweek extends StatelessWidget {
         centerTitle: false,
         title:  Text('This Week'),
         actions: [
+          IconButton(
+            icon:Icon(Icons.notifications_none_outlined),
+            onPressed: (){
+              Navigator.pushReplacementNamed(context, '/thisweek');
+            },
+          ),
           Builder(
             builder: (BuildContext context) {
               return IconButton(
