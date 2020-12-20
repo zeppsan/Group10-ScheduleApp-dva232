@@ -50,15 +50,31 @@ class SearchingPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Expanded(
-                child: BlocBuilder<SearchingLogic, SearchingState>(
-                  builder: (context,state) {
+                child: BlocConsumer<SearchingLogic, SearchingState>(
+                listener: (context,state) {
+                  print (state);
+                  if ( state is ErrorState)
+                    {
+                    showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (_) {
+                      return MessageDisplay(message: state.message);
+                    }
+                    //Navigator.push(context, MaterialPageRoute(builder: (context) => MessageDisplay(message: state.message)),
+                  );}
+                  },
+                buildWhen: (previous,current) { return current is !ErrorState;},
+                builder: (context, state) {
+                  print ('in builder');
+                  print (state);
                     if (state is EmptyState) {
                       BlocProvider.of<SearchingLogic>(context).add(GetRoomEvent(roomToFind));
                       return Container();
                     } else if (state is LoadingState) {
                       return LoadingWidget();
                     } else if (state is ErrorState) {
-                      return MessageDisplay(message: state.message);
+                      //return MessageDisplay(message: state.message);
                     } else if (state is RoomLoadedState) {
                       return Column  (
                         mainAxisSize: MainAxisSize.max,

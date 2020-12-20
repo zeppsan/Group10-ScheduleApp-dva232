@@ -27,13 +27,14 @@ class SearchingLogic extends Bloc<SearchingEvent, SearchingState> {
   Stream<SearchingState> mapEventToState(SearchingEvent event) async* {
     // yield returns a value and DOES NOT terminate the function
     if (event is GetRoomEvent) {
+      print ('event GetRoomEvent fired');
       final inputEither = inputConverter.processInput(event.inputString);
       yield* inputEither.fold (
               (failure) async *{
             yield ErrorState(message: INVALID_INPUT_MESSAGE);
           },
               (str) async* {
-            yield LoadingState();
+            //yield LoadingState();
             final failureOrRoom = await getRoom(str);
             yield failureOrRoom.fold (
                   (failure) => ErrorState(message: ROOM_NOT_FOUND_MESSAGE),
