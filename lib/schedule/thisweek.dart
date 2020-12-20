@@ -8,7 +8,6 @@ import 'dart:math';
 import 'package:schedule_dva232/generalPages/settings.dart';
 import 'package:schedule_dva232/schedule/subfiles/scheduleUpdater.dart';
 
-var prevDay =1;
 bool lightTheme = true;
 Random rand = new Random();
 
@@ -98,13 +97,13 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                     itemCount: 5,
                     itemBuilder: (context, pos) {
                       List<Lecture> _selectedLectures = snapshot.data[DateTime(DateTime.now().year, DateTime.now().month, getDayDate(pos))]; //get lectures for specific date
-                      var dayDate = getDayDate(pos);
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(height: 15,),
 
-                      Text("${getday(pos)} ${dayDate.toString()}/${getMonth(pos, dayDate).toString()}",
+                      Text(/*" "+getday(pos)+"  "+getDayDate(pos).toString()+"/"+getMonth(pos).toString()*/
+                        "${getday(pos)}   ${getDayDate(pos).toString()}/${getMonth(pos).toString()}",
                             style: TextStyle(fontSize: 20, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462), fontWeight: FontWeight.bold),
                           ),
                           Container(
@@ -228,12 +227,23 @@ String getday(int loopPos) {
   var daynr = DateTime.now().weekday +loopPos;
   if (daynr == DateTime.now().weekday && daynr < 5)
     return "Today";
-  if (daynr >5 )  {
+
+
+  if (DateTime.now().weekday == 6)  { //om det är lördag
+   for(int i = daynr-5; i<=daynr-5;  i++){
+      daynr=i;
+    }
+  }
+  if (DateTime.now().weekday == 7 )  { //om det är söndag
+    for(int i = daynr-6; i<=daynr-6 ;  i++){
+      daynr=i;
+    }
+  }
+  if(daynr>5){
     for(int i = daynr-5; i<=daynr-5;  i++){
       daynr=i;
     }
   }
-
   switch(daynr){
     case 1:
       return "Monday";
@@ -253,27 +263,24 @@ String getday(int loopPos) {
   }
 }
 int getDayDate(int loopPos){
-  var actualDay = DateTime.now().day + loopPos;// inte över 30
+  var actualDay = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day+loopPos).day;// inte över 30
 
-  if (DateTime(DateTime.now().year, DateTime.now().month,actualDay).weekday>5)  { //Om helg eller om dagen i loopen innan är större än idag....
-    actualDay = actualDay+2;
-  }
-  if(DateTime(DateTime.now().year, DateTime.now().month,prevDay).month != DateTime(DateTime.now().year, DateTime.now().month,actualDay).month){
-   //print(DateTime(DateTime.now().year, DateTime.now().month,actualDay).month);
-    //prevDay =1;
-    return DateTime(DateTime.now().year, DateTime.now().month,actualDay).day;
-  }
-  if( prevDay > actualDay && loopPos>1)
-    actualDay +=2;
+  var prevDAY = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day+loopPos-1).weekday;
 
-  prevDay = actualDay;
+  if (DateTime.now().weekday == 6 || prevDAY >=5) // if saturday
+    actualDay = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day+2+loopPos).day;
+  else if(DateTime.now().weekday == 7) // if sunday
+    actualDay = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day+1+loopPos).day;
+
 
   return actualDay;
+
 }
 
-int getMonth(var loopPos, var day){
-  if(prevDay > day ){
-    return DateTime(DateTime.now().year, DateTime.now().month+1,day).month;
+int getMonth(var loopPos){
+  var month = DateTime(DateTime.now().year, DateTime.now().month,DateTime.now().day +loopPos).month;
+  if(DateTime(DateTime.now().year, DateTime.now().month,DateTime.now().day +loopPos-1).day > DateTime(DateTime.now().year, DateTime.now().month,DateTime.now().day +loopPos+1).day ){
+    month =  DateTime(DateTime.now().year, DateTime.now().month+1,DateTime.now().day +loopPos).month;
   }
-  return DateTime(DateTime.now().year, DateTime.now().month,day).month;
+  return month;
 }
