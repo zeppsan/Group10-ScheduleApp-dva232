@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 
-class AddCourse extends StatelessWidget {
+class AddCourse extends StatefulWidget {
   @override
+  _AddCourseState createState() => _AddCourseState();
+}
+
+class _AddCourseState extends State<AddCourse> {
+  @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

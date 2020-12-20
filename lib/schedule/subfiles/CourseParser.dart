@@ -13,12 +13,15 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+
+/*
+*
+* Eric Qvarnström
+*
+* */
 class CourseParser{
-
   Map<DateTime, List<Lecture>> events = Map<DateTime, List<Lecture>>();
-
   List<dynamic> rawData;
-
   CourseParser({this.rawData});
 
   /* This is the parent function of courseSorter, this one does the course looping
@@ -47,11 +50,6 @@ class CourseParser{
       }
     });
   }
-
-  static saveToLocalStorage(){
-
-  }
-
 }
 
 /* This class is used to create a lecture. Each lecture has a summary, startTime, endTime, location.
@@ -73,7 +71,6 @@ class Lecture{
     this.location = location;
     this.course_code = course_code;
     this.moment = getMoment(summary);
-
     setColor();
   }
 
@@ -87,7 +84,6 @@ class Lecture{
     resultString = "${hour}:${minute}";
     return resultString;
   }
-
 
   String getMoment(String input){
     int momentIndex = input.indexOf("Moment");

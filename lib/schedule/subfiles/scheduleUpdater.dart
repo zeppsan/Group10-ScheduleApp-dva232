@@ -1,8 +1,15 @@
 import 'package:http/http.dart' as http;
+import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+
+/*
+*
+* Eric Qvarnström
+*
+* */
 
 
 class ScheduleUpdater{
@@ -136,7 +143,5 @@ class ScheduleUpdater{
       }
     }
   }
-
-
 
 }
