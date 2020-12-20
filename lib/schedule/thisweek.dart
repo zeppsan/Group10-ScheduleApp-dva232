@@ -186,7 +186,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                     ),
                                     child: ListTile(
                                       title: Text(text,//maybe add \n
-                                        style: TextStyle(color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462), fontSize: 17, ),
+                                        style: TextStyle(color: lightTheme ? Color(0xff2c1d33) : Colors.white, fontSize: 17, ),
                                           textAlign: TextAlign.left,
                                       ),
                                       trailing: Icon(Icons.emoji_emotions_outlined,size: 30,

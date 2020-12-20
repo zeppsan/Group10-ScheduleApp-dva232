@@ -25,24 +25,12 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
  bool _isShowPathButton=true;
  _SearchingPlanDisplayState(this._currentFloor);
 
- List<String> roomNames;
- String roomToFind;
- AutoCompleteTextField searchTextField;
- GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
-
- void loadList() async {
-   var getRoomList = ic.serviceLocator.get<GetRoomList>();
-   roomNames = await getRoomList();
-   setState((){});
- }
-
  @override
  void initState() {
     setState(() {
       _showPosition=(widget.room.floor==_currentFloor );
       _isShowPathButton = _showPath? false: true;
     });
-    loadList();
  }
 
  void Next() {
@@ -85,46 +73,6 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          roomNames == null ? CircularProgressIndicator() :
-          searchTextField = AutoCompleteTextField<String>(
-            key: key,
-            clearOnSubmit: false,
-            submitOnSuggestionTap: true,
-            suggestions: roomNames,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              suffixIcon: IconButton(
-                onPressed: () {
-                  roomToFind = searchTextField.controller.text.toString();
-                  dispatchGetRoom(roomToFind);
-                },
-                icon: Icon(Icons.search_rounded),
-                color: lightTheme ? const Color(0xff2c1d33) : const Color(
-                    0xffeeb462),),
-              contentPadding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-              hintText: widget.room.name,
-              hintStyle: TextStyle(fontWeight: FontWeight.bold,
-                  color: lightTheme ? const Color(0xff2c1d33) : const Color(0xffeeb462)
-              ),
-            ),
-            itemFilter: (item, query) {
-              return item.toLowerCase().startsWith(query.toLowerCase());
-            },
-            itemSorter: (a, b) {
-              return a.compareTo(b);
-            },
-            itemSubmitted: (item) {
-              setState(() {
-                searchTextField.textField.controller.text = item;
-                roomToFind = item;
-              });
-              dispatchGetRoom(roomToFind);
-            },
-            itemBuilder: (context, item) {
-              return row(item);
-            },
-          ),
-
           Visibility(
             maintainState: true,
             maintainSize: true,
@@ -168,36 +116,6 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
       )
     );
   }
-
- Widget row(String room) {
-   return Container(
-     padding: EdgeInsets.all(15.0),
-     decoration: BoxDecoration(
-       border: Border(
-           bottom: BorderSide(color: Colors.grey.withOpacity(0.3))),
-     ),
-     child: Row(
-       children: [
-         Container(
-           child: Text(room, style: TextStyle(
-               fontSize: 20.0,
-               color: lightTheme ? const Color(0xff2c1d33) : const Color(
-                   0xffeeb462))),
-         ),
-       ],
-     ),
-   );
- }
-
- void dispatchGetRoom(String roomToFind) {
-   BlocProvider.of<SearchingLogic>(context)
-       .add(GetRoomEvent(roomToFind));
- }
-
- void dispatchGetPlanEvent(int _currentFloor, Room room) {
-   BlocProvider.of<SearchingLogic>(context)
-       .add(GetPlanEvent(_currentFloor, room));
- }
 }
 
 
