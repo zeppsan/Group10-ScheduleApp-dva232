@@ -5,6 +5,7 @@ import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
 import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart';
+import 'package:schedule_dva232/map/presentation/widgets/Search_bar_widget.dart';
 import 'package:schedule_dva232/map/presentation/widgets/searching_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
 import 'package:schedule_dva232/generalPages/settings.dart';
@@ -99,6 +100,7 @@ class SearchingPage extends StatelessWidget {
                       return Column  (
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget> [
+                          //SearchBarWidget(mode: 'searching', roomToFind:roomToFind),
                           Expanded(
                             child: WillPopScope(
                               onWillPop: () async { dispatchGetKnownRoom(context, state.room); return false;},

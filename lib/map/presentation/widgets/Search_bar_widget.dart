@@ -40,7 +40,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     txt.text=roomToFind;
   }
 
-  //Autocomplete the search fwith room names
+  //Autocomplete the search with room names
   @override
   Widget build(BuildContext context) {
     return roomNames == null
@@ -48,7 +48,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       : searchTextField = AutoCompleteTextField<String>(
       controller: txt,
       key: key,
-      clearOnSubmit: false,
+      clearOnSubmit: widget.mode == 'browsing' ? true: false,
       submitOnSuggestionTap: true,
       suggestions: roomNames,
       decoration: InputDecoration(
