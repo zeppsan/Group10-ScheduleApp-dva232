@@ -27,6 +27,7 @@ class SearchingPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset:false,
       appBar: AppBar(
+        centerTitle: false,
         title: Text('Map'),
         actions: [
           Builder(
