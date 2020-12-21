@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:schedule_dva232/notice_page.dart';
 import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 import 'package:schedule_dva232/schedule/thisweek.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Note{
   final String title;
@@ -27,11 +28,15 @@ class _NotificationPage extends State<NotificationPage> with TickerProviderState
   bool menuOpen = false;
   AnimationController controller;
   double containerHeight = 0.0;
+  List<String> scheduleUpdate;
 
   var notifications = {'0': Note(title: 'MAA140', content:'Anmälan till tentan öppen'), '1' : Note(title: 'MAA140', content: 'Föreläsning 15 inställd')};
 
   @override
   void initState() {
+    getScheduleUpdates();
+    print('getScheduleUpdate done');
+    print(scheduleUpdate);
     controller = AnimationController(vsync: this, duration: Duration(seconds: 5),);
     super.initState();
   }
@@ -55,28 +60,55 @@ class _NotificationPage extends State<NotificationPage> with TickerProviderState
 
   @override
   Widget build(BuildContext context) {
-    return Badge(
-      badgeContent: Text(notifications.length.toString()),
-      toAnimate: true,
-      animationType: BadgeAnimationType.scale,
-      position: BadgePosition.topEnd(end: 5, top: 5),
-      child: IconButton(
-        icon: Icon(Icons.notifications_rounded),
-        onPressed: () {
-          if(menuOpen){
-            print('closing menu');
-            closeMenu();
-            menuOpen = false;
-          }
+    if(scheduleUpdate != null) {
+      return Badge(
+        badgeContent: Text(notifications.length.toString()),
+        toAnimate: true,
+        animationType: BadgeAnimationType.scale,
+        position: BadgePosition.topEnd(end: 5, top: 5),
+        child: IconButton(
+          icon: Icon(Icons.notifications_rounded),
+          onPressed: () {
+            if (menuOpen) {
+              print('closing menu');
+              closeMenu();
+              menuOpen = false;
+            }
 
-          else {
-            print('openMenu');
-            openMenu();
-            menuOpen = true;
-          }
-        },
-      ),
-    );
+            else {
+              print('openMenu');
+              openMenu();
+              menuOpen = true;
+            }
+          },
+        ),
+      );
+    }
+    else {
+      return Badge(
+        badgeContent: Text('0'),
+        toAnimate: true,
+        animationType: BadgeAnimationType.scale,
+        badgeColor: Colors.grey[600],
+        position: BadgePosition.topEnd(end: 5, top: 5),
+        child: IconButton(
+          icon: Icon(Icons.notifications_rounded),
+          onPressed: () {
+            if (menuOpen) {
+              print('closing menu');
+              closeMenu();
+              menuOpen = false;
+            }
+
+            else {
+              print('openMenu');
+              openMenu();
+              menuOpen = true;
+            }
+          },
+        ),
+      );
+    }
   }
 
   OverlayEntry overlayEntryBuilder() {
@@ -97,6 +129,7 @@ class _NotificationPage extends State<NotificationPage> with TickerProviderState
                 height: MediaQuery.of(context).size.height,
                 ),
               ),
+              if(scheduleUpdate != null)
               AnimatedContainer(
                 height: menuOpen ? MediaQuery.of(context).size.height * 0.6 : 0.0,
                 duration: Duration(seconds: 5),
@@ -114,6 +147,7 @@ class _NotificationPage extends State<NotificationPage> with TickerProviderState
                         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5.0), bottomRight: Radius.circular(5.0) ),
 
                       ),
+
                       child: ListView.builder(
                         itemCount: notifications.length,
                         itemBuilder: (BuildContext context, int index){
@@ -138,6 +172,34 @@ class _NotificationPage extends State<NotificationPage> with TickerProviderState
                   ),
                 ),
               )
+              else
+                Material(
+                  color: Colors.transparent,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top:22.0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.2,
+
+                      decoration: BoxDecoration(
+                        color: const Color(0xff2c1d33),
+                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5.0), bottomRight: Radius.circular(5.0) ),
+
+                      ),
+
+                      child: Center(
+                        child: Text(
+                          'There are no new notifications',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: const Color(0xffeeb462),
+                          ),
+
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
             ],
 
               //child: Material (
@@ -149,5 +211,10 @@ class _NotificationPage extends State<NotificationPage> with TickerProviderState
         );
       }
     );
+  }
+
+   void getScheduleUpdates() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    scheduleUpdate = localStorage.getStringList('scheduleUpdate');
   }
 }
