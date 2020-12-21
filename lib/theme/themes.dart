@@ -28,8 +28,7 @@ class AppTheme{
       ),
 
       textTheme: TextTheme(
-          //headline1: TextStyle(fontFamily: "Handlee"),
-          headline6: TextStyle(color: const Color(0xff2c1d33), fontSize: 20)
+          headline6: TextStyle(color: const Color(0xff2c1d33), fontSize: 35)
       ),
     ),
 
@@ -76,7 +75,7 @@ class AppTheme{
   );
 
   static final ThemeData darkTheme = ThemeData(
-    //fontFamily: "Handlee",
+    fontFamily: "Handlee",
     brightness: Brightness.dark,
     backgroundColor: const Color(0xff302933),
     appBarTheme: AppBarTheme(
