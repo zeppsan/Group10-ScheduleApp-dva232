@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class AppTheme{
   AppTheme._();
   static final ThemeData lightTheme = ThemeData(
-    //fontFamily: "Handlee",
+    fontFamily: "Handlee",
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
     /*scaffoldBackgroundColor: Container(decoration: BoxDecoration( //VARFÖR KAN JAG INTE FÅ EN LINEAR GRADIENT BACKGROUND VARFÖR MÅSTE DET GÖRAS I CONTAINER????

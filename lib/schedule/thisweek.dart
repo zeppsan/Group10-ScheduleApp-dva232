@@ -22,29 +22,12 @@ class Thisweek extends StatelessWidget {
       appBar: AppBar(
         centerTitle: false,
         title:  Text('This Week',style: TextStyle(fontFamily: "Handlee"),),
-       // titleTextStyle: TextStyle(fontFamily: "Handlee"),
+       //titleTextStyle: TextStyle(fontFamily: "Handlee"),
         actions: [
           NotificationPage(appBarSize: AppBar().preferredSize.height),
 
-          TopMenu()
-        ),), actions: [
-          IconButton(
-            icon:Icon(Icons.notifications_none_outlined),
-            onPressed: (){
-              Navigator.pushReplacementNamed(context, '/thisweek');
-            },
-          ),
-          Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: Icon(Icons.more_vert_outlined),
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-              );
-            }
-          ),
-        ],
+          TopMenu(),
+          ],
       ),
       endDrawer: Settings(),
       body: Container(
