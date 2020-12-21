@@ -25,7 +25,7 @@ class Schedule extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text('Schedule'),
+        title: Text('Schedule',style: TextStyle(fontFamily: "Handlee")),
         actions: [
           IconButton(
             icon:Icon(Icons.notifications_none_outlined),
