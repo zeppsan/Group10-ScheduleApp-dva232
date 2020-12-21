@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:schedule_dva232/map/core/util/input_converter.dart';
 import 'package:schedule_dva232/map/data_domain/models/coordinates.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
 import 'package:meta/meta.dart';
@@ -9,18 +9,16 @@ import 'package:schedule_dva232/map/core/error/exceptions.dart';
 import 'package:schedule_dva232/map/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 //Domain Layer
 abstract class RoomRepository {
   Future <Either<Failure,Room>> getRoom(String name);
-
   Future <List<String>> getRoomList();
 }
 
 //Data Layer
 abstract class RoomAssetsDataSource {
-  Future <RoomModel> getRoom(String name);
+  Future <Room> getRoom(String name);
   Future <List<String>> getRoomList();
 }
 
@@ -42,15 +40,17 @@ class RoomAssetsDataSourceImpl implements RoomAssetsDataSource {
 
 
   @override
-  Future<RoomModel> getRoom(String name) async {
-
+  Future<Room> getRoom(String name) async {
+    InputConverter inputConverter = InputConverter();
     List<Coordinates> direction = List<Coordinates>();
     final String buildings = await rootBundle.loadString(
         "assets/buildings_rooms.json");
     Map<String, dynamic> jsonBuildings = json.decode(buildings);
     for (Map<String, dynamic> building in jsonBuildings['buildings']) {
       for (Map<String, dynamic> room in building['rooms']) {
-        if (room['name'].toString().toLowerCase() == name) {
+        //toUpper case is not needed here, if all rooms are Upper case in the json.
+        // If some of them look like Alfa or something, then yes, but in this case it should be both sides from ||
+        if (room['name'].toString().toUpperCase() == name || room['name'].toString().toUpperCase().replaceAll(new RegExp(r"\s+|-"), "" )== name) {
           //if room is found
           print('the room is found');
           print(room['position']['x']);
@@ -60,7 +60,7 @@ class RoomAssetsDataSourceImpl implements RoomAssetsDataSource {
                 new Coordinates(x: coordinate['x'], y: coordinate['y']));
           }
 
-          return Future.value(RoomModel(
+          return Future.value(Room(
               building: Building(floors: building['floors'],
                   name: building['name'],
                   campus: building['campus']),

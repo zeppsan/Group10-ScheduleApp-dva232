@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:schedule_dva232/appComponents/notifications.dart';
+import 'package:schedule_dva232/appComponents/topMenu.dart';
 import 'subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
@@ -25,18 +27,11 @@ class Schedule extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text('Schedule'),
+        title: Text('Schedule',style: TextStyle(fontFamily: "Handlee")),
         actions: [
-          Builder(
-              builder: (BuildContext context) {
-                return IconButton(
-                  icon: Icon(Icons.more_vert_outlined),
-                  onPressed: () {
-                    Scaffold.of(context).openEndDrawer();
-                  },
-                );
-              }
-          ),
+          NotificationPage(appBarSize: AppBar().preferredSize.height),
+
+          TopMenu()
         ],
       ),
       endDrawer: Settings(),
@@ -221,6 +216,12 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                       }).toList(),
                     ),
                   ),
+                  FlatButton(
+                    child: Text('test'),
+                    onPressed: (){
+                      CourseParser.searchForChanges();
+                    },
+                  )
                 ],
               );
               break;
@@ -267,7 +268,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${course_code}',
+                  '${course_code}'.toUpperCase(),
                   style: TextStyle(
                       color: lectureTextColor,
                       fontWeight: FontWeight.bold,

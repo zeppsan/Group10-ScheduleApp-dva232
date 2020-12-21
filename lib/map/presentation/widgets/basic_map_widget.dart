@@ -78,7 +78,7 @@ class _BasicMapWidget extends State<BasicMapWidget> {
 }
 
 String switchImage(String basicMapToShow) {
-String image;
+
   switch (basicMapToShow) {
     case 'basic':
       return 'assets/basic.png';

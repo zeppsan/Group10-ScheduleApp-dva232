@@ -2,32 +2,32 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class Note{
-  final String title;
-  final String content;
 
-  Note({this.title, this.content});
-}
 
 class NotificationPage extends StatefulWidget {
+  final Map notifications;
+  final double appBarSize;
+
+  NotificationPage({this.notifications, this.appBarSize});
+
   @override
   _NotificationPage createState() => _NotificationPage();
 }
 
 class _NotificationPage extends State<NotificationPage>{
+bool menuOpen = false;
+OverlayEntry overlayEntry;
+// var notifications = {'1': Note(title: 'MAA140', content:'Anmälan till tentan öppen'), '2' : Note(title: 'MAA140', content: 'Föreläsning 15 inställd')};
 
-  static List<Note> noteList = [
-    Note(
-        title: 'MAA140',
-        content: 'Anmälan till tentan öppen'
-    ),
-    Note(
-        title: 'MAA140',
-        content: 'Föreläsning 15 inställd'
-    ),
-  ];
+  void openMenu(){
+   menuOpen = true;
+  }
 
+  void closeMenu(){
+    menuOpen = false;
+  }
 
+ @override
   Widget build(BuildContext context) {
     print('notiser');
     return Stack(
@@ -44,7 +44,7 @@ class _NotificationPage extends State<NotificationPage>{
         ),
         Center(
           child: ListView.builder(
-            itemCount: noteList.length,
+            itemCount: widget.notifications.length,
             itemBuilder: (BuildContext context, int index){
              return Card(
                 color: const Color(0xffeeb462),
@@ -53,8 +53,8 @@ class _NotificationPage extends State<NotificationPage>{
                   children: [
                     ListTile(
 
-                      title: Text(noteList[index].title),
-                      subtitle: Text(noteList[index].content),
+                      title: Text(widget.notifications[index].title),
+                      subtitle: Text(widget.notifications[index].content),
                       trailing: IconButton(
                           onPressed: (){
                           /*  noteList.removeAt(index);

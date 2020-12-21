@@ -2,12 +2,11 @@
 This will work as an CSS file, if you want to change color of buttons
  */
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class AppTheme{
   AppTheme._();
   static final ThemeData lightTheme = ThemeData(
+    fontFamily: "Handlee",
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
     /*scaffoldBackgroundColor: Container(decoration: BoxDecoration( //VARFÖR KAN JAG INTE FÅ EN LINEAR GRADIENT BACKGROUND VARFÖR MÅSTE DET GÖRAS I CONTAINER????
@@ -23,12 +22,13 @@ class AppTheme{
 
     appBarTheme: AppBarTheme(
       color: const Color(0xffeeb462),
+      //titleTextStyle: TextStyle(fontFamily: "Handlee"),
       iconTheme: IconThemeData(
         color: const Color(0xff2c1d33),
       ),
-      centerTitle: true,
+
       textTheme: TextTheme(
-          headline6: TextStyle(color: const Color(0xff2c1d33), fontSize: 20)
+          headline6: TextStyle(color: const Color(0xff2c1d33), fontSize: 35)
       ),
     ),
 
@@ -37,7 +37,7 @@ class AppTheme{
       ///TODO: Color for inputfields when active
     inputDecorationTheme: InputDecorationTheme(
       focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.white, width: 2.0),
+        borderSide: const BorderSide(color: Color(0xff2c1d33), width: 2.0),
         borderRadius: BorderRadius.circular(25.0),
       )
     ),
@@ -46,7 +46,7 @@ class AppTheme{
     accentColor: const Color(0xff2c1d33),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),textStyle: TextStyle(color: Colors.white),
+      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),textStyle: TextStyle(color: Colors.white,fontFamily: "Handlee"),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
 
@@ -68,10 +68,12 @@ class AppTheme{
   );
 
   static final ThemeData darkTheme = ThemeData(
+    fontFamily: "Handlee",
     brightness: Brightness.dark,
     backgroundColor: const Color(0xff302933),
     appBarTheme: AppBarTheme(
       color: const Color(0xff2c1d33),
+      //titleTextStyle: TextStyle(fontFamily: "Handlee"),
       iconTheme: IconThemeData(
         color: const Color(0xffeeb462),
       ),
@@ -81,7 +83,7 @@ class AppTheme{
     )
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-     style: ElevatedButton.styleFrom(onPrimary: Color(0xff2c1d33), primary: const Color(0xffeeb462), textStyle: TextStyle(color: const Color(0xff2c1d33),inherit: false),
+     style: ElevatedButton.styleFrom(onPrimary: Color(0xff2c1d33), primary: const Color(0xffeeb462), textStyle: TextStyle(color: const Color(0xff2c1d33),inherit: false,fontFamily: "Handlee"),
      shape: RoundedRectangleBorder(
        borderRadius: BorderRadius.circular(30.0),
      ),
@@ -95,7 +97,6 @@ class AppTheme{
             borderRadius: BorderRadius.circular(25.0),
           )
       ),
-
     accentColor: Color(0xffeeb462),
     primaryColorDark: Color(0xffeeb462),
     primaryIconTheme: IconThemeData(
