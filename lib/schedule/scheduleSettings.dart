@@ -94,7 +94,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
                   hintStyle: TextStyle(fontWeight: FontWeight.bold,
                       color: lightTheme ? const Color(0xff2c1d33) : const Color(
                           0xffeeb462)),
-                  border: OutlineInputBorder(),
+                  //border: OutlineInputBorder(),
                 ),
               ),
             ),

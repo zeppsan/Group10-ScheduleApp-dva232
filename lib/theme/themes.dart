@@ -34,19 +34,26 @@ class AppTheme{
 
     /* Calendar Styling */
 
-      ///TODO: Color for inputfields when active
+
     inputDecorationTheme: InputDecorationTheme(
+      //Style of input fields
+        border: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.grey, width: 2.0),
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+      //Style of input fields in focus
       focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Color(0xff2c1d33), width: 2.0),
+        borderSide: const BorderSide(color: const Color(0xff2c1d33), width: 2.0),
         borderRadius: BorderRadius.circular(25.0),
-      )
+      ),
+
     ),
       primaryColorLight: const Color(0xff2c1d33),
 
     accentColor: const Color(0xff2c1d33),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),textStyle: TextStyle(color: Colors.white,fontFamily: "Handlee"),
+      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),textStyle: TextStyle(color: Colors.white),//,fontFamily: "Handlee"),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
 
@@ -92,11 +99,18 @@ class AppTheme{
 
       ///TODO: Color for inputfields when active
       inputDecorationTheme: InputDecorationTheme(
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.white, width: 2.0),
+        //Style of input fields
+          border: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.grey, width: 2.0),
             borderRadius: BorderRadius.circular(25.0),
-          )
+          ),
+          //Style of input fields in focus
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: const Color(0xff2c1d33), width: 2.0),
+            borderRadius: BorderRadius.circular(25.0),
+          ),
       ),
+
     accentColor: Color(0xffeeb462),
     primaryColorDark: Color(0xffeeb462),
     primaryIconTheme: IconThemeData(

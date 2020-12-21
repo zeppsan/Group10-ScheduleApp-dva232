@@ -22,12 +22,12 @@ class Thisweek extends StatelessWidget {
       appBar: AppBar(
         centerTitle: false,
         title:  Text('This Week',style: TextStyle(fontFamily: "Handlee"),),
-       // titleTextStyle: TextStyle(fontFamily: "Handlee"),
+       //titleTextStyle: TextStyle(fontFamily: "Handlee"),
         actions: [
           NotificationPage(appBarSize: AppBar().preferredSize.height),
 
-          TopMenu()
-        ],
+          TopMenu(),
+          ],
       ),
       endDrawer: Settings(),
       body: Container(

@@ -52,7 +52,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       submitOnSuggestionTap: true,
       suggestions: roomNames,
       decoration: InputDecoration(
-        border: OutlineInputBorder(),
+       // border: OutlineInputBorder(),
         suffixIcon: IconButton(
           onPressed: () {
             widget.mode == 'browsing'
