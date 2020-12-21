@@ -279,7 +279,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${course_code}',
+                  '${course_code}'.toUpperCase(),
                   style: TextStyle(
                       color: lectureTextColor,
                       fontWeight: FontWeight.bold,

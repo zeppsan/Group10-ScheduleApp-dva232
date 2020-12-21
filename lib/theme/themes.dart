@@ -28,7 +28,7 @@ class AppTheme{
       ),
 
       textTheme: TextTheme(
-          headline6: TextStyle(color: const Color(0xff2c1d33), fontSize: 20)
+          headline6: TextStyle(color: const Color(0xff2c1d33), fontSize: 35)
       ),
     ),
 
@@ -37,7 +37,7 @@ class AppTheme{
       ///TODO: Color for inputfields when active
     inputDecorationTheme: InputDecorationTheme(
       focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.white, width: 2.0),
+        borderSide: const BorderSide(color: Color(0xff2c1d33), width: 2.0),
         borderRadius: BorderRadius.circular(25.0),
       )
     ),
@@ -97,7 +97,6 @@ class AppTheme{
             borderRadius: BorderRadius.circular(25.0),
           )
       ),
-
     accentColor: Color(0xffeeb462),
     primaryColorDark: Color(0xffeeb462),
     primaryIconTheme: IconThemeData(
