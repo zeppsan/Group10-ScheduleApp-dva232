@@ -13,13 +13,12 @@ import 'package:schedule_dva232/map/data_domain/models/building.dart';
 //Domain Layer
 abstract class RoomRepository {
   Future <Either<Failure,Room>> getRoom(String name);
-
   Future <List<String>> getRoomList();
 }
 
 //Data Layer
 abstract class RoomAssetsDataSource {
-  Future <RoomModel> getRoom(String name);
+  Future <Room> getRoom(String name);
   Future <List<String>> getRoomList();
 }
 
@@ -41,7 +40,7 @@ class RoomAssetsDataSourceImpl implements RoomAssetsDataSource {
 
 
   @override
-  Future<RoomModel> getRoom(String name) async {
+  Future<Room> getRoom(String name) async {
     InputConverter inputConverter = InputConverter();
     List<Coordinates> direction = List<Coordinates>();
     final String buildings = await rootBundle.loadString(
@@ -61,7 +60,7 @@ class RoomAssetsDataSourceImpl implements RoomAssetsDataSource {
                 new Coordinates(x: coordinate['x'], y: coordinate['y']));
           }
 
-          return Future.value(RoomModel(
+          return Future.value(Room(
               building: Building(floors: building['floors'],
                   name: building['name'],
                   campus: building['campus']),

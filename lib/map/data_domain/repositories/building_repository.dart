@@ -14,22 +14,22 @@ abstract class BuildingRepository {
 
 //Data Layer
 abstract class BuildingAssetsDataSource {
-  Future <BuildingModel> getBuilding(String name);
+  Future <Building> getBuilding(String name);
 }
 
 abstract class BuildingCacheDataSource {
-  Future <BuildingModel> getLastBuilding();
+  Future <Building> getLastBuilding();
 }
 
 class BuildingAssetsDataSourceImpl implements BuildingAssetsDataSource {
 
   @override
-  Future<BuildingModel> getBuilding (String name)  async {
+  Future<Building> getBuilding (String name)  async {
     final String buildings = await rootBundle.loadString("assets/buildings_rooms.json");
     Map<String, dynamic> jsonBuildings = json.decode(buildings);
     for (Map<String, dynamic> building in jsonBuildings['buildings']) {
       if (building['name'] == name)  {
-        return Future.value(BuildingModel(
+        return Future.value(Building(
             name: building['name'],
             campus: building['campus'],
             floors: building['floors'],

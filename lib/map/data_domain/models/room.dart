@@ -20,14 +20,5 @@ class Room {
     @required this.path,
   });
 }
-  class RoomModel extends Room {
-    RoomModel({
-      @required Building building,
-      @required String name,
-      @required int floor,
-      @required Coordinates position,
-      @required List<Coordinates> path,
-    }) :super(name: name, floor: floor, position: position, building: building, path: path );
 
-    }
 
