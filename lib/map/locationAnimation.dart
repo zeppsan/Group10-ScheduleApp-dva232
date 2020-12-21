@@ -64,6 +64,9 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
                 child: Stack(
                   children: [
                     Image.asset(getFloorImage(widget.floorImage)),
+                    if(widget.showPath)
+                      CustomPaint( painter: DirectionPainter(direction: widget.room.path), ),
+
                     if(widget.showPosition)
                     PositionedTransition(
                       rect: RelativeRectTween(
@@ -75,8 +78,7 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
                         'assets/test.png',
                       ),
                     ),
-                    if(widget.showPath)
-                    CustomPaint( painter: DirectionPainter(direction: widget.room.path), ),
+
                   ]
                 ),
               ),
