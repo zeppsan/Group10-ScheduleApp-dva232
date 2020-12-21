@@ -49,7 +49,9 @@ class RoomAssetsDataSourceImpl implements RoomAssetsDataSource {
     Map<String, dynamic> jsonBuildings = json.decode(buildings);
     for (Map<String, dynamic> building in jsonBuildings['buildings']) {
       for (Map<String, dynamic> room in building['rooms']) {
-        if (room['name'].toString().toUpperCase() == name || room['name'].replaceAll(new RegExp(r"\s+|-"), "" )== name) {
+        //toUpper case is not needed here, if all rooms are Upper case in the json.
+        // If some of them look like Alfa or something, then yes, but in this case it should be both sides from ||
+        if (room['name'].toString().toUpperCase() == name || room['name'].toString().toUpperCase().replaceAll(new RegExp(r"\s+|-"), "" )== name) {
           //if room is found
           print('the room is found');
           print(room['position']['x']);

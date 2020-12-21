@@ -22,7 +22,7 @@ class AppTheme{
 
     appBarTheme: AppBarTheme(
       color: const Color(0xffeeb462),
-      titleTextStyle: TextStyle(fontFamily: "Handlee"),
+      //titleTextStyle: TextStyle(fontFamily: "Handlee"),
       iconTheme: IconThemeData(
         color: const Color(0xff2c1d33),
       ),
@@ -73,7 +73,7 @@ class AppTheme{
     backgroundColor: const Color(0xff302933),
     appBarTheme: AppBarTheme(
       color: const Color(0xff2c1d33),
-      titleTextStyle: TextStyle(fontFamily: "Handlee"),
+      //titleTextStyle: TextStyle(fontFamily: "Handlee"),
       iconTheme: IconThemeData(
         color: const Color(0xffeeb462),
       ),
