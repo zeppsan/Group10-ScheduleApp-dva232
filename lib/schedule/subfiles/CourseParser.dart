@@ -1,4 +1,3 @@
-
 /*
 *
 * Class will be used to parse the course json that is returned from the localstorage or the database/api.
@@ -13,8 +12,13 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class CourseParser{
+/*
+*
+* Eric Qvarnström
+*
+* */
 
+class CourseParser {
   Map<DateTime, List<Lecture>> events = Map<DateTime, List<Lecture>>();
 
   List<dynamic> rawData;
@@ -23,41 +27,108 @@ class CourseParser{
 
   /* This is the parent function of courseSorter, this one does the course looping
   * */
-  void parseRawData(){
+  void parseRawData() {
     rawData.forEach((element) async {
       await courseSorter(jsonDecode(element['schedule']));
     });
   }
-
 
   /* This function takes in the rawdata from the api-endpoint and loops trough the course in the json-string.
   *  It then adds each course occation into the events map, sorting them by datetime.
   * */
   void courseSorter(LinkedHashMap<String, dynamic> course) async {
     await course.forEach((lectureTime, lectureInformation) async {
-      int year = await DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime)).year;
-      int month = await DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime)).month;
-      int day = await DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime)).day;
+      int year =
+          await DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime))
+              .year;
+      int month =
+          await DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime))
+              .month;
+      int day =
+          await DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime)).day;
       DateTime target = DateTime(year, month, day);
-      if(events[target] == null){
+      if (events[target] == null) {
         events[target] = List<Lecture>();
-        events[target].add(Lecture(lectureInformation['summary'], lectureInformation['dateStart'], lectureInformation['dateEnd'], lectureInformation['location'], lectureInformation['course_code']));
+        events[target].add(Lecture(
+            lectureInformation['summary'],
+            lectureInformation['dateStart'],
+            lectureInformation['dateEnd'],
+            lectureInformation['location'],
+            lectureInformation['course_code']));
       } else {
-        events[target].add(Lecture( lectureInformation['summary'], lectureInformation['dateStart'], lectureInformation['dateEnd'], lectureInformation['location'], lectureInformation['course_code']));
+        events[target].add(Lecture(
+            lectureInformation['summary'],
+            lectureInformation['dateStart'],
+            lectureInformation['dateEnd'],
+            lectureInformation['location'],
+            lectureInformation['course_code']));
       }
     });
   }
 
-  static saveToLocalStorage(){
+  static void searchForChanges() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    if (localStorage.containsKey('rawSchedule')) {
+      if (localStorage.containsKey('token')) {
+        String token = localStorage.getString('token');
+        log("testte");
+        CourseParser parser1 = CourseParser(
+            rawData: jsonDecode(localStorage.getString('rawSchedule')));
+        parser1.parseRawData();
 
+        List<String> changes = List<String>();
+        Map<DateTime, List<Lecture>> old_sched = parser1.events;
+        Map<DateTime, List<Lecture>> new_sched = Map<DateTime, List<Lecture>>();
+
+        String url = "https://qvarnstrom.tech/api/schedule/update";
+        var response = await http.get(
+          url,
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + token,
+          },
+        );
+
+        Future.delayed(Duration(seconds: 1), () {
+          CourseParser parser2 =
+              CourseParser(rawData: jsonDecode(response.body));
+          parser2.parseRawData();
+          new_sched = parser2.events;
+
+          Future.delayed(Duration(seconds: 1), () {
+            // Check for differences in the schedule
+            old_sched.forEach((key, value) {
+              for (var i = 0; i < value.length; i++) {
+                try {
+                  if (old_sched[key][i].startTime != new_sched[key][i].startTime) {
+                    changes.add("${old_sched[key][i].course_code}:${old_sched[key][i].startTime}");
+                  }
+                } catch (Exception) {
+                  // The index does not exist... Lecture moved
+                  changes.add("${old_sched[key][i].course_code}:${old_sched[key][i].startTime}");
+                }
+              }
+            });
+
+            Future.delayed(Duration(seconds: 2), () {
+              if (changes.length > 0) {
+                localStorage.setString('scheduleUpdates', jsonEncode(changes));
+                Future.delayed(Duration(seconds: 1), (){
+                  log(localStorage.getString('scheduleUpdates'));
+                });
+              }
+            });
+          });
+        });
+      }
+    }
   }
-
 }
 
 /* This class is used to create a lecture. Each lecture has a summary, startTime, endTime, location.
 * */
-class Lecture{
-
+class Lecture {
   String summary;
   int startTime;
   int endTime;
@@ -66,7 +137,7 @@ class Lecture{
   String moment;
   Color color;
 
-  Lecture(summary, startTime, endTime, location, course_code){
+  Lecture(summary, startTime, endTime, location, course_code) {
     this.summary = summary;
     this.startTime = startTime;
     this.endTime = endTime;
@@ -77,32 +148,68 @@ class Lecture{
     setColor();
   }
 
-  String getTime(int dateTime){
-    if(startTime == 0)
-      return "All day";
+  String getTime(int dateTime) {
+    if (startTime == 0) return "All day";
     String resultString = "";
     DateTime date = DateTime.fromMicrosecondsSinceEpoch(dateTime * 1000);
-    String hour = (date.hour.toString().length<2) ? "0"+date.hour.toString(): date.hour.toString();
-    String minute = (date.minute.toString().length < 2)? "0${date.minute.toString()}": "${date.minute.toString()}";
+    String hour = (date.hour.toString().length < 2)
+        ? "0" + date.hour.toString()
+        : date.hour.toString();
+    String minute = (date.minute.toString().length < 2)
+        ? "0${date.minute.toString()}"
+        : "${date.minute.toString()}";
     resultString = "${hour}:${minute}";
     return resultString;
   }
 
+  /*
+  void AddTen(String courseCode, DateTime date, Lecture lecture) async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
 
-  String getMoment(String input){
+    localStorage.remove('tentor');
+
+    // If the string exists in localstorage, check for already existing copy of ten etc.
+    if(localStorage.containsKey('tentor')){
+      Map<DateTime, List<Lecture>> tens = await jsonDecode(localStorage.getString('tens'));
+      if(tens.containsKey(date)){
+        if(tens[date].contains(lecture)){
+          // Course ten already added, do nothing
+        } else {
+          tens[date].add(lecture);
+        }
+      } else {
+        tens[date] = List<Lecture>();
+        tens[date].add(lecture);
+      }
+      await localStorage.setString('tentor', jsonEncode(tens));
+    } else {
+      // Tenta found, add it to the localStorage
+
+      Map<DateTime, List<Lecture>> tens = await Map<DateTime, List<Lecture>>();
+
+      tens[date] = List<Lecture>();
+      tens[date].add(lecture);
+
+
+      await localStorage.setString('tentor', jsonEncode(tens));
+      log("men inte detta");
+    }
+  } */
+
+  String getMoment(String input) {
     int momentIndex = input.indexOf("Moment");
     return input.substring(momentIndex + 8);
   }
 
   void setColor() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    if(!localStorage.containsKey('course_color')){
+    if (!localStorage.containsKey('course_color')) {
       color = Colors.lightBlueAccent;
       return;
     }
 
     LinkedHashMap colors = jsonDecode(localStorage.getString('course_color'));
-    if (colors[course_code] != null){
+    if (colors[course_code] != null) {
       color = Color(int.parse(colors[course_code]));
     } else {
       color = Colors.lightBlueAccent;

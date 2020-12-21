@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart';
+import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 
 // Create a Form widget.
 class LoginForm extends StatefulWidget {
@@ -147,8 +148,6 @@ class _LoginForm extends State<LoginForm> {
   }
 
   void postRequest({var email, var password}) async {
-    print(email);
-    print(password);
     var url = 'https://qvarnstrom.tech/api/auth/login';
 
     Map data = {
@@ -163,11 +162,7 @@ class _LoginForm extends State<LoginForm> {
         headers: {"Content-Type": "application/json"}, body: body);
 
     if (response.statusCode == 200) {
-      print("${response.statusCode}");
-      print("${response.body}");
-
       Map responseData = jsonDecode(response.body);
-      print(responseData['access_token']);
 
       if (responseData['access_token'] != null) {
         SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -187,7 +182,6 @@ class _LoginForm extends State<LoginForm> {
           localStorage.setString('email', email);
           localStorage.setString('password', password);
         }
-
         Navigator.pushReplacementNamed(context, '/thisweek');
       }
     } else if (response.statusCode == 401) {

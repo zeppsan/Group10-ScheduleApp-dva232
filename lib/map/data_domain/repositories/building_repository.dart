@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
@@ -7,7 +6,6 @@ import 'package:schedule_dva232/map/core/error/exceptions.dart';
 import 'package:schedule_dva232/map/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 //Domain Layer
 abstract class BuildingRepository {

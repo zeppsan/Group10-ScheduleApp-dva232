@@ -1,9 +1,5 @@
-import 'dart:collection';
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:ui';
-import 'dart:io';
-import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/appComponents/notifications.dart';
@@ -12,10 +8,16 @@ import 'subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'subfiles/CourseParser.dart';
-import 'package:http/http.dart' as http;
 import 'subfiles/scheduleUpdater.dart';
 import 'package:schedule_dva232/generalPages/settings.dart';
+
+
+/*
+*
+* Eric Qvarnström
+*
+* */
+
 
 // Schedule Page
 class Schedule extends StatelessWidget {
@@ -31,28 +33,6 @@ class Schedule extends StatelessWidget {
 
           TopMenu()
         ],
-        //Old view with add courses and notifications
-        /*actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/scheduleSettings');
-            },
-            icon: Icon(
-              Icons.add,
-              color:  const Color(0xffdfb15b),
-            ),
-
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/scheduleSettings');
-            },
-            icon: Icon(
-              Icons.notifications_none_rounded,
-              color:  const Color(0xffdfb15b),
-            ),
-          ),
-        ],*/
       ),
       endDrawer: Settings(),
       body: Container(
@@ -236,6 +216,12 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                       }).toList(),
                     ),
                   ),
+                  FlatButton(
+                    child: Text('test'),
+                    onPressed: (){
+                      CourseParser.searchForChanges();
+                    },
+                  )
                 ],
               );
               break;

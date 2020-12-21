@@ -1,8 +1,18 @@
+import 'dart:developer';
+
 import 'package:http/http.dart' as http;
+import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
+
+/*
+*
+* Eric Qvarnström
+*
+* */
 
 
 class ScheduleUpdater{
@@ -16,7 +26,7 @@ class ScheduleUpdater{
   * */
   static Future<List<dynamic>> getEvents(context) async {
 
-    bool needsUpdate = false;
+    bool needsUpdate = true;
 
     SharedPreferences localStorage = await SharedPreferences.getInstance();
 
@@ -65,6 +75,7 @@ class ScheduleUpdater{
           }
         } else {
           /* SERVER FOUND AN UPDATE, DOWNLOAD IT. PROCESS FURTHER DOWN */
+          localStorage.setBool('scheduleUpdated', true);
           needsUpdate = true;
         }
 
@@ -136,7 +147,5 @@ class ScheduleUpdater{
       }
     }
   }
-
-
 
 }

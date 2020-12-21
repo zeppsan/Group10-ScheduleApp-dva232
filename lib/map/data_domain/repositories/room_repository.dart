@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:schedule_dva232/map/core/util/input_converter.dart';
 import 'package:schedule_dva232/map/data_domain/models/coordinates.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
 import 'package:meta/meta.dart';
@@ -9,7 +9,6 @@ import 'package:schedule_dva232/map/core/error/exceptions.dart';
 import 'package:schedule_dva232/map/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 //Domain Layer
 abstract class RoomRepository {
@@ -43,14 +42,14 @@ class RoomAssetsDataSourceImpl implements RoomAssetsDataSource {
 
   @override
   Future<RoomModel> getRoom(String name) async {
-
+    InputConverter inputConverter = InputConverter();
     List<Coordinates> direction = List<Coordinates>();
     final String buildings = await rootBundle.loadString(
         "assets/buildings_rooms.json");
     Map<String, dynamic> jsonBuildings = json.decode(buildings);
     for (Map<String, dynamic> building in jsonBuildings['buildings']) {
       for (Map<String, dynamic> room in building['rooms']) {
-        if (room['name'].toString().toLowerCase() == name) {
+        if (room['name'].toString().toLowerCase() == name || room['name'].replaceAll(new RegExp(r"\s+|-"), "" )==name) {
           //if room is found
           print('the room is found');
           print(room['position']['x']);
