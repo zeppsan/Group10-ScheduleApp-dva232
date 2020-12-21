@@ -161,6 +161,7 @@ class _LoginForm extends State<LoginForm> {
         headers: {"Content-Type": "application/json"}, body: body);
 
     if (response.statusCode == 200) {
+      print("Status 200: All good");
       Map responseData = jsonDecode(response.body);
 
       if (responseData['access_token'] != null) {
@@ -185,6 +186,7 @@ class _LoginForm extends State<LoginForm> {
         Navigator.pushReplacementNamed(context, '/thisweek');
       }
     } else if (response.statusCode == 401) {
+      print("Status 401: Unauthorized");
       //TODO: Error message to user. Something wrong with the error code 401
       setState(() {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -193,6 +195,7 @@ class _LoginForm extends State<LoginForm> {
         ));
       });
     } else if (response.statusCode == 422) {
+      print("Status 422: Invalid email or password");
       //TODO: Error message to user
       setState(() {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
