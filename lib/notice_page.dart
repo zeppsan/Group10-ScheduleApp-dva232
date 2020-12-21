@@ -15,8 +15,8 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPage extends State<NotificationPage>{
-bool menuOpen = false;
-OverlayEntry overlayEntry;
+  bool menuOpen = false;
+  OverlayEntry overlayEntry;
 // var notifications = {'1': Note(title: 'MAA140', content:'Anmälan till tentan öppen'), '2' : Note(title: 'MAA140', content: 'Föreläsning 15 inställd')};
 
   void openMenu(){

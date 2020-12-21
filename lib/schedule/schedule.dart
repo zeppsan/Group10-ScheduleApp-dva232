@@ -30,7 +30,6 @@ class Schedule extends StatelessWidget {
         title: Text('Schedule',style: TextStyle(fontFamily: "Handlee")),
         actions: [
           NotificationPage(appBarSize: AppBar().preferredSize.height),
-
           TopMenu()
         ],
       ),

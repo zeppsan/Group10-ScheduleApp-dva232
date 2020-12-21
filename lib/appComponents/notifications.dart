@@ -14,6 +14,7 @@ class Note{
 
   Note({this.title, this.content});
 }
+
 class NotificationPage extends StatefulWidget {
   OverlayEntry overlayEntry;
   final double appBarSize;
@@ -26,6 +27,8 @@ class NotificationPage extends StatefulWidget {
 
 class _NotificationPage extends State<NotificationPage> with TickerProviderStateMixin{
   bool menuOpen = false;
+  bool lightTheme;
+  bool loggedIn;
   AnimationController controller;
   double containerHeight = 0.0;
   List<String> scheduleUpdate;
@@ -40,6 +43,7 @@ class _NotificationPage extends State<NotificationPage> with TickerProviderState
     controller = AnimationController(vsync: this, duration: Duration(seconds: 5),);
     super.initState();
   }
+
   void openMenu(){
 
     widget.overlayEntry = overlayEntryBuilder();
@@ -60,56 +64,72 @@ class _NotificationPage extends State<NotificationPage> with TickerProviderState
 
   @override
   Widget build(BuildContext context) {
-    if(scheduleUpdate != null) {
-      return Badge(
-        badgeContent: Text(notifications.length.toString()),
-        toAnimate: true,
-        animationType: BadgeAnimationType.scale,
-        position: BadgePosition.topEnd(end: 5, top: 5),
-        child: IconButton(
-          icon: Icon(Icons.notifications_rounded),
-          onPressed: () {
-            if (menuOpen) {
-              print('closing menu');
-              closeMenu();
-              menuOpen = false;
-            }
+    return FutureBuilder(
+        future: getScheduleUpdates(),
+        builder: (context, snapshot) {
+          switch(snapshot.connectionState) {
+            case ConnectionState.done:
+              if(scheduleUpdate != null)
+                return Badge(
+                  badgeContent: Text(notifications.length.toString()),
+                  toAnimate: true,
+                  animationType: BadgeAnimationType.scale,
+                  position: BadgePosition.topEnd(end: 5, top: 5),
+                  child: IconButton(
+                    icon: Icon(Icons.notifications_rounded),
+                    onPressed: () {
+                      if (menuOpen) {
+                        print('closing menu');
+                        closeMenu();
+                        menuOpen = false;
+                      }
+                      else {
+                        print('openMenu');
+                        openMenu();
+                        menuOpen = true;
+                      }
+                    },
+                  ),
+                );
 
-            else {
-              print('openMenu');
-              openMenu();
-              menuOpen = true;
-            }
-          },
-        ),
-      );
-    }
-    else {
-      return Badge(
-        badgeContent: Text('0'),
-        toAnimate: true,
-        animationType: BadgeAnimationType.scale,
-        badgeColor: Colors.grey[600],
-        position: BadgePosition.topEnd(end: 5, top: 5),
-        child: IconButton(
-          icon: Icon(Icons.notifications_rounded),
-          onPressed: () {
-            if (menuOpen) {
-              print('closing menu');
-              closeMenu();
-              menuOpen = false;
-            }
+            /* else if(!loggedIn) {
+                print('bygger');
+                return Badge(
+                  badgeContent: Text('0'),
+                  toAnimate: true,
+                  animationType: BadgeAnimationType.scale,
+                  badgeColor: Colors.grey[600],
+                  position: BadgePosition.topEnd(end: 5, top: 5),
+                  child: IconButton(
+                    icon: Icon(Icons.notifications_rounded),
+                  ),
+                );
+              }*/
+              else
+                return IconButton(
+                  icon: Icon(Icons.notifications_rounded),
+                  onPressed: () {
+                    if (menuOpen) {
+                      print('closing menu');
+                      closeMenu();
+                      menuOpen = false;
+                    }
 
-            else {
-              print('openMenu');
-              openMenu();
-              menuOpen = true;
-            }
-          },
-        ),
-      );
-    }
+                    else {
+                      print('openMenu');
+                      openMenu();
+                      menuOpen = true;
+                    }
+                    },
+                );
+              break;
+
+              default:
+                return Text('error');
+          }
+        });
   }
+
 
   OverlayEntry overlayEntryBuilder() {
     return OverlayEntry(
@@ -143,7 +163,7 @@ class _NotificationPage extends State<NotificationPage> with TickerProviderState
                       height: MediaQuery.of(context).size.height * 0.6,
 
                       decoration: BoxDecoration(
-                        color: const Color(0xff2c1d33),
+                        color: (lightTheme) ? const Color(0xffeeb462) : const Color(0xff2c1d33),
                         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5.0), bottomRight: Radius.circular(5.0) ),
 
                       ),
@@ -182,14 +202,14 @@ class _NotificationPage extends State<NotificationPage> with TickerProviderState
                       height: MediaQuery.of(context).size.height * 0.2,
 
                       decoration: BoxDecoration(
-                        color: const Color(0xff2c1d33),
+                        color: (lightTheme)? const Color(0xffeeb462) : const Color(0xff2c1d33),
                         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5.0), bottomRight: Radius.circular(5.0) ),
 
                       ),
 
                       child: Center(
                         child: Text(
-                          'There are no new notifications',
+                          loggedIn ? 'There are no new notifications' : 'Login to see notifications',
                           style: TextStyle(
                             fontSize: 18,
                             color: const Color(0xffeeb462),
@@ -213,8 +233,15 @@ class _NotificationPage extends State<NotificationPage> with TickerProviderState
     );
   }
 
-   void getScheduleUpdates() async {
+  Future getScheduleUpdates() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     scheduleUpdate = localStorage.getStringList('scheduleUpdate');
+    lightTheme = localStorage.getBool('theme');
+    loggedIn = localStorage.getBool('loggedIn');
+    print('lightTheme: ');
+    print(lightTheme);
+    print('loggedIn: ');
+    print(loggedIn);
+    print('end');
   }
 }

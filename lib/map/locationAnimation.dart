@@ -25,7 +25,7 @@ class LocationAnimation extends StatefulWidget {
 class _LocationAnimation extends State<LocationAnimation> with TickerProviderStateMixin {
   double x;
   double y;
-  AnimationController controller; // Manage the animation
+  AnimationController controller;// Manage the animation
 
   @override
     void initState() {
