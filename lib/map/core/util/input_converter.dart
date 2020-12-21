@@ -3,7 +3,7 @@ import 'package:schedule_dva232/map/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 
 class InputConverter {
-  Either <Failure, String> removeGaps (String str){
+  Either <Failure, String> processInput (String str){
     try {
       if (str == "")
         throw InvalidInputException();

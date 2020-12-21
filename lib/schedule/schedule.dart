@@ -27,6 +27,12 @@ class Schedule extends StatelessWidget {
         centerTitle: false,
         title: Text('Schedule'),
         actions: [
+          IconButton(
+            icon:Icon(Icons.notifications_none_outlined),
+            onPressed: (){
+              Navigator.pushReplacementNamed(context, '/thisweek');
+            },
+          ),
           Builder(
               builder: (BuildContext context) {
                 return IconButton(
@@ -221,6 +227,12 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                       }).toList(),
                     ),
                   ),
+                  FlatButton(
+                    child: Text('test'),
+                    onPressed: (){
+                      CourseParser.searchForChanges();
+                    },
+                  )
                 ],
               );
               break;

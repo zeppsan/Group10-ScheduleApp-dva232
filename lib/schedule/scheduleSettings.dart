@@ -48,8 +48,15 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
     getCourseColors();
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         title: Text("Course Information"),
         actions: [
+          IconButton(
+            icon:Icon(Icons.notifications_none_outlined),
+            onPressed: (){
+              Navigator.pushReplacementNamed(context, '/thisweek');
+            },
+          ),
           Builder(
               builder: (BuildContext context) {
                 return IconButton(
