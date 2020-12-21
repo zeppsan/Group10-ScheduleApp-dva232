@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
+import 'package:schedule_dva232/appComponents/notifications.dart';
+import 'package:schedule_dva232/appComponents/topMenu.dart';
 import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
@@ -19,8 +21,12 @@ class Thisweek extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title:  Text('This Week',style: TextStyle(//fontFamily: "Handlee"),),
+        title:  Text('This Week',style: TextStyle(fontFamily: "Handlee"),),
        // titleTextStyle: TextStyle(fontFamily: "Handlee"),
+        actions: [
+          NotificationPage(appBarSize: AppBar().preferredSize.height),
+
+          TopMenu()
         ),), actions: [
           IconButton(
             icon:Icon(Icons.notifications_none_outlined),

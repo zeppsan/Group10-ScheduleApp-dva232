@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:schedule_dva232/appComponents/notifications.dart';
+import 'package:schedule_dva232/appComponents/topMenu.dart';
 import 'subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
@@ -27,22 +29,9 @@ class Schedule extends StatelessWidget {
         centerTitle: false,
         title: Text('Schedule',style: TextStyle(fontFamily: "Handlee")),
         actions: [
-          IconButton(
-            icon:Icon(Icons.notifications_none_outlined),
-            onPressed: (){
-              Navigator.pushReplacementNamed(context, '/thisweek');
-            },
-          ),
-          Builder(
-              builder: (BuildContext context) {
-                return IconButton(
-                  icon: Icon(Icons.more_vert_outlined),
-                  onPressed: () {
-                    Scaffold.of(context).openEndDrawer();
-                  },
-                );
-              }
-          ),
+          NotificationPage(appBarSize: AppBar().preferredSize.height),
+
+          TopMenu()
         ],
       ),
       endDrawer: Settings(),

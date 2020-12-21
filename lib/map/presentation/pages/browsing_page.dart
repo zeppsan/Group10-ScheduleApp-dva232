@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
+import 'package:schedule_dva232/appComponents/notifications.dart';
+import 'package:schedule_dva232/appComponents/topMenu.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
 import 'package:schedule_dva232/map/presentation/browsing_ploc/browsing_logic.dart';
@@ -28,22 +30,8 @@ class BrowsingPage extends StatelessWidget {
                   centerTitle: false,
                   title: Text('Map',style: TextStyle(fontFamily: "Handlee")),
                   actions: [
-                  IconButton(
-                    icon:Icon(Icons.notifications_none_outlined),
-                    onPressed: (){
-                      Navigator.pushReplacementNamed(context, '/thisweek');
-                    },
-                  ),
-                    Builder(
-                        builder: (BuildContext context) {
-                          return IconButton(
-                            icon: Icon(Icons.more_vert_outlined),
-                            onPressed: () {
-                              Scaffold.of(context).openEndDrawer();
-                            },
-                          );
-                        }
-                    ),
+                    NotificationPage(appBarSize: AppBar().preferredSize.height),
+                    TopMenu(),
                   ],
                 ),
                 endDrawer: Settings(),
