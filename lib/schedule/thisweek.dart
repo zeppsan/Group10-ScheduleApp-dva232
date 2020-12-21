@@ -19,9 +19,9 @@ class Thisweek extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title:  Text('This Week',style: TextStyle(fontFamily: "Handlee"),),
+        title:  Text('This Week',style: TextStyle(//fontFamily: "Handlee"),),
        // titleTextStyle: TextStyle(fontFamily: "Handlee"),
-        actions: [
+        ),), actions: [
           IconButton(
             icon:Icon(Icons.notifications_none_outlined),
             onPressed: (){
