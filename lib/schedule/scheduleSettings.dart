@@ -49,7 +49,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text("Course Information"),
+        title: Text("Course Information",style: TextStyle(fontFamily: "Handlee")),
         actions: [
           IconButton(
             icon:Icon(Icons.notifications_none_outlined),

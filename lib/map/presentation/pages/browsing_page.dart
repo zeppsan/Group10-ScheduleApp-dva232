@@ -28,7 +28,7 @@ class BrowsingPage extends StatelessWidget {
                 resizeToAvoidBottomInset: false,
                 appBar: AppBar(
                   centerTitle: false,
-                  title: Text('Map'),
+                  title: Text('Map',style: TextStyle(fontFamily: "Handlee")),
                   actions: [
                     NotificationPage(appBarSize: AppBar().preferredSize.height),
                     TopMenu(),
