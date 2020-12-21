@@ -1698,7 +1698,7 @@
 					"floor" :  2
 				},
 				{
-					"name" : "HILBERT-ROOM",
+					"name" : "HILBERTROOM",
 					"position" : {
 						"x": 640.0,
 						"y": -2280.0 },
