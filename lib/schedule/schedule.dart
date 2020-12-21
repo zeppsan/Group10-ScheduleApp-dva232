@@ -3,8 +3,11 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:ui';
 import 'dart:io';
+import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:schedule_dva232/appComponents/notifications.dart';
+import 'package:schedule_dva232/appComponents/topMenu.dart';
 import 'subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
@@ -21,18 +24,12 @@ class Schedule extends StatelessWidget {
     print("## in schedule ##");
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         title: Text('Schedule'),
         actions: [
-          Builder(
-              builder: (BuildContext context) {
-                return IconButton(
-                  icon: Icon(Icons.more_vert_outlined),
-                  onPressed: () {
-                    Scaffold.of(context).openEndDrawer();
-                  },
-                );
-              }
-          ),
+          NotificationPage(appBarSize: AppBar().preferredSize.height),
+
+          TopMenu()
         ],
         //Old view with add courses and notifications
         /*actions: [

@@ -26,7 +26,8 @@ class AppTheme{
       iconTheme: IconThemeData(
         color: const Color(0xff2c1d33),
       ),
-      centerTitle: true,
+      centerTitle: false,
+
       textTheme: TextTheme(
           headline6: TextStyle(color: const Color(0xff2c1d33), fontSize: 20)
       ),

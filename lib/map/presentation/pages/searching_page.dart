@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
+import 'package:schedule_dva232/appComponents/notifications.dart';
+import 'package:schedule_dva232/appComponents/topMenu.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
 import 'package:schedule_dva232/map/data_domain/repositories/room_repository.dart';
@@ -27,18 +29,12 @@ class SearchingPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset:false,
       appBar: AppBar(
+        centerTitle: false,
         title: Text('Map'),
         actions: [
-          Builder(
-              builder: (BuildContext context) {
-                return IconButton(
-                  icon: Icon(Icons.more_vert_outlined),
-                  onPressed: () {
-                    Scaffold.of(context).openEndDrawer();
-                  },
-                );
-              }
-          ),
+          NotificationPage(appBarSize: AppBar().preferredSize.height),
+
+          TopMenu()
         ],
       ),
       endDrawer: Settings(),
