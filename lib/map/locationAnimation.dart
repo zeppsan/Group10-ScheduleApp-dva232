@@ -5,6 +5,7 @@ import 'package:flutter/animation.dart';
 import 'package:schedule_dva232/schedule/thisweek.dart';
 import 'DirectionPainter.dart';
 import 'data_domain/models/room.dart';
+import 'image_load.dart';
 
 class LocationAnimation extends StatefulWidget {
   final Room room;
@@ -30,6 +31,7 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
   @override
     void initState() {
       super.initState();
+      assignImage();
       x = widget.room.position.x;
       y = widget.room.position.y;
       print(x);
@@ -37,6 +39,13 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
       print(widget.floorImage);
       controller = AnimationController(duration: Duration(milliseconds: 2000), vsync: this) // Manage the animation
       ..forward();
+  }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print('precache images');
+    precacheImages(context);
+    print('precache images done');
   }
   
   @override
@@ -63,7 +72,7 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
                 fit: BoxFit.contain,
                 child: Stack(
                   children: [
-                    Image.asset(getFloorImage(widget.floorImage)),
+                    Image.asset(switchImage(widget.floorImage)),
                     if(widget.showPath)
                       CustomPaint( painter: DirectionPainter(direction: widget.room.path), ),
 
@@ -97,41 +106,5 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
         )
       )
    );
-  }
-}
-
-String getFloorImage(String building){
-  print('gets floor image');
-  switch (building) {
-
-    case 'U1':
-      return 'assets/U1.png';
-
-    case 'U2':
-      return 'assets/U2.png';
-
-    case 'U3':
-      return 'assets/U3.png';
-
-    case 'T1':
-      return 'assets/U1.png';
-
-    case 'T2':
-      return 'assets/U2.png';
-
-    case 'T3':
-      return 'assets/U3.png';
-
-    case 'R1':
-      return 'assets/R1.png';
-
-    case 'R2':
-      return 'assets/R2.png';
-
-    case 'R3':
-      return 'assets/R3.png';
-
-    default:
-      return 'Can not find corresponding image';
   }
 }
