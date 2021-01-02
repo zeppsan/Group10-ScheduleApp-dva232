@@ -2,8 +2,9 @@ import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:schedule_dva232/appComponents/notifications.dart';
 import 'package:schedule_dva232/appComponents/topMenu.dart';
+import 'package:schedule_dva232/notification/notifications.dart';
+
 import 'subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';

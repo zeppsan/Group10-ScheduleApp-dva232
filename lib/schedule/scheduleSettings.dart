@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:schedule_dva232/appComponents/notifications.dart';
+import 'file:///C:/Users/emeli/AndroidStudioProjects/Group10-ScheduleApp-dva232/lib/notification/notifications.dart';
 import 'package:schedule_dva232/appComponents/topMenu.dart';
 import 'package:schedule_dva232/schedule/subfiles/colorPicker.dart';
 import 'package:schedule_dva232/schedule/thisweek.dart';
