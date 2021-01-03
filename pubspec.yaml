@@ -36,6 +36,8 @@ dependencies:
   autocomplete_textfield: ^1.7.3
   sizer: ^1.1.8
   flutter_swiper: ^1.1.6
+  flutter_local_notifications: ^1.4.4+2
+  workmanager: ^0.2.3
 
 
   # The following adds the Cupertino Icons font to your application.
