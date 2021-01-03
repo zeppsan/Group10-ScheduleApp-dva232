@@ -1,39 +1,36 @@
 
 import 'dart:convert';
-
+import 'package:schedule_dva232/globalNotification.dart' as global;
 import 'package:badges/badges.dart';
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Note{
-  final String title;
-  final String content;
+import 'noteClass.dart';
 
-  Note({this.title, this.content});
-}
+
 
 class NotificationList extends StatefulWidget {
   OverlayEntry overlayEntry;
   final double appBarSize;
   final bool hasData;
-  List<dynamic> scheduleList;
+  
 
-  NotificationList({this.appBarSize, this.hasData, this.scheduleList});
+  NotificationList({this.appBarSize, this.hasData});
 
   @override
   _NotificationList createState() => _NotificationList();
 }
 
-class _NotificationList extends State<NotificationList> with TickerProviderStateMixin{
+class _NotificationList extends State<NotificationList>{
   bool dropDownOpen = false;
   bool lightTheme;
   bool loggedIn;
   double containerHeight = 0.0;
-  List<Lecture> notificationList;
+  Map<DateTime, List<Lecture>> rawScheduleList;
 
-  //var notifications = {'0': Note(title: 'MAA140', content:'Anmälan till tentan öppen'), '1' : Note(title: 'MAA140', content: 'Föreläsning 15 inställd')};
 
   @override
   void initState() {
@@ -79,10 +76,12 @@ class _NotificationList extends State<NotificationList> with TickerProviderState
         builder: (context, snapshot) {
           switch(snapshot.connectionState) {
             case ConnectionState.done:
-              if(notificationList != null)
+              rawScheduleList = snapshot.data;
+              createNotes();
+              if(global.notificationList != null && global.numberOfItems > 0)
                 return Badge(
-                  badgeContent: Text(notificationList.length.toString()),
-                  toAnimate: true,
+                  badgeContent: Text(global.numberOfItems.toString()),
+                  toAnimate: false,
                   animationType: BadgeAnimationType.scale,
                   position: BadgePosition.topEnd(end: 5, top: 5),
                   child: IconButton(
@@ -132,7 +131,7 @@ class _NotificationList extends State<NotificationList> with TickerProviderState
                     height: MediaQuery.of(context).size.height,
                   ),
                 ),
-                if(notificationList != null)
+                if(global.notificationList != null && global.numberOfItems > 0)
                   Padding(
                     padding: const EdgeInsets.only(top: 22.0),
                     child: GestureDetector(
@@ -148,23 +147,35 @@ class _NotificationList extends State<NotificationList> with TickerProviderState
                         ),
 
                         child: ListView.builder(
-                          itemCount: notificationList.length,
+                          itemCount: global.notificationList.length,
                           itemBuilder: (BuildContext context, int index){
+                            if(global.notificationList[index].show)
                             return Card(
                               color: const Color(0xffeeb462),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
+
                                   ListTile(
 
-                                    title: Text(notificationList[index].course_code),
-                                    subtitle: Text(notificationList[index].moment),
+                                    title: Text(global.notificationList[index].title),
+                                    subtitle: Text('${global.notificationList[index].date} ${global.notificationList[index].courseCode}\n'
+                                        '${global.notificationList[index].content}'),
                                     trailing: IconButton(
-                                        icon: Icon(Icons.check)),
+                                      onPressed: () {
+                                        global.notificationList[index].show = false;
+                                        global.numberOfItems--;
+                                        closeDropDown();
+                                        openDropDown();
+                                      },
+                                        icon: Icon(Icons.check)
+                                    ),
                                   )
                                 ],
                               ),
                             );
+                            else
+                              return Container();
                           },
                         ),
                       ),
@@ -223,5 +234,31 @@ class _NotificationList extends State<NotificationList> with TickerProviderState
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     lightTheme = localStorage.getBool('theme');
     loggedIn = localStorage.getBool('loggedIn');
+  }
+  
+  void createNotes() {
+    Note newNote;
+    //notificationList = List<Note>();
+
+    rawScheduleList.forEach((key, value) {
+      String title, content, courseCode, date, id;
+      date = '${key.day}/${key.month}';
+
+      value.forEach((element) {
+        title = 'Schedule change';
+        content = element.moment;
+        courseCode = element.course_code.toUpperCase();
+        id = title + date + courseCode;
+
+        newNote = Note(title: title, content: content, courseCode: courseCode, date: date, id: id);
+        
+        var exists = global.notificationList.firstWhere((element) => element.id == newNote.id, orElse: () => null); //check if item already exists
+        if(exists == null)
+          {
+            global.notificationList.add(newNote);
+            global.numberOfItems++;
+          }
+      });
+    });
   }
 }

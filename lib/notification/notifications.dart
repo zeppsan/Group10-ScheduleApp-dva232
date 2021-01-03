@@ -5,12 +5,6 @@ import 'package:schedule_dva232/notification/notificationList.dart';
 import 'package:schedule_dva232/schedule/subfiles/scheduleUpdater.dart';
 
 
-class Note{
-  final String title;
-  final String content;
-
-  Note({this.title, this.content});
-}
 
 class NotificationPage extends StatefulWidget {
   final double appBarSize;
@@ -39,8 +33,7 @@ class _NotificationPage extends State<NotificationPage> {
           case ConnectionState.done:
             if(snapshot.hasData){
               print('has data');
-              print(snapshot.data);
-            return NotificationList(appBarSize: widget.appBarSize, hasData: true, scheduleList: snapshot.data);
+            return NotificationList(appBarSize: widget.appBarSize, hasData: true);
             }
             else {
               print('no data');
