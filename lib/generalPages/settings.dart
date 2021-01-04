@@ -65,6 +65,24 @@ class _SettingsState extends State<Settings> {
                 Navigator.pushReplacementNamed(context, '/scheduleSettings');
               },
             ),
+            ElevatedButton(
+              child: Text(_darkModeSwitch ? "Change to lightTheme" : "Change to darkTheme"),
+              onPressed: () async {
+                SharedPreferences localStorage =
+                await SharedPreferences.getInstance();
+                if (localStorage.getBool('theme')) {
+                  //if lightmode when change set to false to get darkmode
+                  localStorage.setBool('theme', false);
+                } else {
+                  //if darkmode when change set to true to get lightmode
+                  localStorage.setBool('theme', true);
+                }
+                //Change the theme
+                getThemeManager(context).toggleDarkLightTheme();
+              },
+            ),
+
+/*
             ListTile(
               leading: Text("Dark theme"),
               trailing: Switch(
@@ -88,36 +106,11 @@ class _SettingsState extends State<Settings> {
                 },
               ),
             ),
-           /* Row(
-              children: [
-                Text("Dark theme"),
-                Switch(
-                  value: _darkModeSwitch,
-                  onChanged: (value) async {
-                    SharedPreferences localStorage =
-                    await SharedPreferences.getInstance();
-                    if (localStorage.getBool('theme')) {
-                      //if lightmode when change set to false to get darkmode
-                      localStorage.setBool('theme', false);
-                    } else {
-                      //if darkmode when change set to true to get lightmode
-                      localStorage.setBool('theme', true);
-                    }
-                    //Change the theme
-                    getThemeManager(context).toggleDarkLightTheme();
-
-                    setState(() {
-                      _darkModeSwitch = value;
-                    });
-                  },
-                ),
-              ],
-            ),*/
-
+*/
             /*******************************************
              * Only for testing
              *******************************************/
-            SizedBox(
+            /*SizedBox(
               height: 150.0,
             ),
             Text(
@@ -142,7 +135,7 @@ class _SettingsState extends State<Settings> {
               onPressed: () {
                 Navigator.pushReplacementNamed(context, '/');
               },
-            ),
+            ),*/
           ],
         ),
       );
@@ -156,6 +149,32 @@ class _SettingsState extends State<Settings> {
     return Future.value(_loggedIn);
   }
 
+  Widget loggedIn() {
+    return FlatButton(
+      child: Text("Logout"),
+      onPressed: () async {
+        SharedPreferences localStorage = await SharedPreferences
+            .getInstance();
+        await localStorage.remove('token');
+        await localStorage.remove('rawSchedule');
+        await localStorage.setBool('loggedIn', false);
+        //Push to home screen
+        Navigator.pushReplacementNamed(context, '/');
+      },
+    );
+  }
+
+  Widget notLoggedIn() {
+    return FlatButton(
+      child: Text("Login"),
+      onPressed: () {
+        ///TODO: Change push
+        Navigator.pushReplacementNamed(context, '/');
+      },
+    );
+  }
+
+  /*
   Widget loggedIn() {
     return Column(
       children: [
@@ -187,5 +206,5 @@ class _SettingsState extends State<Settings> {
         ),
       ],
     );
-  }
+  }*/
 }
