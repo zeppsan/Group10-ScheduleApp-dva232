@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
-import 'package:schedule_dva232/appComponents/notifications.dart';
 import 'package:schedule_dva232/appComponents/topMenu.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
@@ -11,8 +10,10 @@ import 'package:schedule_dva232/map/presentation/widgets/Search_bar_widget.dart'
 import 'package:schedule_dva232/map/presentation/widgets/browsing_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
 import 'package:schedule_dva232/generalPages/settings.dart';
+import 'package:schedule_dva232/notification/notifications.dart';
 import 'package:schedule_dva232/schedule/thisweek.dart';
 import 'package:sizer/sizer.dart';
+
 
 class BrowsingPage extends StatelessWidget {
   final String buildingToFind;

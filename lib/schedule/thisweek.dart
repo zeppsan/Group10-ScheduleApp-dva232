@@ -3,13 +3,14 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
-import 'package:schedule_dva232/appComponents/notifications.dart';
 import 'package:schedule_dva232/appComponents/topMenu.dart';
+import 'package:schedule_dva232/notification/notifications.dart';
 import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import 'package:schedule_dva232/generalPages/settings.dart';
 import 'package:schedule_dva232/schedule/subfiles/scheduleUpdater.dart';
+
 
 Random rand = new Random();
 bool lightTheme = true;
