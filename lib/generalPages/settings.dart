@@ -10,7 +10,11 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   Future<bool> _loggedIn;
-  bool _darkModeSwitch = false;
+  bool _darkModeSwitch;
+
+  //Colors of the switch when active
+  Color _lightActive = Color(0xff2c1d33);
+  Color _darkActive = Color(0xffeeb462);
 
   @override
   void initState() {
@@ -65,7 +69,39 @@ class _SettingsState extends State<Settings> {
                 Navigator.pushReplacementNamed(context, '/scheduleSettings');
               },
             ),
-            ListTile(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Light theme"),
+                Switch(
+                  inactiveTrackColor: _darkModeSwitch ? _darkActive : _lightActive,
+                  activeColor: _darkModeSwitch ? _darkActive : _lightActive,
+                  inactiveThumbColor: _darkModeSwitch ? _darkActive : _lightActive,
+                  value: _darkModeSwitch,
+                  onChanged: (value) async {
+                    SharedPreferences localStorage =
+                    await SharedPreferences.getInstance();
+                    if (localStorage.getBool('theme')) {
+                      //if lightmode when change set to false to get darkmode
+                      localStorage.setBool('theme', false);
+                    } else {
+                      //if darkmode when change set to true to get lightmode
+                      localStorage.setBool('theme', true);
+                    }
+                    //Needed to make the switch select the right theme every time the drawer is used
+                    LoginMain.darkTheme = !LoginMain.darkTheme;
+                    //Change the theme
+                    getThemeManager(context).toggleDarkLightTheme();
+
+                    setState(() {
+                      _darkModeSwitch = value;
+                    });
+                  },
+                ),
+                Text("Dark theme"),
+              ],
+            ),
+           /* ListTile(
               leading: Text("Dark theme"),
               trailing: Switch(
                 value: _darkModeSwitch,
@@ -87,7 +123,7 @@ class _SettingsState extends State<Settings> {
                   });
                 },
               ),
-            ),
+            ),*/
 
 
             /*******************************************
