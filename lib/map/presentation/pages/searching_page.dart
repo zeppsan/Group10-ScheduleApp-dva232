@@ -83,17 +83,17 @@ class SearchingPage extends StatelessWidget {
                                     text: TextSpan(
                                       style: new TextStyle(
                                         fontSize: 14.0,
-                                        color: lightTheme? Colors.black : Colors.white,
+                                        color: Theme.of(context).scaffoldBackgroundColor == Colors.white ? Colors.black : Colors.white,
                                       ),
                                       children: <TextSpan>[
                                         new TextSpan(text: 'Show '),
-                                        new TextSpan(text: state.room.name, style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)),
+                                        new TextSpan(text: state.room.name, style: new TextStyle(color: Theme.of(context).accentColor, fontWeight: FontWeight.bold, fontSize: 16.0)),
                                         new TextSpan(text: ' on floor plan'),
                                       ],
                                     )
                                   ),
                                   Icon(Icons.arrow_forward_rounded,
-                                    color: lightTheme? const Color(0xff2c1d33) : Theme.of(context).accentColor,
+                                    color: Theme.of(context).accentColor,
                                   ),
                                 ]
                               ),

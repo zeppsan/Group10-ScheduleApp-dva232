@@ -22,11 +22,9 @@ class Thisweek extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title:  Text('This Week',style: TextStyle(fontFamily: "Handlee"),),
-       //titleTextStyle: TextStyle(fontFamily: "Handlee"),
+        title:  Text('This Week',style: TextStyle(fontFamily: "Handlee",)),
         actions: [
           NotificationPage(appBarSize: AppBar().preferredSize.height),
-
           TopMenu(),
           ],
       ),
@@ -110,9 +108,11 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                 children: <Widget>[
                                   Container(height: 15,),
 
-                                  Text(getday(pos)+" "+getDayDate(pos),
-                                    style: TextStyle(fontSize: 20, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462), fontWeight: FontWeight.bold),
+                                  Text(" "+getday(pos)+" "+getDayDate(pos),
+                                    style: TextStyle(fontSize: 20, color: lightTheme ? Color(0xff2c1d33) : Color(0xffeeb462), fontWeight: FontWeight.bold, wordSpacing: 10.0),
+                                    //textAlign: TextAlign.start,
                                   ),
+
                                   Container(
                                     child: Builder(
                                       builder: (context) {
@@ -143,7 +143,10 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                                           decorationThickness: 1.5,)
                                                     ),
                                                     onPressed: () {
-                                                      Navigator.pushNamed((context), '/searching', arguments: e.location.toLowerCase());
+                                                      if (e.location == "zoom")
+                                                        print("zoom");
+                                                      else
+                                                        Navigator.pushNamed((context), '/searching', arguments: e.location.toLowerCase());
                                                     },
                                                   ),
                                                 ),
@@ -173,7 +176,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                               text = "There is always retakes..\nbut it's always nice to pass the first exam";
                                               break;
                                             case 6:
-                                              text = "Finally! No classes!\nWhat to do know?";
+                                              text = "Finally! No classes!\nWhat to do now?";
                                               break;
                                             case 7:
                                               text = "Today's schedule is  empty.\nThis is the day to focus on you!";
@@ -193,7 +196,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                             ),
                                             child: ListTile(
                                               title: Text(text,//maybe add \n
-                                                style: TextStyle(color: lightTheme ? Color(0xff2c1d33) : Colors.white, fontSize: 17, ),
+                                                style: TextStyle(color: lightTheme ? Color(0xff2c1d33) : Colors.white, fontSize: 17,),
                                                 textAlign: TextAlign.left,
                                               ),
                                               trailing: Icon(Icons.emoji_emotions_outlined,size: 30,

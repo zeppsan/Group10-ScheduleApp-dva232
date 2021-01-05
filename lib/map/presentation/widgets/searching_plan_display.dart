@@ -72,7 +72,7 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SearchBarWidget(mode: 'searching', roomToFind:widget.room.name),
+          SearchBarWidget(mode:'searching', roomToFind:widget.room.name),
           Visibility(
             maintainState: true,
             maintainSize: true,
@@ -95,7 +95,7 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
             children: <Widget> [
               IconButton(
                 icon: Icon(Icons.arrow_back_rounded),
-                color: lightTheme? const Color(0xff2c1d33) : Theme.of(context).accentColor,
+                color: Theme.of(context).accentColor,
                 onPressed: () { Previous(); },
               ),
               Expanded(child: SizedBox()),
@@ -106,7 +106,7 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
                 maintainSize: true,
                 child: IconButton(
                   icon: Icon(Icons.arrow_forward_rounded),
-                  color: lightTheme? const Color(0xff2c1d33) : Theme.of(context).accentColor,
+                  color: Theme.of(context).accentColor,
                   onPressed: () { Next(); },
                 ),
               )
