@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/routing.dart';
-import 'package:schedule_dva232/schedule/subfiles/scheduleUpdater.dart';
+
 import 'package:stacked_themes/stacked_themes.dart';
 import 'package:schedule_dva232/theme/themes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -55,7 +54,7 @@ Future main() async {
 class App extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return ThemeBuilder(
+    return  ThemeBuilder(
       defaultThemeMode: theme,
       darkTheme: AppTheme.darkTheme,
       lightTheme: AppTheme.lightTheme,
@@ -64,7 +63,7 @@ class App extends StatelessWidget{
         darkTheme: darkTheme,
         themeMode: themeMode,
         initialRoute: '/',
-        onGenerateRoute: Roots.generateRoute,
+       onGenerateRoute: Roots.generateRoute,
       ),
     );
   }

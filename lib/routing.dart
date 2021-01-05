@@ -10,15 +10,6 @@ import 'package:schedule_dva232/login/loading.dart';
 import 'generalPages/settings.dart';
 import 'login/loginMain.dart';
 
-/*'/': (context) => LoginMain(),
-'/schedule': (context) => Schedule(),
-'/scheduleSettings': (context) => ScheduleSettings(),
-'/addCourse': (context) => AddCourse(),
-'/thisweek': (context) => Thisweek(),
-'/map': (context) => IntroMapPage(),
-'/browsing': (context) => BrowsingPage(arguments)
-'/settings': (context) => Settings(),*/
-
 class Roots {
   static Route<dynamic> generateRoute (RouteSettings settings) {
     final args = settings.arguments;

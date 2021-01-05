@@ -19,10 +19,7 @@ class _AddCourseState extends State<AddCourse> {
           children: [
             TextField(
               controller: new TextEditingController(),
-              //decoration: InputDecoration(
-               // border: OutlineInputBorder(),
               ),
-           // ),
             ElevatedButton(
                 onPressed:(){Navigator.pushNamed(context, '/addCourse');},
                 child: Text("Add course")),
