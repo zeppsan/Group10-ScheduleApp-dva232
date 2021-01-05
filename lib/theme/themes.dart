@@ -70,7 +70,7 @@ class AppTheme{
 
     appBarTheme: AppBarTheme(
       color: const Color(0xff2c1d33),
-      //titleTextStyle: TextStyle(fontFamily: "Bungee"),
+      //titleTextStyle: TextStyle(fontFamily: "Handlee"),
       iconTheme: IconThemeData(
         color: const Color(0xffeeb462),
       ),
