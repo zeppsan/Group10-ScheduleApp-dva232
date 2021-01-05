@@ -83,6 +83,7 @@ class SearchingPage extends StatelessWidget {
                                     text: TextSpan(
                                       style: new TextStyle(
                                         fontSize: 14.0,
+                                        color: Theme.of(context).scaffoldBackgroundColor == Colors.white ? Colors.black : Colors.white,
                                       ),
                                       children: <TextSpan>[
                                         new TextSpan(text: 'Show '),

@@ -26,8 +26,8 @@ class NotificationList extends StatefulWidget {
 
 class _NotificationList extends State<NotificationList>{
   bool dropDownOpen = false;
-  bool lightTheme;
-  bool loggedIn;
+  bool lightTheme = true;
+  bool loggedIn = false;
   double containerHeight = 0.0;
   Map<DateTime, List<Lecture>> rawScheduleList;
 

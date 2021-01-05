@@ -43,6 +43,8 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   //Autocomplete the search with room names
   @override
   Widget build(BuildContext context) {
+  print('theme is: ');
+  print (Theme.of(context).brightness);
     return roomNames == null
       ? CircularProgressIndicator()
       : searchTextField = AutoCompleteTextField<String>(
@@ -57,13 +59,8 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               dispatchGetRoom(roomToFind, widget.mode);
             },
             icon: Icon(Icons.search_rounded),
-            color: Theme.of(context).accentColor,
           ),
-          labelText: "Search room",
-          labelStyle: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).accentColor,
-          ),
+          hintText: "Search room",
         ),
         itemFilter: (item, query) {
           return item.toLowerCase().startsWith(query.toLowerCase());

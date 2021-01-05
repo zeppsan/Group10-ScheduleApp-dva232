@@ -6,7 +6,7 @@ import 'package:dartz/dartz.dart';
 class InputConverter {
   Either <Failure, String> processInput (String str){
     try {
-      if (str == "")
+      if (str == "" || str==null)
         throw InvalidInputException();
       else
         return Right(str.replaceAll(new RegExp(r"\s+|-"), "").toUpperCase());
