@@ -20,7 +20,6 @@ class _BrowsingPlanDisplayState extends State<BrowsingPlanDisplay> {
  String buildingFloor;
 
  _BrowsingPlanDisplayState() {
-   print(_currentFloor);
    _currentFloor = 1;
  }
 
@@ -28,7 +27,6 @@ class _BrowsingPlanDisplayState extends State<BrowsingPlanDisplay> {
  void initState(){
    setState(() {
      buildingFloor = widget.building.name + _currentFloor.toString();
-     print(buildingFloor);
    });
  }
 

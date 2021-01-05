@@ -36,9 +36,6 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
       assignImage();
       x = widget.room.position.x;
       y = widget.room.position.y;
-      print(x);
-      print(y);
-      print(widget.floorImage);
       controller = AnimationController(duration: Duration(milliseconds: 2000), vsync: this) // Manage the animation
       ..forward();
   }
