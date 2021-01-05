@@ -21,7 +21,7 @@ void callbackDispatcher() {
 }
 
 Future showNotification(notificationPlugin, String text) async {
-print('show notifications');
+
   //android channel
   var androidDetails = new AndroidNotificationDetails(
     'your channel id',
@@ -44,6 +44,7 @@ print('show notifications');
         '$text',
         platformChannel, payload: 'Default_Sound'
     );
+  print('show notifications');
 
   //});
 

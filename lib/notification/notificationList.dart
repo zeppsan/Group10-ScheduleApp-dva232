@@ -78,9 +78,10 @@ class _NotificationList extends State<NotificationList>{
             case ConnectionState.done:
              // rawScheduleList = snapshot.data;
               //createNotes();
-              if(global.notificationList != null && global.numberOfItems > 0)
+              if(loggedIn && global.notificationList != null && global.numberOfItems > 0)
                 return Badge(
                   badgeContent: Text(global.numberOfItems.toString()),
+                  badgeColor: Colors.red[900],
                   toAnimate: false,
                   animationType: BadgeAnimationType.scale,
                   position: BadgePosition.topEnd(end: 5, top: 5),
@@ -125,62 +126,91 @@ class _NotificationList extends State<NotificationList>{
                   onTap:  () {
                     closeDropDown();
                   },
-                  child: Container(
-                    color: Colors.transparent,
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 22.0),
+                    child: Container(
+                      color: Colors.black.withOpacity(0.5),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                    ),
                   ),
                 ),
-                if(global.notificationList != null && global.numberOfItems > 0)
+
+                //if logged in, there are items in list, and number of "active" notifications are at least one
+                //build the list of notification cards
+
+                if(loggedIn && global.notificationList != null && global.numberOfItems > 0)
                   Padding(
                     padding: const EdgeInsets.only(top: 22.0),
-                    child: GestureDetector(
+                    child: Container(
+                      constraints: BoxConstraints(
+                        minWidth: MediaQuery.of(context).size.width,
+                        maxWidth: MediaQuery.of(context).size.width,
+                        minHeight: MediaQuery.of(context).size.height * 0.15,
+                        maxHeight: MediaQuery.of(context).size.height * 0.5,
+                      ),
 
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.6,
+                      decoration: BoxDecoration(
+                        color: (lightTheme) ? const Color(0xffeeb462) : const Color(0xff2c1d33),
+                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5.0), bottomRight: Radius.circular(5.0) ),
 
-                        decoration: BoxDecoration(
-                          color: (lightTheme) ? const Color(0xffeeb462) : const Color(0xff2c1d33),
-                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5.0), bottomRight: Radius.circular(5.0) ),
+                      ),
 
-                        ),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: global.notificationList.length,
+                        itemBuilder: (BuildContext context, int index){
+                          if(global.notificationList[index].show)
+                          return Card(
+                            color: (lightTheme) ? const Color(0xff2c1d33) : const Color(0xffeeb462),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max ,
+                              children: [
 
-                        child: ListView.builder(
-                          itemCount: global.notificationList.length,
-                          itemBuilder: (BuildContext context, int index){
-                            if(global.notificationList[index].show)
-                            return Card(
-                              color: const Color(0xffeeb462),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
+                                ListTile(
 
-                                  ListTile(
-
-                                    title: Text(global.notificationList[index].title),
-                                    subtitle: Text('${global.notificationList[index].date} ${global.notificationList[index].courseCode}\n'
-                                        '${global.notificationList[index].content}'),
-                                    trailing: IconButton(
-                                      onPressed: () {
-                                        global.notificationList[index].show = false;
-                                        global.numberOfItems--;
-                                        closeDropDown();
-                                        openDropDown();
-                                      },
-                                        icon: Icon(Icons.check)
+                                  title: Text(
+                                    '${global.notificationList[index].date.day}/${global.notificationList[index].date.month} '
+                                        '${global.notificationList[index].title}',
+                                    style: TextStyle(
+                                      color: (lightTheme) ? Colors.white : const Color(0xff2c1d33),
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                  )
-                                ],
-                              ),
-                            );
-                            else
-                              return Container();
-                          },
-                        ),
+                                  ),
+                                  subtitle: Text(
+                                      '${global.notificationList[index].content} \n ${global.notificationList[index].noteText}',
+                                      style: TextStyle(
+                                      color: (lightTheme) ? Colors.white  : const Color(0xff2c1d33),
+                          ),),
+
+                                  trailing: IconButton(
+                                    onPressed: () {
+                                      global.notificationList[index].show = false;
+                                      global.numberOfItems--;
+                                      closeDropDown();
+                                      openDropDown();
+                                    },
+                                      icon: Icon(
+                                        Icons.check,
+                                        color: (lightTheme) ? Colors.white  : const Color(0xff2c1d33),
+                                      )
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                          else
+                            return Container();
+                        },
                       ),
                     ),
                   )
+
+                  //if not logged in or there are no notification yet
+                //build this widget witch only contains a text-field
                 else
                   Material(
                     color: Colors.transparent,
@@ -188,7 +218,7 @@ class _NotificationList extends State<NotificationList>{
                       padding: const EdgeInsets.only(top:22.0),
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.2,
+                        height: MediaQuery.of(context).size.height * 0.15,
 
                         decoration: BoxDecoration(
                           color: (lightTheme)? const Color(0xffeeb462) : const Color(0xff2c1d33),
@@ -201,7 +231,7 @@ class _NotificationList extends State<NotificationList>{
                             loggedIn ? 'There are no new notifications' : 'Login to see notifications',
                             style: TextStyle(
                               fontSize: 18,
-                              color: const Color(0xffeeb462),
+                              color: (lightTheme) ? const Color(0xff2c1d33) : const Color(0xffeeb462),
                             ),
 
                           ),
@@ -222,43 +252,10 @@ class _NotificationList extends State<NotificationList>{
     );
   }
 
- /* Future<Map<DateTime, List<Lecture>>> parseSchedule(context) async{
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-
-    CourseParser parser = CourseParser(rawData: jsonDecode(localStorage.getString('rawSchedule')));
-    await parser.parseRawData();
-    return parser.events;
-  }*/
-
   Future getVariableValue() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     lightTheme = localStorage.getBool('theme');
     loggedIn = localStorage.getBool('loggedIn');
   }
-  
- /* void createNotes() {
-    Note newNote;
-    //notificationList = List<Note>();
 
-    rawScheduleList.forEach((key, value) {
-      String title, content, courseCode, date, id;
-      date = '${key.day}/${key.month}';
-
-      value.forEach((element) {
-        title = 'Schedule change';
-        content = element.moment;
-        courseCode = element.course_code.toUpperCase();
-        id = title + date + courseCode;
-
-        newNote = Note(title: title, content: content, courseCode: courseCode, date: date, id: id);
-        
-        var exists = global.notificationList.firstWhere((element) => element.id == newNote.id, orElse: () => null); //check if item already exists
-        if(exists == null)
-          {
-            global.notificationList.add(newNote);
-            global.numberOfItems++;
-          }
-      });
-    });
-  }*/
 }
