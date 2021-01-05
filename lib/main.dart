@@ -24,13 +24,17 @@ Future main() async {
     print(global.newItem);
     Future.delayed(Duration(seconds: 1), () async{
       if(global.newItem){
-        global.notificationList.forEach((element) {
-          print('testar loopa listan');
-          Future.delayed(Duration(seconds: 2), (){
+        print('before delay');
+        Future.delayed(Duration(seconds: 3), () {
+          global.notificationList.forEach((element) {
+
+
             Workmanager.initialize(callbackDispatcher, isInDebugMode: false); //debugMode is only to help with debugging
             Workmanager.registerOneOffTask('1', 'simpelTask', inputData: {'string': '${element.content}'
+
             });
-         });
+        });
+          print('after delay');
         });
       }
       global.newItem = false;
