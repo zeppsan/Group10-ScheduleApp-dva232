@@ -3,9 +3,11 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 import 'package:schedule_dva232/schedule/thisweek.dart';
-import 'DirectionPainter.dart';
-import 'data_domain/models/room.dart';
-import 'image_load.dart';
+import '../../DirectionPainter.dart';
+import '../../data_domain/models/room.dart';
+import '../../image_load.dart';
+
+//Widget to present floor plans in searching mode
 
 class LocationAnimation extends StatefulWidget {
   final Room room;
@@ -34,18 +36,14 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
       assignImage();
       x = widget.room.position.x;
       y = widget.room.position.y;
-      print(x);
-      print(y);
-      print(widget.floorImage);
       controller = AnimationController(duration: Duration(milliseconds: 2000), vsync: this) // Manage the animation
       ..forward();
   }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    print('precache images');
     precacheImages(context);
-    print('precache images done');
   }
   
   @override
@@ -55,7 +53,6 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
   }
 
   Widget build(BuildContext context) {
-
     return Container (
       child: ClipRect(
         child:Stack (
@@ -63,12 +60,7 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
             InteractiveViewer(
               minScale: 0.1,
               maxScale: 3.0,
-              /*child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,// * 0.55,
-                decoration: BoxDecoration(color: Colors.white),
-              */
-               child: FittedBox(
+              child: FittedBox(
                 fit: BoxFit.contain,
                 child: Stack(
                   children: [
@@ -83,11 +75,8 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
                         end: RelativeRect.fromLTRB(x, y + 300, 0, 0),
                       ).animate(CurvedAnimation( parent: controller, curve: Curves.bounceIn.flipped)),
 
-                      child: Image.asset(
-                        'assets/test.png',
-                      ),
+                      child: Image.asset('assets/test.png'),
                     ),
-
                   ]
                 ),
               ),

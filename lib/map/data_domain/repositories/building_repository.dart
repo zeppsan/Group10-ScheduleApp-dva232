@@ -17,18 +17,15 @@ abstract class BuildingAssetsDataSource {
   Future <Building> getBuilding(String name);
 }
 
-abstract class BuildingCacheDataSource {
-  Future <Building> getLastBuilding();
-}
-
+// Data source implementation
 class BuildingAssetsDataSourceImpl implements BuildingAssetsDataSource {
-
   @override
   Future<Building> getBuilding (String name)  async {
+    // read the json source file
     final String buildings = await rootBundle.loadString("assets/buildings_rooms.json");
     Map<String, dynamic> jsonBuildings = json.decode(buildings);
     for (Map<String, dynamic> building in jsonBuildings['buildings']) {
-      if (building['name'] == name)  {
+      if (building['name'] == name)  { // if building is found
         return Future.value(Building(
             name: building['name'],
             campus: building['campus'],
@@ -41,8 +38,7 @@ class BuildingAssetsDataSourceImpl implements BuildingAssetsDataSource {
   }
 }
 
-
-
+//Building Repository Implementation
 class BuildingRepositoryImpl implements BuildingRepository {
   final BuildingAssetsDataSource assetsDataSource;
 
@@ -54,11 +50,10 @@ class BuildingRepositoryImpl implements BuildingRepository {
   Future<Either<Failure, Building>> getBuilding(String name) async {
     //Get the building data from assets
     try {
-      final buildingToCache = await assetsDataSource.getBuilding(name);
-      // Remember the building
-      return Right(buildingToCache);
+      final building = await assetsDataSource.getBuilding(name);
+      return Right(building);
     }
-    //If fails to get building data
+    //If fails to get building
     on AssetsException {
       return Left(AssetsFailure());
     }

@@ -2,6 +2,7 @@ import 'package:schedule_dva232/map/core/error/exceptions.dart';
 import 'package:schedule_dva232/map/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 
+// Analyze the input in the searchbar
 class InputConverter {
   Either <Failure, String> processInput (String str){
     try {

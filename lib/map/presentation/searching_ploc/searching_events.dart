@@ -1,5 +1,6 @@
 part of 'searching_logic.dart';
 
+//Events in searching mode
 abstract class SearchingEvent {
   SearchingEvent([List props = const <dynamic>[]]);
 }
@@ -14,6 +15,7 @@ class GetRoomEvent extends SearchingEvent {
   GetRoomEvent(this.inputString):super([inputString]);
 }
 
+// Get Floor Plan Event
 class GetPlanEvent extends SearchingEvent {
   Room room;
   int currentFloor;
