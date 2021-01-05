@@ -12,7 +12,6 @@ import 'noteClass.dart';
   Map<DateTime, List<Lecture>> rawSchedule = Map<DateTime, List<Lecture>>();
 
   Future<void> parseSchedule() async{
-    print('in parseSchedule');
     SharedPreferences localStorage = await SharedPreferences.getInstance();
 
     CourseParser parser = CourseParser(rawData: jsonDecode(localStorage.getString('rawSchedule')));
@@ -23,14 +22,14 @@ import 'noteClass.dart';
       findExam();
       removeExpiredItems();
     });
-    print('done parseSchedule');
+
   }
 
   void findExam() {
-    print('in findExam');
+
     rawSchedule.forEach((key, value) {
       value.forEach((element) {
-        print(element);
+
         if(element.moment.startsWith('TEN'))
           createNote(key, element);
       });
@@ -41,7 +40,7 @@ import 'noteClass.dart';
     Note newNote;
     DateTime today = DateTime.now();
     int daysApart ;
-    String title, content, courseCode, id;
+    String title, content, courseCode, id, noteText = '';
     DateTime date;
 
     daysApart = DateTime(key.year, key.month, key.day).difference(DateTime(today.year, today.month, today.day)).inDays; //check how many days it is until exam
@@ -49,22 +48,33 @@ import 'noteClass.dart';
     courseCode = element.course_code.toUpperCase();
     title = 'Upcoming exam in $courseCode';
     date = key;
-    id = 'exam$courseCode${date.day.toString()}${date.month.toString()}'; //create an id with courseCode, moment and date
+    content = '${element.moment}';
 
     if(daysApart == 21){ //21 days ahead
-      content = '${element.moment} - is open for registration';
-      newNote = Note(title: title, content: content, courseCode: courseCode, date: date, id: id);
+      noteText = '- is open for registration';
+      id = 'open$courseCode${date.day.toString()}${date.month.toString()}'; //create an id with courseCode, moment and date
+
     }
 
     else if(daysApart == 10) { //10 days head
-      content = '${element.moment} - last day for registration';
-      newNote = Note(title: title, content: content, courseCode: courseCode, date: date, id: id);
+      noteText = '- last day for registration';
+      id = 'lastday$courseCode${date.day.toString()}${date.month.toString()}'; //create an id with courseCode, moment and date
+
     }
 
     else if(daysApart <= 9){ // registration is closed
-      content = '${element.moment} - is closed for registration';
-      newNote = Note(title: title, content: content, courseCode: courseCode, date: date, id: id);
+      noteText = '- is closed for registration';
+      id = 'closed$courseCode${date.day.toString()}${date.month.toString()}'; //create an id with courseCode, moment and date
     }
+
+    newNote = Note(
+        title: title,
+        content: content,
+        courseCode: courseCode,
+        date: date,
+        id: id,
+        noteText: noteText
+    );
 
     var exists = global.notificationList.firstWhere((element) => element.id == newNote.id, orElse: () => null); //check if item already exists
     if(exists == null) {
@@ -73,7 +83,6 @@ import 'noteClass.dart';
       global.newItem = true;
 
     }
-    print(global.numberOfItems);
 
   }
 
