@@ -28,7 +28,7 @@ class Schedule extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text('Schedule',style: TextStyle(fontFamily: "Handlee")),
+        title: Text('Schedule',style: TextStyle(fontFamily: "Roboto")),
         actions: [
           NotificationPage(appBarSize: AppBar().preferredSize.height),
           TopMenu()

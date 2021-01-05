@@ -21,23 +21,24 @@ Future main() async {
   var cron = new Cron();
   cron.schedule(Schedule.parse('* * * * *'), () async { // '0 * * * *' schedule update checks once every hour
     parseSchedule();
-    print(global.newItem);
-    Future.delayed(Duration(seconds: 1), () async{
+
+    Future.delayed(Duration(seconds: 10), () {
+      print(global.newItem);
       if(global.newItem){
         print('before delay');
-        Future.delayed(Duration(seconds: 3), () {
-          global.notificationList.forEach((element) {
-
 
             Workmanager.initialize(callbackDispatcher, isInDebugMode: false); //debugMode is only to help with debugging
-            Workmanager.registerOneOffTask('1', 'simpelTask', inputData: {'string': '${element.content}'
+            Workmanager.registerOneOffTask(
+                '1',
+                'simpelTask',
+                inputData: {
+                  'string': '${global.notificationList.last.content} ${global.notificationList.last.noteText}'
 
-            });
-        });
-          print('after delay');
         });
       }
+
       global.newItem = false;
+      print(global.newItem);
     });
 
   });

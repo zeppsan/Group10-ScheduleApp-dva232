@@ -101,9 +101,10 @@ class CourseParser {
             old_sched.forEach((key, value) {
               for (var i = 0; i < value.length; i++) {
                 try {
-                  if (old_sched[key][i].startTime != new_sched[key][i].startTime) {
+                  if (old_sched[key][i].startTime != new_sched[key][i].startTime || old_sched[key][i].location != new_sched[key][i].location ) {
                     changes.add("${old_sched[key][i].course_code}:${old_sched[key][i].startTime}");
                   }
+
                 } catch (Exception) {
                   // The index does not exist... Lecture moved
                   changes.add("${old_sched[key][i].course_code}:${old_sched[key][i].startTime}");

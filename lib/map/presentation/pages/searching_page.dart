@@ -23,7 +23,7 @@ class SearchingPage extends StatelessWidget {
       resizeToAvoidBottomInset:false,
       appBar: AppBar(
         centerTitle: false,
-        title: Text('Map',style: TextStyle(fontFamily: "Handlee")),
+        title: Text('Map',style: TextStyle(fontFamily: "Roboto")),
         actions: [
           NotificationPage(appBarSize: AppBar().preferredSize.height),
 

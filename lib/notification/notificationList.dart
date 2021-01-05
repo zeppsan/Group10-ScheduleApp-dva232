@@ -26,8 +26,8 @@ class NotificationList extends StatefulWidget {
 
 class _NotificationList extends State<NotificationList>{
   bool dropDownOpen = false;
-  bool lightTheme;
-  bool loggedIn;
+  bool lightTheme = true;
+  bool loggedIn = false;
   double containerHeight = 0.0;
   Map<DateTime, List<Lecture>> rawScheduleList;
 
@@ -48,11 +48,10 @@ class _NotificationList extends State<NotificationList>{
   }
 
   void closeDropDown(){
-
+    widget.overlayEntry.remove();
     setState(() {
       dropDownOpen = false;
     });
-    widget.overlayEntry.remove();
 
   }
 
@@ -161,45 +160,52 @@ class _NotificationList extends State<NotificationList>{
                         itemCount: global.notificationList.length,
                         itemBuilder: (BuildContext context, int index){
                           if(global.notificationList[index].show)
-                          return Card(
-                            color: (lightTheme) ? const Color(0xff2c1d33) : const Color(0xffeeb462),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max ,
-                              children: [
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 8.0, bottom: 6.0, right: 8.0),
+                            child: Card(
+                              //color: (lightTheme) ? const Color(0xff2c1d33) : const Color(0xffeeb462),
+                              color: global.notificationList[index].color,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max ,
+                                children: [
 
-                                ListTile(
+                                  ListTile(
 
-                                  title: Text(
-                                    '${global.notificationList[index].date.day}/${global.notificationList[index].date.month} '
-                                        '${global.notificationList[index].title}',
-                                    style: TextStyle(
-                                      color: (lightTheme) ? Colors.white : const Color(0xff2c1d33),
-                                      fontWeight: FontWeight.bold,
+                                    title: Text(
+                                      /*'${global.notificationList[index].date.day}/${global.notificationList[index].date.month} '
+                                          '${global.notificationList[index].title}',*/
+                                      '${global.notificationList[index].date} '
+                                          '${global.notificationList[index].title}',
+                                      style: TextStyle(
+                                        color: const Color(0xff2c1d33),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                        '${global.notificationList[index].content} \n ${global.notificationList[index].noteText}',
+                                        style: TextStyle(
+                                        color:  const Color(0xff2c1d33),
+                            ),),
+
+                                    trailing: IconButton(
+                                      onPressed: () {
+                                        global.notificationList[index].show = false;
+                                        global.numberOfItems--;
+                                        closeDropDown();
+                                        openDropDown();
+                                      },
+                                        icon: Icon(
+                                          Icons.check,
+                                          color: const Color(0xff2c1d33),
+                                        )
                                     ),
                                   ),
-                                  subtitle: Text(
-                                      '${global.notificationList[index].content} \n ${global.notificationList[index].noteText}',
-                                      style: TextStyle(
-                                      color: (lightTheme) ? Colors.white  : const Color(0xff2c1d33),
-                          ),),
-
-                                  trailing: IconButton(
-                                    onPressed: () {
-                                      global.notificationList[index].show = false;
-                                      global.numberOfItems--;
-                                      closeDropDown();
-                                      openDropDown();
-                                    },
-                                      icon: Icon(
-                                        Icons.check,
-                                        color: (lightTheme) ? Colors.white  : const Color(0xff2c1d33),
-                                      )
-                                  ),
-                                )
-                              ],
+                                 // SizedBox(height: 5),
+                                ],
+                              ),
                             ),
                           );
                           else

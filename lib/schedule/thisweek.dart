@@ -22,7 +22,7 @@ class Thisweek extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title:  Text('This Week',style: TextStyle(fontFamily: "Handlee",)),
+        title:  Text('This Week',style: TextStyle(fontFamily: "Roboto")),
         actions: [
           NotificationPage(appBarSize: AppBar().preferredSize.height),
           TopMenu(),
