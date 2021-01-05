@@ -43,7 +43,7 @@ class AppTheme{
     accentColor: const Color(0xff2c1d33),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),textStyle: TextStyle(color: Colors.white),//,fontFamily: "Handlee"),
+      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),textStyle: TextStyle(color: Colors.white,inherit: false,fontFamily: "Handlee"),//,fontFamily: "Handlee"),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
 
