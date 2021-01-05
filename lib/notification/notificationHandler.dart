@@ -38,7 +38,6 @@ print('show notifications');
   var platformChannel = new NotificationDetails(androidDetails, iOSDetails);
 
   //global.notificationList.forEach((element) async{
-    print('in foreach-loop');
     await notificationPlugin.show(
         0,
         'MaShRoom',

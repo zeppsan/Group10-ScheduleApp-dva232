@@ -33,6 +33,7 @@ Future main() async {
          });
         });
       }
+      global.newItem = false;
     });
 
   });
