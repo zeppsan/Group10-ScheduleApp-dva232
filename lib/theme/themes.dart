@@ -40,6 +40,9 @@ class AppTheme{
         fontWeight: FontWeight.bold,
         color: const Color(0xff2c1d33),
       ),
+      suffixStyle: TextStyle(
+        color: const Color(0xff2c1d33),
+      ),
     ),
       primaryColorLight: const Color(0xff2c1d33),
     accentColor: const Color(0xff2c1d33),
@@ -53,6 +56,9 @@ class AppTheme{
       ),
     ),
 
+      iconTheme: IconThemeData(
+        color: const Color(0xff2c1d33),
+      ),
       primaryIconTheme: IconThemeData(
         color: const Color(0xff2c1d33),
       ),
@@ -106,15 +112,20 @@ class AppTheme{
            hintStyle: TextStyle(
             fontWeight: FontWeight.bold,
             color: const Color(0xffeeb462),
-        ),
+          ),
+          suffixStyle: TextStyle(
+            color: const Color(0xffeeb462),
+          ),
       ),
-
     accentColor: Color(0xffeeb462),
     primaryColorDark: Color(0xffeeb462),
 
-    primaryIconTheme: IconThemeData(
-      color: Color(0xffeeb462),
-    ),
+      iconTheme: IconThemeData(
+        color: const Color(0xffeeb462),
+      ),
+      primaryIconTheme: IconThemeData(
+        color: const Color(0xffeeb462),
+      ),
 
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: const Color(0xff2c1d33),
