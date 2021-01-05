@@ -6,7 +6,6 @@ import 'package:schedule_dva232/injection_container.dart' as ic;
 import 'package:schedule_dva232/map/data_domain/usecases/get_room_list_usecase.dart';
 import 'package:schedule_dva232/map/presentation/browsing_ploc/browsing_logic.dart' as bl;
 import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart' as sl;
-import 'package:schedule_dva232/schedule/thisweek.dart';
 
 // Widget to present search bar
 class SearchBarWidget extends StatefulWidget {
@@ -58,13 +57,12 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               dispatchGetRoom(roomToFind, widget.mode);
             },
             icon: Icon(Icons.search_rounded),
-            color: lightTheme ? const Color(0xff2c1d33) : const Color(0xffeeb462),
+            color: Theme.of(context).accentColor,
           ),
-          hintText: "Search room",
-          hintStyle: TextStyle(
+          labelText: "Search room",
+          labelStyle: TextStyle(
             fontWeight: FontWeight.bold,
-            color: lightTheme ? const Color(0xff2c1d33) : const Color(
-              0xffeeb462)
+            color: Theme.of(context).accentColor,
           ),
         ),
         itemFilter: (item, query) {
@@ -90,7 +88,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       );
   }
 
-  // Wisget presenting alternatives
+  // Widget presenting alternatives
   Widget row(String room) {
     return Container(
       padding: EdgeInsets.all(15.0),
@@ -100,10 +98,13 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       child: Row(
         children: [
           Container(
-            child: Text(room, style: TextStyle(
+            child: Text(
+              room,
+              style: TextStyle(
                 fontSize: 20.0,
-                color: lightTheme ? const Color(0xff2c1d33) : const Color(
-                    0xffeeb462))),
+                color: Theme.of(context).accentColor,
+              ),
+            ),
           ),
         ],
       ),

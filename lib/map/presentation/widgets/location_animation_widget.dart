@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
-import 'package:schedule_dva232/schedule/thisweek.dart';
 import '../../DirectionPainter.dart';
 import '../../data_domain/models/room.dart';
 import '../../image_load.dart';
@@ -87,7 +86,7 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
               child:Text( widget.room.building.name + widget.currentFloor.toString(),
                 style: TextStyle (
                   fontSize: 50,
-                  color: lightTheme ? const Color(0xff2c1d33) : Theme.of(context).accentColor,
+                  color: Theme.of(context).accentColor,
                 )
               )
             ),

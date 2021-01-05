@@ -106,7 +106,7 @@ class BrowsingPage extends StatelessWidget {
                                   children: [
                                     Text('To floor plans'),
                                     Icon(Icons.arrow_forward_rounded,
-                                      color: lightTheme? const Color(0xff2c1d33) : Theme.of(context).accentColor,
+                                      color: Theme.of(context).accentColor,
                                     ),
                                   ]
                                ),

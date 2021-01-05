@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:schedule_dva232/schedule/thisweek.dart';
-
 import '../../image_load.dart';
 
 // Widget to present ground maps and floor maps in browsing mode
@@ -49,7 +47,7 @@ class _BasicMapWidget extends State<BasicMapWidget> {
               child:Text( widget.basicMapToShow,
                 style: TextStyle (
                   fontSize: 50,
-                  color: lightTheme ? const Color(0xff2c1d33) : const Color(0xffeeb462),
+                  color: Theme.of(context).accentColor,
                 )
               )
             ),
