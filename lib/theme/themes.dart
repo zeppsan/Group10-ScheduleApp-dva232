@@ -18,7 +18,7 @@ class AppTheme{
       ),
 
       textTheme: TextTheme(
-          headline6: TextStyle(color: const Color(0xff2c1d33), fontSize: 35)
+          headline6: TextStyle(color: const Color(0xff2c1d33), fontSize: 25)
       ),
     ),
 
@@ -39,11 +39,10 @@ class AppTheme{
 
     ),
       primaryColorLight: const Color(0xff2c1d33),
-
     accentColor: const Color(0xff2c1d33),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),textStyle: TextStyle(color: Colors.white),//,fontFamily: "Handlee"),
+      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),textStyle: TextStyle(color: Colors.white,fontFamily: "Handlee"),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
 
@@ -68,17 +67,19 @@ class AppTheme{
     fontFamily: "Handlee",
     brightness: Brightness.dark,
     backgroundColor: const Color(0xff302933),
+
     appBarTheme: AppBarTheme(
       color: const Color(0xff2c1d33),
-      //titleTextStyle: TextStyle(fontFamily: "Handlee"),
+      //titleTextStyle: TextStyle(fontFamily: "Bungee"),
       iconTheme: IconThemeData(
         color: const Color(0xffeeb462),
       ),
     centerTitle: true,
     textTheme: TextTheme(
-        headline6: TextStyle(color: const Color(0xffeeb462),fontSize: 20)
+        headline6: TextStyle(color: const Color(0xffeeb462),fontSize: 25)
     )
     ),
+
     elevatedButtonTheme: ElevatedButtonThemeData(
      style: ElevatedButton.styleFrom(onPrimary: Color(0xff2c1d33), primary: const Color(0xffeeb462), textStyle: TextStyle(color: const Color(0xff2c1d33),inherit: false,fontFamily: "Handlee"),
      shape: RoundedRectangleBorder(

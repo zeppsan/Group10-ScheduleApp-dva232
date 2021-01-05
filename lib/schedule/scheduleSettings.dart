@@ -5,8 +5,8 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:schedule_dva232/appComponents/topMenu.dart';
 import 'package:schedule_dva232/notification/notifications.dart';
+import 'package:schedule_dva232/appComponents/topMenu.dart';
 import 'package:schedule_dva232/schedule/subfiles/colorPicker.dart';
 import 'package:schedule_dva232/schedule/thisweek.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,7 +51,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text("Course Information",style: TextStyle(fontFamily: "Handlee")),
+        title: Text("Manage Courses",style: TextStyle(fontFamily: "Handlee")),
         actions: [
             NotificationPage(appBarSize: AppBar().preferredSize.height),
             TopMenu()
