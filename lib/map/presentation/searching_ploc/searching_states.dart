@@ -1,5 +1,6 @@
 part of 'searching_logic.dart';
 
+// States in searching mode
 abstract class SearchingState {
   SearchingState([List props  = const <dynamic>[]]);
 }

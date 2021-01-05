@@ -9,8 +9,8 @@ part 'searching_states.dart';
 
 const String ROOM_NOT_FOUND_MESSAGE = 'Can not find the room';
 const String INVALID_INPUT_MESSAGE = 'Write the whole room name';
-//presentation logic
 
+//presentation logic in searching mode
 class SearchingLogic extends Bloc<SearchingEvent, SearchingState> {
   final GetRoom getRoom;
   final InputConverter inputConverter;
@@ -27,20 +27,18 @@ class SearchingLogic extends Bloc<SearchingEvent, SearchingState> {
   Stream<SearchingState> mapEventToState(SearchingEvent event) async* {
     // yield returns a value and DOES NOT terminate the function
     if (event is GetRoomEvent) {
-      print ('event GetRoomEvent fired');
       final inputEither = inputConverter.processInput(event.inputString);
       yield* inputEither.fold (
-              (failure) async *{
-            yield ErrorState(message: INVALID_INPUT_MESSAGE);
-          },
-              (str) async* {
-            //yield LoadingState();
-            final failureOrRoom = await getRoom(str);
-            yield failureOrRoom.fold (
-                  (failure) => ErrorState(message: ROOM_NOT_FOUND_MESSAGE),
-                  (room) => RoomLoadedState(room:room),
-            );
-          }
+        (failure) async *{
+          yield ErrorState(message: INVALID_INPUT_MESSAGE);
+        },
+        (str) async* {
+          final failureOrRoom = await getRoom(str);
+          yield failureOrRoom.fold (
+            (failure) => ErrorState(message: ROOM_NOT_FOUND_MESSAGE),
+            (room) => RoomLoadedState(room:room),
+          );
+        }
       );
     }
     else if (event is GetPlanEvent) {

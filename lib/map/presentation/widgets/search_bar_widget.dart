@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
 import 'package:schedule_dva232/map/data_domain/usecases/get_room_list_usecase.dart';
-import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart';
+import 'package:schedule_dva232/map/presentation/browsing_ploc/browsing_logic.dart' as bl;
+import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart' as sl;
 import 'package:schedule_dva232/schedule/thisweek.dart';
+
+// Widget to present search bar
 class SearchBarWidget extends StatefulWidget {
   final String mode;
   final String roomToFind;
@@ -22,9 +25,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   var txt=TextEditingController();
 
   GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
-
   _SearchBarWidgetState(this.roomToFind);
-
 
   //Get room names to list as suggestions
   void loadList() async {
@@ -46,64 +47,50 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     return roomNames == null
       ? CircularProgressIndicator()
       : searchTextField = AutoCompleteTextField<String>(
-      controller: txt,
-      key: key,
-      clearOnSubmit: widget.mode == 'browsing' ? true: false,
-      submitOnSuggestionTap: true,
-      suggestions: roomNames,
-      decoration: InputDecoration(
-       // border: OutlineInputBorder(),
-        suffixIcon: IconButton(
-          onPressed: () {
-            widget.mode == 'browsing'
-                ? Navigator.of(context).pushNamed(
-                '/searching', arguments: roomToFind)
-                : dispatchGetRoom(roomToFind);
-          },
-          icon: Icon(Icons.search_rounded),
-          color: lightTheme ? const Color(0xff2c1d33) : const Color(0xffeeb462),
-        ),
-        hintText: "Search room",
-        hintStyle: TextStyle(
+        controller: txt,
+        key: key,
+        clearOnSubmit: widget.mode == 'browsing' ? true: false,
+        submitOnSuggestionTap: true,
+        suggestions: roomNames,
+        decoration: InputDecoration(
+          suffixIcon: IconButton(
+            onPressed: () {
+              dispatchGetRoom(roomToFind, widget.mode);
+            },
+            icon: Icon(Icons.search_rounded),
+            color: lightTheme ? const Color(0xff2c1d33) : const Color(0xffeeb462),
+          ),
+          hintText: "Search room",
+          hintStyle: TextStyle(
             fontWeight: FontWeight.bold,
             color: lightTheme ? const Color(0xff2c1d33) : const Color(
-                0xffeeb462)
+              0xffeeb462)
+          ),
         ),
-      ),
-      itemFilter: (item, query) {
-        return item.toLowerCase().startsWith(query.toLowerCase());
-      },
-      itemSorter: (a, b) {
-        return a.compareTo(b);
-      },
-      textChanged: (value) {
-        setState(() {
-          roomToFind = value;
-        });
-      },
-      textSubmitted: (value) {
-        setState(() {
-          roomToFind = value;
-        });
-        widget.mode == 'browsing'
-            ? Navigator.of(context).pushNamed(
-            '/searching', arguments: roomToFind)
-            : dispatchGetRoom(roomToFind);
-      },
-      itemSubmitted: (item) {
-        setState(() {
-          roomToFind = item;
-        });
-        widget.mode == 'browsing'
-            ? Navigator.of(context).pushNamed('/searching', arguments: roomToFind)
-            : dispatchGetRoom(roomToFind);
-      },
-      itemBuilder: (context, item) {
-        return row(item);
-      },
-    );
+        itemFilter: (item, query) {
+          return item.toLowerCase().startsWith(query.toLowerCase());
+        },
+        itemSorter: (a, b) {
+          return a.compareTo(b);
+        },
+        textChanged: (value) {
+          setState(() { roomToFind = value; });
+        },
+        textSubmitted: (value) {
+          setState(() { roomToFind = value; });
+          dispatchGetRoom(roomToFind, widget.mode);
+        },
+        itemSubmitted: (item) {
+          setState(() { roomToFind = item; });
+          dispatchGetRoom(roomToFind, widget.mode);
+        },
+        itemBuilder: (context, item) {
+          return row(item);
+        },
+      );
   }
 
+  // Wisget presenting alternatives
   Widget row(String room) {
     return Container(
       padding: EdgeInsets.all(15.0),
@@ -123,8 +110,11 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     );
   }
 
-  void dispatchGetRoom(String roomToFind) {
-    BlocProvider.of<SearchingLogic>(context)
-        .add(GetRoomEvent(roomToFind));
+  void dispatchGetRoom(String roomToFind, String mode ) {
+    mode == 'searching'
+    ? BlocProvider.of<sl.SearchingLogic>(context)
+        .add(sl.GetRoomEvent(roomToFind))
+    : BlocProvider.of<bl.BrowsingLogic>(context)
+        .add(bl.GetRoomEvent(roomToFind));
   }
 }

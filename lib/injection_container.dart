@@ -14,7 +14,7 @@ Future<void> init () async
 {
   //Ploc
   //Instantiates new instance on every call
-  serviceLocator.registerFactory(() => BrowsingLogic(getBuilding: serviceLocator()));
+  serviceLocator.registerFactory(() => BrowsingLogic(getBuilding: serviceLocator(),getRoom: serviceLocator(), inputConverter: serviceLocator()));
   serviceLocator.registerFactory(() => SearchingLogic(getRoom: serviceLocator(), inputConverter: serviceLocator()));
 
   //Usecases
