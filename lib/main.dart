@@ -40,16 +40,6 @@ class App extends StatelessWidget{
         themeMode: themeMode,
         initialRoute: '/',
        onGenerateRoute: Roots.generateRoute,
-       /* routes: {
-            '/': (context) => LoginMain(),
-            '/schedule': (context) => Schedule(),
-            '/scheduleSettings': (context) => ScheduleSettings(),
-            '/addCourse': (context) => AddCourse(),
-            '/thisweek': (context) => Thisweek(),
-            '/map': (context) => IntroMapPage(),
-            '/browsing': (context) => BrowsingPage(arguments)
-            '/settings': (context) => Settings(),
-          },*/
       ),
     );
   }

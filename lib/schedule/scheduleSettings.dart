@@ -56,18 +56,6 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
             NotificationPage(appBarSize: AppBar().preferredSize.height),
             TopMenu()
         ],
-        //OLD
-        /*actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/scheduleSettings');
-              },
-            icon: Icon(
-            Icons.notifications_none_rounded,
-            color:  const Color(0xffdfb15b),
-            ),
-          ),
-        ],*/
       ),
       endDrawer: Settings(),
       body: Container(

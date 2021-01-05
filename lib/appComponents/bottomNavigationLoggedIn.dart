@@ -22,10 +22,6 @@ class NavigationBarLoggedIn extends StatelessWidget {
           icon: Icon(Icons.map_outlined),
           label: 'Map',
         ),
-       /* BottomNavigationBarItem(
-          icon: Icon(Icons.notifications_none_outlined),
-          label: 'Notices',
-        ),*/
 
       ],
       onTap: (value) async {
@@ -42,10 +38,6 @@ class NavigationBarLoggedIn extends StatelessWidget {
             Navigator.pushReplacementNamed(context, '/browsing');
             _selectedItem = value;
             break;
-         /* case 3:
-            Navigator.pushReplacementNamed(context, '/addCourse'); //EMELIE MAY CHANGE TO RIGHT NOTICES
-            _selectedItem = value;
-            break;*/
         }
       },
     );
