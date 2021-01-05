@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_dva232/map/data_domain/models/building.dart';
 import 'package:schedule_dva232/map/presentation/browsing_ploc/browsing_logic.dart';
 import 'package:schedule_dva232/map/presentation/widgets/basic_map_widget.dart';
-import 'package:schedule_dva232/schedule/thisweek.dart';
 
 // Widget to present building floorplans with navigation arrows in browsing mode
 class BrowsingPlanDisplay extends StatefulWidget{
@@ -60,7 +59,7 @@ class _BrowsingPlanDisplayState extends State<BrowsingPlanDisplay> {
             children: <Widget> [
               IconButton(
                 icon: Icon(Icons.arrow_back_rounded),
-                color: lightTheme? const Color(0xff2c1d33) : Theme.of(context).accentColor,
+                color: Theme.of(context).accentColor,
                 onPressed: () { Previous(); },
               ),
               Expanded(child: SizedBox()),
@@ -71,7 +70,7 @@ class _BrowsingPlanDisplayState extends State<BrowsingPlanDisplay> {
                 maintainSize: true,
                 child: IconButton(
                   icon: Icon(Icons.arrow_forward_rounded),
-                  color: lightTheme? const Color(0xff2c1d33) : Theme.of(context).accentColor,
+                  color: Theme.of(context).accentColor,
                   onPressed: () { Next(); },
                 ),
               )
