@@ -2,6 +2,6 @@
 
 import 'notification/noteClass.dart';
 
-bool test = true;
+bool newItem = false;
 List<Note> notificationList = List<Note>();
 int numberOfItems = 0;

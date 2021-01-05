@@ -3,8 +3,9 @@ class Note{
   final String title;
   final String content;
   final String courseCode;
-  final String date;
+  final DateTime date;
   bool show = true;
+  bool expired = false;
 
   Note({this.title, this.content, this.courseCode, this.date, this.id});
 }

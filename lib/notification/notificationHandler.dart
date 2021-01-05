@@ -1,24 +1,27 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:workmanager/workmanager.dart';
+import 'package:schedule_dva232/globalNotification.dart' as global;
 
 void callbackDispatcher() {
+  print('in callback');
   Workmanager.executeTask((taskName, inputData) {
     FlutterLocalNotificationsPlugin notificationPlugin = new FlutterLocalNotificationsPlugin();
 
     //initialise settings for android and IOS separately
     var androidSettings = new AndroidInitializationSettings('@mipmap/ic_launcher');
-    var IOSSettings = new IOSInitializationSettings();
+    var iOSSettings = new IOSInitializationSettings();
 
     //initialise settings for both devices
-    var settings = new InitializationSettings(androidSettings, IOSSettings);
+    var settings = new InitializationSettings(androidSettings, iOSSettings);
     notificationPlugin.initialize(settings);
-    showNotification(notificationPlugin);
+    showNotification(notificationPlugin, inputData['string']);
+
     return Future.value(true);
   });
 }
 
-Future showNotification(notificationPlugin) async {
-
+Future showNotification(notificationPlugin, String text) async {
+print('show notifications');
   //android channel
   var androidDetails = new AndroidNotificationDetails(
     'your channel id',
@@ -29,15 +32,19 @@ Future showNotification(notificationPlugin) async {
   );
 
   //IOS channel
-  var IOSDetails = new IOSNotificationDetails();
+  var iOSDetails = new IOSNotificationDetails();
 
   //both devices channel
-  var platformChannel = new NotificationDetails(androidDetails, IOSDetails);
+  var platformChannel = new NotificationDetails(androidDetails, iOSDetails);
 
-  await notificationPlugin.show(
-    0,
-    'MaShRoom',
-    'Testing local notifications, and its awesome',
-    platformChannel, payload: 'Default_Sound'
-  );
+  //global.notificationList.forEach((element) async{
+    await notificationPlugin.show(
+        0,
+        'MaShRoom',
+        '$text',
+        platformChannel, payload: 'Default_Sound'
+    );
+
+  //});
+
 }

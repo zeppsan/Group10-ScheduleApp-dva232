@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:schedule_dva232/map/data_domain/models/coordinates.dart';
 
+// Help class to draw lines
 class DirectionPainter extends CustomPainter {
 
   DirectionPainter({ @required this.direction});

@@ -4,9 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
 import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart';
 import 'package:schedule_dva232/schedule/thisweek.dart';
-import '../../locationAnimation.dart';
-import 'Search_bar_widget.dart';
+import 'location_animation_widget.dart';
+import 'search_bar_widget.dart';
 
+//Widget to present search bar, show path button, navigation arrows and floor plan in searching mode
 class SearchingPlanDisplay extends StatefulWidget{
   int _currentFloor;
   final Room room;
@@ -64,9 +65,9 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
      _showPath=false;
    });
  }
+
   @override
   Widget build(BuildContext context) {
-
     return Container(
       child: Column(
         mainAxisSize: MainAxisSize.min,

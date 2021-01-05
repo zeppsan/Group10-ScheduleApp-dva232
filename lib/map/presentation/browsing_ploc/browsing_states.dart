@@ -1,5 +1,6 @@
 part of 'browsing_logic.dart';
 
+// Browsing mode states
 abstract class BrowsingState {
   BrowsingState([List props  = const <dynamic>[]]);
 }
@@ -18,13 +19,14 @@ class ErrorState extends BrowsingState {
   ErrorState ({@required this.message}):super ([message]);
 }
 
-//class SearchingForRoomState extends BrowsingState {
- // final String inputString;
-  //SearchingForRoomState ({@required this.inputString}):super([inputString]);
-//}
+class RoomFoundState extends BrowsingState {
+  final Room room;
+  RoomFoundState({@required this.room}):super([room]);
+}
 
 class PlanLoaded extends BrowsingState {
   final Building building;
   int currentFloor;
   PlanLoaded({@required this.building, @required this.currentFloor}):super ([building, currentFloor]);
 }
+

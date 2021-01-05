@@ -6,6 +6,7 @@ import 'package:schedule_dva232/map/presentation/browsing_ploc/browsing_logic.da
 import 'package:schedule_dva232/map/presentation/widgets/basic_map_widget.dart';
 import 'package:schedule_dva232/schedule/thisweek.dart';
 
+// Widget to present building floorplans with navigation arrows in browsing mode
 class BrowsingPlanDisplay extends StatefulWidget{
   final Building building;
   BrowsingPlanDisplay(this.building);
@@ -19,7 +20,6 @@ class _BrowsingPlanDisplayState extends State<BrowsingPlanDisplay> {
  String buildingFloor;
 
  _BrowsingPlanDisplayState() {
-   print(_currentFloor);
    _currentFloor = 1;
  }
 
@@ -27,7 +27,6 @@ class _BrowsingPlanDisplayState extends State<BrowsingPlanDisplay> {
  void initState(){
    setState(() {
      buildingFloor = widget.building.name + _currentFloor.toString();
-     print(buildingFloor);
    });
  }
 
@@ -53,7 +52,6 @@ class _BrowsingPlanDisplayState extends State<BrowsingPlanDisplay> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       child: Column(
         children: [

@@ -9,16 +9,6 @@ class AppTheme{
     fontFamily: "Handlee",
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
-    /*scaffoldBackgroundColor: Container(decoration: BoxDecoration( //VARFÖR KAN JAG INTE FÅ EN LINEAR GRADIENT BACKGROUND VARFÖR MÅSTE DET GÖRAS I CONTAINER????
-      gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          const Color(0xff452c52),
-          Colors.black
-        ]
-      )
-    ),),*/
 
     appBarTheme: AppBarTheme(
       color: const Color(0xffeeb462),
@@ -116,10 +106,6 @@ class AppTheme{
     primaryIconTheme: IconThemeData(
       color: Color(0xffeeb462),
     ),
-    /*textTheme: TextTheme(
-      headline6: TextStyle(color: Colors.blue,),
-      subtitle2: TextStyle(color: Colors.blueAccent),
-    ),*/
 
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: const Color(0xff2c1d33),

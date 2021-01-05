@@ -22,121 +22,107 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 40.0,
-            ),
-            Image.asset('assets/logo/LogoLightTheme.png', width: 80.0, height: 80.0),
-            SizedBox(
-              height: 20.0,
-            ),
-            FutureBuilder(
-              //Will change the button label depending on if the user is logged in or not
-              future: _loggedIn,
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.none:
-                    return Text('Something went wrong');
-                    break;
-                  case ConnectionState.active:
-                    return SizedBox(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
-                        child: Center(child: CircularProgressIndicator()));
-                    break;
-                  case ConnectionState.done:
-                    if (snapshot.data == true) {
-                      return loggedIn();
-                    } else {
-                      return notLoggedIn();
-                    }
-                    break;
-                  default:
-                    return Text("Unexpected error");
-                }
-              },
-            ),
-            ElevatedButton(
-              child: Text("Manage courses"),
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/scheduleSettings');
-              },
-            ),
-            ElevatedButton(
-              child: Text(_darkModeSwitch ? "Change to lightTheme" : "Change to darkTheme"),
-              onPressed: () async {
-                SharedPreferences localStorage =
-                await SharedPreferences.getInstance();
-                if (localStorage.getBool('theme')) {
-                  //if lightmode when change set to false to get darkmode
-                  localStorage.setBool('theme', false);
-                } else {
-                  //if darkmode when change set to true to get lightmode
-                  localStorage.setBool('theme', true);
-                }
-                //Change the theme
-                getThemeManager(context).toggleDarkLightTheme();
-              },
-            ),
-
-/*
-            ListTile(
-              leading: Text("Dark theme"),
-              trailing: Switch(
-                value: _darkModeSwitch,
-                onChanged: (value) async {
-                  SharedPreferences localStorage =
-                  await SharedPreferences.getInstance();
-                  if (localStorage.getBool('theme')) {
-                    //if lightmode when change set to false to get darkmode
-                    localStorage.setBool('theme', false);
-                  } else {
-                    //if darkmode when change set to true to get lightmode
-                    localStorage.setBool('theme', true);
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: 40.0,
+              ),
+              Image.asset('assets/logo/LogoLightTheme.png', width: 80.0, height: 80.0),
+              SizedBox(
+                height: 20.0,
+              ),
+              FutureBuilder(
+                //Will change the button label depending on if the user is logged in or not
+                future: _loggedIn,
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.none:
+                      return Text('Something went wrong');
+                      break;
+                    case ConnectionState.active:
+                      return SizedBox(
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
+                          child: Center(child: CircularProgressIndicator()));
+                      break;
+                    case ConnectionState.done:
+                      if (snapshot.data == true) {
+                        return loggedIn();
+                      } else {
+                        return notLoggedIn();
+                      }
+                      break;
+                    default:
+                      return Text("Unexpected error");
                   }
-                  //Change the theme
-                  getThemeManager(context).toggleDarkLightTheme();
-
-                  setState(() {
-                    _darkModeSwitch = value;
-                  });
                 },
               ),
-            ),
-*/
-            /*******************************************
-             * Only for testing
-             *******************************************/
-            /*SizedBox(
-              height: 150.0,
-            ),
-            Text(
-              "Only for testing. Remove",
-              style: TextStyle(color: Colors.deepOrange),
-            ),
-            FlatButton.icon(
-              onPressed: () async {
-                SharedPreferences localStorage =
+              ElevatedButton(
+                child: Text("Manage courses"),
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/scheduleSettings');
+                },
+              ),
+              ListTile(
+                leading: Text("Dark theme"),
+                trailing: Switch(
+                  value: _darkModeSwitch,
+                  onChanged: (value) async {
+                    SharedPreferences localStorage =
                     await SharedPreferences.getInstance();
-                await localStorage.remove('rawSchedule');
-                await localStorage.remove('token');
-                await localStorage.remove('course_list');
-                await localStorage.remove('course_color');
-                Navigator.pushReplacementNamed(context, '/');
-              },
-              icon: Icon(Icons.remove_circle),
-              label: Text('Remove User Localstorage (temp)'),
-            ),
-            ElevatedButton(
-              child: Text("Return to main, without signing out"),
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/');
-              },
-            ),*/
-          ],
+                    if (localStorage.getBool('theme')) {
+                      //if lightmode when change set to false to get darkmode
+                      localStorage.setBool('theme', false);
+                    } else {
+                      //if darkmode when change set to true to get lightmode
+                      localStorage.setBool('theme', true);
+                    }
+                    //Change the theme
+                    getThemeManager(context).toggleDarkLightTheme();
+
+                    setState(() {
+                      _darkModeSwitch = value;
+                    });
+                  },
+                ),
+              ),
+
+
+              /*******************************************
+               * Only for testing
+               *******************************************/
+              SizedBox(
+                height: 150.0,
+              ),
+              Text(
+                "Only for testing. Remove",
+                style: TextStyle(color: Colors.deepOrange),
+              ),
+              FlatButton.icon(
+                onPressed: () async {
+                  SharedPreferences localStorage =
+                      await SharedPreferences.getInstance();
+                  await localStorage.remove('rawSchedule');
+                  await localStorage.remove('token');
+                  await localStorage.remove('course_list');
+                  await localStorage.remove('course_color');
+                  Navigator.pushReplacementNamed(context, '/');
+                },
+                icon: Icon(Icons.remove_circle),
+                label: Text('Remove User Localstorage (temp)'),
+              ),
+              ElevatedButton(
+                child: Text("Return to main, without signing out"),
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/');
+                },
+              ),
+            ],
+          ),
         ),
       );
   }
@@ -149,32 +135,6 @@ class _SettingsState extends State<Settings> {
     return Future.value(_loggedIn);
   }
 
-  Widget loggedIn() {
-    return FlatButton(
-      child: Text("Logout"),
-      onPressed: () async {
-        SharedPreferences localStorage = await SharedPreferences
-            .getInstance();
-        await localStorage.remove('token');
-        await localStorage.remove('rawSchedule');
-        await localStorage.setBool('loggedIn', false);
-        //Push to home screen
-        Navigator.pushReplacementNamed(context, '/');
-      },
-    );
-  }
-
-  Widget notLoggedIn() {
-    return FlatButton(
-      child: Text("Login"),
-      onPressed: () {
-        ///TODO: Change push
-        Navigator.pushReplacementNamed(context, '/');
-      },
-    );
-  }
-
-  /*
   Widget loggedIn() {
     return Column(
       children: [
@@ -206,5 +166,5 @@ class _SettingsState extends State<Settings> {
         ),
       ],
     );
-  }*/
+  }
 }

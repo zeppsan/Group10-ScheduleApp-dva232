@@ -162,40 +162,6 @@ class Lecture {
     return resultString;
   }
 
-  /*
-  void AddTen(String courseCode, DateTime date, Lecture lecture) async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-
-    localStorage.remove('tentor');
-
-    // If the string exists in localstorage, check for already existing copy of ten etc.
-    if(localStorage.containsKey('tentor')){
-      Map<DateTime, List<Lecture>> tens = await jsonDecode(localStorage.getString('tens'));
-      if(tens.containsKey(date)){
-        if(tens[date].contains(lecture)){
-          // Course ten already added, do nothing
-        } else {
-          tens[date].add(lecture);
-        }
-      } else {
-        tens[date] = List<Lecture>();
-        tens[date].add(lecture);
-      }
-      await localStorage.setString('tentor', jsonEncode(tens));
-    } else {
-      // Tenta found, add it to the localStorage
-
-      Map<DateTime, List<Lecture>> tens = await Map<DateTime, List<Lecture>>();
-
-      tens[date] = List<Lecture>();
-      tens[date].add(lecture);
-
-
-      await localStorage.setString('tentor', jsonEncode(tens));
-      log("men inte detta");
-    }
-  } */
-
   String getMoment(String input) {
     int momentIndex = input.indexOf("Moment");
     return input.substring(momentIndex + 8);

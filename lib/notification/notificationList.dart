@@ -34,7 +34,7 @@ class _NotificationList extends State<NotificationList>{
 
   @override
   void initState() {
-    getScheduleUpdates();
+    //getScheduleUpdates();
     super.initState();
   }
 
@@ -72,12 +72,12 @@ class _NotificationList extends State<NotificationList>{
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: parseSchedule(context),
+        future: getVariableValue(),
         builder: (context, snapshot) {
           switch(snapshot.connectionState) {
             case ConnectionState.done:
-              rawScheduleList = snapshot.data;
-              createNotes();
+             // rawScheduleList = snapshot.data;
+              //createNotes();
               if(global.notificationList != null && global.numberOfItems > 0)
                 return Badge(
                   badgeContent: Text(global.numberOfItems.toString()),
@@ -222,21 +222,21 @@ class _NotificationList extends State<NotificationList>{
     );
   }
 
-  Future<Map<DateTime, List<Lecture>>> parseSchedule(context) async{
+ /* Future<Map<DateTime, List<Lecture>>> parseSchedule(context) async{
     SharedPreferences localStorage = await SharedPreferences.getInstance();
 
     CourseParser parser = CourseParser(rawData: jsonDecode(localStorage.getString('rawSchedule')));
     await parser.parseRawData();
     return parser.events;
-  }
+  }*/
 
-  Future getScheduleUpdates() async {
+  Future getVariableValue() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     lightTheme = localStorage.getBool('theme');
     loggedIn = localStorage.getBool('loggedIn');
   }
   
-  void createNotes() {
+ /* void createNotes() {
     Note newNote;
     //notificationList = List<Note>();
 
@@ -260,5 +260,5 @@ class _NotificationList extends State<NotificationList>{
           }
       });
     });
-  }
+  }*/
 }

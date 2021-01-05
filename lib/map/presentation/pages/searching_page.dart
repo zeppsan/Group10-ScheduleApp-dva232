@@ -6,7 +6,6 @@ import 'package:schedule_dva232/appComponents/topMenu.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
 import 'package:schedule_dva232/injection_container.dart' as ic;
 import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart';
-import 'package:schedule_dva232/map/presentation/widgets/Search_bar_widget.dart';
 import 'package:schedule_dva232/map/presentation/widgets/searching_plan_display.dart';
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
 import 'package:schedule_dva232/generalPages/settings.dart';
@@ -15,8 +14,10 @@ import 'package:schedule_dva232/schedule/thisweek.dart';
 
 class SearchingPage extends StatelessWidget {
   final String roomToFind;
-  const SearchingPage({Key key,  this.roomToFind}):super(key:key);
+  final Room room;
+  const SearchingPage({Key key,  this.roomToFind, this.room}):super(key:key);
 
+  // Base
   @override build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset:false,
@@ -35,6 +36,7 @@ class SearchingPage extends StatelessWidget {
     );
   }
 
+  // Body
   Widget buildBody(BuildContext context) {
     return BlocProvider(
       create: (context)=> ic.serviceLocator<SearchingLogic>(),
@@ -46,30 +48,25 @@ class SearchingPage extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: BlocConsumer<SearchingLogic, SearchingState>(
-                listener: (context,state) {
-                  print (state);
-                  if ( state is ErrorState)
-                    {
-                    showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (_) {
-                      return MessageDisplay(message: state.message);
+                  listener: (context,state) {
+                    if ( state is ErrorState) {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (_) {
+                          return MessageDisplay(message: state.message);
+                        }
+                      );
                     }
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => MessageDisplay(message: state.message)),
-                  );}
-                  },
-                buildWhen: (previous,current) { return current is !ErrorState;},
-                builder: (context, state) {
-                  print ('in builder');
-                  print (state);
+                  }, // listener
+                  // Don't build when state is error state
+                  buildWhen: (previous,current) { return current is !ErrorState;},
+                  builder: (context, state) {
                     if (state is EmptyState) {
                       BlocProvider.of<SearchingLogic>(context).add(GetRoomEvent(roomToFind));
                       return Container();
                     } else if (state is LoadingState) {
                       return LoadingWidget();
-                    } else if (state is ErrorState) {
-                      //return MessageDisplay(message: state.message);
                     } else if (state is RoomLoadedState) {
                       return Column  (
                         mainAxisSize: MainAxisSize.max,
@@ -95,8 +92,6 @@ class SearchingPage extends StatelessWidget {
                                       ],
                                     )
                                   ),
-
-                               //Text('Show $roomToFind on floor plan'),
                                   Icon(Icons.arrow_forward_rounded,
                                     color: lightTheme? const Color(0xff2c1d33) : Theme.of(context).accentColor,
                                   ),
@@ -111,7 +106,6 @@ class SearchingPage extends StatelessWidget {
                       return Column  (
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget> [
-                          //SearchBarWidget(mode: 'searching', roomToFind:roomToFind),
                           Expanded(
                             child: WillPopScope(
                               onWillPop: () async { dispatchGetKnownRoom(context, state.room); return false;},

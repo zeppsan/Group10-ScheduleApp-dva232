@@ -5,8 +5,8 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/emeli/AndroidStudioProjects/Group10-ScheduleApp-dva232/lib/notification/notifications.dart';
 import 'package:schedule_dva232/appComponents/topMenu.dart';
+import 'package:schedule_dva232/notification/notifications.dart';
 import 'package:schedule_dva232/schedule/subfiles/colorPicker.dart';
 import 'package:schedule_dva232/schedule/thisweek.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -56,18 +56,6 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
             NotificationPage(appBarSize: AppBar().preferredSize.height),
             TopMenu()
         ],
-        //OLD
-        /*actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/scheduleSettings');
-              },
-            icon: Icon(
-            Icons.notifications_none_rounded,
-            color:  const Color(0xffdfb15b),
-            ),
-          ),
-        ],*/
       ),
       endDrawer: Settings(),
       body: Container(
