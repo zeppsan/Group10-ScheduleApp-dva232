@@ -72,7 +72,7 @@ class _SearchingPlanDisplayState extends State<SearchingPlanDisplay> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SearchBarWidget(mode: 'searching', roomToFind:widget.room.name),
+          SearchBarWidget(mode:'searching', roomToFind:widget.room.name),
           Visibility(
             maintainState: true,
             maintainSize: true,

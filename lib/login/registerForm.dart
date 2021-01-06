@@ -25,6 +25,7 @@ class _RegisterForm extends State<RegisterForm> {
   String _emailNotValid = "Please enter an valid email";
 
   String _nameEmpty = "Please enter your name";
+  String _nameTooShort = "Name need to be at least 2 characters";
 
   String _passwordEmpty = "Please enter a password";
   String _passwordTooShort = "Password too short. Minimum 6 characters";
@@ -75,6 +76,9 @@ class _RegisterForm extends State<RegisterForm> {
             validator: (nameValue) {
               if (nameValue.isEmpty) {
                 return _nameEmpty;
+              }
+              else if (nameValue.length < 2){
+                return _nameTooShort;
               }
               name = nameValue;
               return null;
@@ -202,6 +206,7 @@ class _RegisterForm extends State<RegisterForm> {
         headers: {"Content-Type": "application/json"}, body: body);
 
     if (response.statusCode == 400) {
+      print("Status 400: Email taken");
       //TODO: Error message to user
       setState(() {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -210,6 +215,7 @@ class _RegisterForm extends State<RegisterForm> {
         ));
       });
     } else if (response.statusCode == 201) {
+      print("Status 201: Registration complete");
       //TODO: Message to user. Autofill the loginboxes?
       setState(() {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
