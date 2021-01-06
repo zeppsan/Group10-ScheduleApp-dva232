@@ -71,6 +71,7 @@ class SearchingPage extends StatelessWidget {
                       return Column  (
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget> [
+                          SearchBarWidget(mode:'searching', roomToFind:roomToFind),
                           Expanded(child: BasicMapWidget(basicMapToShow: state.room.building.name)),
                           Align(
                             alignment:Alignment.centerRight,
