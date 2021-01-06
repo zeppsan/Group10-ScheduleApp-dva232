@@ -77,9 +77,15 @@ class _NotificationList extends State<NotificationList>{
             case ConnectionState.done:
              // rawScheduleList = snapshot.data;
               //createNotes();
-              if(loggedIn && global.notificationList != null && global.numberOfItems > 0)
+              if(loggedIn && global.notificationList != null && global.notificationList.length > 0)
                 return Badge(
-                  badgeContent: Text(global.numberOfItems.toString()),
+                  badgeContent: Text(
+                    '${global.notificationList.length}',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+
+                  ),
                   badgeColor: Colors.red[900],
                   toAnimate: false,
                   animationType: BadgeAnimationType.scale,
@@ -138,7 +144,7 @@ class _NotificationList extends State<NotificationList>{
                 //if logged in, there are items in list, and number of "active" notifications are at least one
                 //build the list of notification cards
 
-                if(loggedIn && global.notificationList != null && global.numberOfItems > 0)
+                if(loggedIn && global.notificationList != null && global.notificationList.length > 0)
                   Padding(
                     padding: const EdgeInsets.only(top: 22.0),
                     child: Container(
@@ -159,7 +165,6 @@ class _NotificationList extends State<NotificationList>{
                         shrinkWrap: true,
                         itemCount: global.notificationList.length,
                         itemBuilder: (BuildContext context, int index){
-                          if(global.notificationList[index].show)
                           return Padding(
                             padding: const EdgeInsets.only(left: 8.0, bottom: 6.0, right: 8.0),
                             child: Card(
@@ -175,9 +180,7 @@ class _NotificationList extends State<NotificationList>{
                                   ListTile(
 
                                     title: Text(
-                                      /*'${global.notificationList[index].date.day}/${global.notificationList[index].date.month} '
-                                          '${global.notificationList[index].title}',*/
-                                      '${global.notificationList[index].date} '
+                                      '${global.notificationList[index].date.day}/${global.notificationList[index].date.month} '
                                           '${global.notificationList[index].title}',
                                       style: TextStyle(
                                         color: const Color(0xff2c1d33),
@@ -192,8 +195,8 @@ class _NotificationList extends State<NotificationList>{
 
                                     trailing: IconButton(
                                       onPressed: () {
-                                        global.notificationList[index].show = false;
-                                        global.numberOfItems--;
+                                        global.notificationList.remove(global.notificationList[index]);
+
                                         closeDropDown();
                                         openDropDown();
                                       },
@@ -208,8 +211,6 @@ class _NotificationList extends State<NotificationList>{
                               ),
                             ),
                           );
-                          else
-                            return Container();
                         },
                       ),
                     ),

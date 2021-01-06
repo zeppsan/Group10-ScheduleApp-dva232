@@ -14,6 +14,7 @@ import 'noteClass.dart';
   Map<DateTime, List<Lecture>> rawSchedule = Map<DateTime, List<Lecture>>();
   List<dynamic> updateCourseList;
 
+
   Future<void> parseSchedule() async{
     SharedPreferences localStorage = await SharedPreferences.getInstance();
 
@@ -23,6 +24,8 @@ import 'noteClass.dart';
       updateCourseList = jsonDecode(localStorage.getString('scheduleUpdates'));
       print('inside checkforupdates');
       if(updateCourseList != null) {
+      // remove scheduleUpdates from localStorage to avoid duplicated data
+        localStorage.remove('scheduleUpdates');
         print('list not null');
         if (updateCourseList.isNotEmpty) {
           print('list not empty');
@@ -91,22 +94,24 @@ import 'noteClass.dart';
 
     }
 
-    else if(daysApart <= 9){ // registration is closed
+    else if(daysApart == 9){ // registration is closed
       noteText = '- is closed for registration';
       id = 'closed$courseCode${date.day.toString()}${date.month.toString()}'; //create an id with courseCode, moment and date
     }
 
-    newNote = Note(
-      title: title,
-      content: content,
-      courseCode: courseCode,
-      date: date,
-      id: id,
-      noteText: noteText,
-      color: color,
-    );
-    print('add exam');
-    addNote(newNote);
+    if(noteText != ''){
+      newNote = Note(
+        title: title,
+        content: content,
+        courseCode: courseCode,
+        date: date,
+        id: id,
+        noteText: noteText,
+        color: color,
+      );
+
+      addNote(newNote);
+    }
   }
 
   void removeExpiredItems() {
@@ -118,7 +123,6 @@ import 'noteClass.dart';
 
       if(expired < 0){
         element.expired = true;
-        global.numberOfItems--; //lower the number of items in list
       }
     });
 
@@ -185,9 +189,7 @@ import 'noteClass.dart';
     print(exists);
     if(exists == null) {
       global.notificationList.add(note);
-      global.numberOfItems++;
       global.newItem = true;
-
     }
     //print(global.notificationList.length);
   }

@@ -8,7 +8,6 @@ class Note{
   final DateTime date;
   final String noteText;
   final Color color;
-  bool show = true;
   bool expired = false;
 
   Note({this.title, this.content, this.courseCode, this.date, this.id, this.noteText, this.color});
