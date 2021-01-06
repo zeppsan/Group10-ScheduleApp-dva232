@@ -118,11 +118,13 @@ import 'noteClass.dart';
 
       if(expired < 0){
         element.expired = true;
+        global.numberOfItems--; //lower the number of items in list
       }
     });
 
+    //remove all expired notifications
     global.notificationList.removeWhere((element) => element.expired == true);
-    global.numberOfItems--;//remove all expired notifications
+
   }
 
   void parseChanges() async{

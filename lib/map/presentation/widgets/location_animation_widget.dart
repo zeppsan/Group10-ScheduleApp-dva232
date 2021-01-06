@@ -74,7 +74,7 @@ class _LocationAnimation extends State<LocationAnimation> with TickerProviderSta
                         end: RelativeRect.fromLTRB(x, y + 300, 0, 0),
                       ).animate(CurvedAnimation( parent: controller, curve: Curves.bounceIn.flipped)),
 
-                      child: Image.asset('assets/test.png'),
+                      child: Image.asset('assets/location.png'),
                     ),
                   ]
                 ),
