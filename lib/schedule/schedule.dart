@@ -287,6 +287,13 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                     style: TextStyle(color: lectureTextColor),
                   ),
                 ),
+                (room == "Anywhere" || room == "Zoom" || room == "Kopparlunden"||room == "Campus" || room == "Canvas") ?
+                Flexible(
+                  flex: 3,
+                  child: Text("${room}",
+                    style: TextStyle(color: lectureTextColor, fontSize: 18, decoration: TextDecoration.none),
+                  ))
+                :
                 Flexible(
                   flex: 1,
                   child: FlatButton(
@@ -299,7 +306,7 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
                       Navigator.pushNamed(context, '/searching', arguments: "${room}");
                     },
                   )
-                ),
+                )
               ],
             )
           ],
