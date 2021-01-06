@@ -22,7 +22,7 @@ Future main() async {
   cron.schedule(Schedule.parse('* * * * *'), () async { // '0 * * * *' schedule update checks once every hour
     parseSchedule();
 
-    Future.delayed(Duration(seconds: 10), () {
+    Future.delayed(Duration(minutes: 1), () { // because the schedule update only runs once a day this can wait a while so all data is collected first
       print(global.newItem);
       if(global.newItem){
         print('before delay');
