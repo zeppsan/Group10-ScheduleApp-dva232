@@ -135,7 +135,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                                   subtitle: Text(e.moment,
                                                     style: TextStyle(fontSize: 15, color: Color(0xff2c1d33)),),
                                                   trailing: FlatButton(
-                                                    child: Text(e.location.toUpperCase(),
+                                                    child: Text(e.location == "Zoom" ? e.location : e.location.toUpperCase(),
                                                         style: TextStyle(
                                                           fontSize: 15,
                                                           color: Color(0xff2c1d33),
@@ -143,7 +143,7 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                                           decorationThickness: 1.5,)
                                                     ),
                                                     onPressed: () {
-                                                      if (e.location == "zoom")
+                                                      if (e.location == "zoom"||e.location =="Zoom"||e.location=="ZOOM")
                                                         print("zoom");
                                                       else
                                                         Navigator.pushNamed((context), '/searching', arguments: e.location.toLowerCase());
