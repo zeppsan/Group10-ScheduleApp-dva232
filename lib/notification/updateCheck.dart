@@ -136,7 +136,7 @@ import 'noteClass.dart';
     LinkedHashMap colors = jsonDecode(localStorage.getString('course_color'));
     Note newNote;
 
-    String title, courseCode, id, noteText = '- there has been a change in schedule' ;
+    String courseCode;
     DateTime date;
     DateTime today = DateTime.now();
     Color color;
@@ -157,8 +157,6 @@ import 'noteClass.dart';
       int daysPast = DateTime(date.year, date.month, date.day).difference(DateTime(today.year, today.month, today.day)).inDays;
       if(daysPast >= 0) { // if date hasn't already past
         courseCode = splitString[0];
-        title = 'Schedule change in $courseCode';
-        id = element;
 
         if (colors[courseCode] != null) {
           color = Color(int.parse(colors[courseCode]));
@@ -166,11 +164,12 @@ import 'noteClass.dart';
           color = Colors.lightBlueAccent;
         }
         newNote = Note(
-          title: title,
+          title: 'Schedule change in $courseCode',
+          content: splitString[2],
           courseCode: courseCode,
           date: date,
-          id: id,
-          noteText: noteText,
+          id: element,
+          noteText: splitString[3],
           color: color,
         );
 
