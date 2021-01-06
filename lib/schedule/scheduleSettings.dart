@@ -51,7 +51,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text("Manage Courses",style: TextStyle(fontFamily: "Handlee")),
+        title: Text("Manage Courses",style: TextStyle(fontFamily: "Roboto")),
         actions: [
             NotificationPage(appBarSize: AppBar().preferredSize.height),
             TopMenu()
