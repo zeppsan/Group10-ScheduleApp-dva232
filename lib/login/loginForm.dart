@@ -102,11 +102,11 @@ class _LoginForm extends State<LoginForm> {
           ),
           Visibility(
             visible: _error422,
-            child: Text("Invalid email or password", style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 15.0)),
+            child: Text("Invalid email or password", style: TextStyle(color: Colors.red, fontSize: 15.0)),
           ),
           Visibility(
             visible: _error401,
-            child: Text("Unauthorized", style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 15.0),),
+            child: Text("Unauthorized", style: TextStyle(color: Colors.red, fontSize: 15.0),),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
