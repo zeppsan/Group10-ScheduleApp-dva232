@@ -128,27 +128,25 @@ class _fiveTopDaysState extends State<fiveTopDays> {
                                                 color: e.color,
                                                 child: ListTile(
                                                   leading: Text(e.getTime(e.startTime) + "\n    -\n" + e.getTime(e.endTime),
-                                                      style: TextStyle(fontSize: 15, color: Color(0xff2c1d33))
+                                                      style: TextStyle(fontSize: 17, color: Color(0xff2c1d33), )
                                                   ),
                                                   title: Text(e.course_code.toUpperCase(),
                                                       style: TextStyle(color: Color(0xff2c1d33),)),
                                                   subtitle: Text(e.moment,
-                                                    style: TextStyle(fontSize: 15, color: Color(0xff2c1d33)),),
-                                                  trailing: FlatButton(
-                                                    child: Text(e.location.toUpperCase(),
-                                                        style: TextStyle(
-                                                          fontSize: 15,
-                                                          color: Color(0xff2c1d33),
-                                                          decoration: TextDecoration.underline,
-                                                          decorationThickness: 1.5,)
-                                                    ),
-                                                    onPressed: () {
-                                                      if (e.location == "zoom")
-                                                        print("zoom");
-                                                      else
-                                                        Navigator.pushNamed((context), '/searching', arguments: e.location.toLowerCase());
-                                                    },
-                                                  ),
+                                                    style: TextStyle(fontSize: 17, color: Color(0xff2c1d33)),),
+                                                  trailing:
+                                                    (e.location == "Canvas"||e.location =="Zoom"|| e.location == "Kopparlunden" || e.location =="Campus")?
+                                                      Text( e.location,
+                                                        style: TextStyle(fontSize: 17, color: Color(0xff2c1d33),decoration: TextDecoration.none, decorationThickness: 1.5,)
+                                                       )
+                                                    :
+                                                      FlatButton(child: Text( e.location.toUpperCase(),
+                                                        style: TextStyle(fontSize: 17, color: Color(0xff2c1d33), decoration: TextDecoration.underline, decorationThickness: 1.5,)
+                                                        ),
+                                                        onPressed: () {
+                                                          Navigator.pushNamed((context), '/searching', arguments: e.location.toLowerCase());
+                                                        },
+                                                      ),
                                                 ),
                                               );
                                             }).toList(),
