@@ -28,6 +28,7 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Drawer(
         child: Column(
+
           children: [
             SizedBox(
               height: 40.0,
@@ -48,6 +49,59 @@ class _SettingsState extends State<Settings> {
                     SizedBox(
                       height: 10.0,
                     ),
+
+                    SizedBox(height: 10.0),
+                    FlatButton(
+                      //color: Colors.blue,
+                     // minWidth: 150,
+                      child: Row(
+                        children: [
+                          Text("Manage courses", style: TextStyle(fontSize: 16),),
+                          Expanded(child: SizedBox()),
+                          Icon(
+                            Icons.build_rounded,
+                            color: _darkModeSwitch ? _darkActive : _lightActive,
+                          ),
+                        ],
+
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/scheduleSettings');
+                      },
+                    ),
+
+
+                    FutureBuilder(
+                      //Will change the button label depending on if the user is logged in or not
+                      future: _loggedIn,
+                      builder: (context, snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.none:
+                            return Text('Something went wrong');
+                            break;
+                          case ConnectionState.active:
+                            return SizedBox(
+                                width: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width,
+                                child: Center(child: CircularProgressIndicator()));
+                            break;
+                          case ConnectionState.done:
+                            if (snapshot.data == true) {
+                              return loggedIn();
+                            } else {
+                              return notLoggedIn();
+                            }
+                            break;
+                          default:
+                            return Text("Unexpected error");
+                        }
+                      },
+                    ),
+                    SizedBox(height: 20.0),
+                    Divider(),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -80,56 +134,6 @@ class _SettingsState extends State<Settings> {
                         ),
                         Text("Dark theme", style: TextStyle(fontSize: 15)),
                       ],
-                    ),
-                    Divider(),
-                    SizedBox(height: 10.0),
-
-                    FlatButton(
-                      //color: Colors.blue,
-                     // minWidth: 150,
-                      child: Row(
-                        children: [
-                          Text("Manage courses", style: TextStyle(fontSize: 16),),
-                          Expanded(child: SizedBox()),
-                          Icon(
-                            Icons.build_rounded,
-                            color: _darkModeSwitch ? _darkActive : _lightActive,
-                          ),
-                        ],
-
-                      ),
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/scheduleSettings');
-                      },
-                    ),
-
-                    FutureBuilder(
-                      //Will change the button label depending on if the user is logged in or not
-                      future: _loggedIn,
-                      builder: (context, snapshot) {
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.none:
-                            return Text('Something went wrong');
-                            break;
-                          case ConnectionState.active:
-                            return SizedBox(
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width,
-                                child: Center(child: CircularProgressIndicator()));
-                            break;
-                          case ConnectionState.done:
-                            if (snapshot.data == true) {
-                              return loggedIn();
-                            } else {
-                              return notLoggedIn();
-                            }
-                            break;
-                          default:
-                            return Text("Unexpected error");
-                        }
-                      },
                     ),
                   ],
                 ),
