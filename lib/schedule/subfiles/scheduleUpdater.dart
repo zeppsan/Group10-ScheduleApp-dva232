@@ -1,12 +1,8 @@
-import 'dart:developer';
-
 import 'package:http/http.dart' as http;
-import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 
 /*
 *
@@ -46,7 +42,7 @@ class ScheduleUpdater{
     // Check if the user is logged in to an account that has online-sync
     if(hasInternetAccess){
       if (localStorage.containsKey('token')) {
-        String token = await localStorage.getString('token');
+        String token = localStorage.getString('token');
         String url = "https://qvarnstrom.tech/api/schedule/update-check";
         var response = await http.get(
           url,
@@ -81,7 +77,7 @@ class ScheduleUpdater{
         }
 
         if(needsUpdate){
-          String token = await localStorage.getString('token');
+          String token = localStorage.getString('token');
           String url = "https://qvarnstrom.tech/api/schedule/update";
           var response = await http.get(
             url,

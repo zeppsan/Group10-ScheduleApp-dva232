@@ -1,11 +1,7 @@
-
-import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:schedule_dva232/globalNotification.dart' as global;
 import 'package:schedule_dva232/notification/notificationList.dart';
 import 'package:schedule_dva232/schedule/subfiles/scheduleUpdater.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 

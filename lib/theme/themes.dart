@@ -76,7 +76,7 @@ class AppTheme{
   static final ThemeData darkTheme = ThemeData(
       fontFamily: "Roboto",
     brightness: Brightness.dark,
-    backgroundColor: const Color(0xff302933),
+    scaffoldBackgroundColor: const Color(0xff302933),
 
     appBarTheme: AppBarTheme(
       color: const Color(0xff2c1d33),
@@ -100,7 +100,6 @@ class AppTheme{
     ),
     ),
 
-      ///TODO: Color for inputfields when active
       inputDecorationTheme: InputDecorationTheme(
         //Style of input fields
           border: OutlineInputBorder(

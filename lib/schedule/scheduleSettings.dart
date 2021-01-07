@@ -20,7 +20,7 @@ class ScheduleSettings extends StatefulWidget {
 }
 
 class _ScheduleSettingsState extends State<ScheduleSettings> {
-  @override
+  //@override
   TextEditingController course_input;
   Future courseFuture;
   bool activeButton;
@@ -178,7 +178,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
 
     // IF THE USER IS LOGGED IN
     if (localStorage.containsKey('token')) {
-      String token = await localStorage.getString('token');
+      String token = localStorage.getString('token');
       var url = 'https://qvarnstrom.tech/api/schedule/getCourses';
       var response = await http.get(url, headers: {
         "Content-Type": "application/json",
@@ -206,7 +206,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
 
     // Check if course exist:
     if (localStorage.containsKey('token')) {
-      String token = await localStorage.getString('token');
+      String token = localStorage.getString('token');
       // IF THE USER IS LOGGED IN
 
       var url = 'https://qvarnstrom.tech/api/schedule/add';
@@ -295,7 +295,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
     if (localStorage.containsKey('token')) {
       // IF THE USER IS LOGGED IN
 
-      String token = await localStorage.getString('token');
+      String token = localStorage.getString('token');
       // IF THE USER IS LOGGED IN
 
       var url = 'https://qvarnstrom.tech/api/schedule/remove';

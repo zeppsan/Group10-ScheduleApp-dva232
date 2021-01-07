@@ -10,7 +10,6 @@ import 'package:schedule_dva232/map/presentation/widgets/searching_plan_display.
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
 import 'package:schedule_dva232/generalPages/settings.dart';
 import 'package:schedule_dva232/notification/notifications.dart';
-import 'package:schedule_dva232/schedule/thisweek.dart';
 
 class SearchingPage extends StatelessWidget {
   final String roomToFind;

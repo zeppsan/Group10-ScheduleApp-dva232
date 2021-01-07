@@ -29,7 +29,7 @@ class CourseParser {
   * */
   void parseRawData() {
     rawData.forEach((element) async {
-      await courseSorter(jsonDecode(element['schedule']));
+      courseSorter(jsonDecode(element['schedule']));
     });
   }
 
@@ -37,15 +37,10 @@ class CourseParser {
   *  It then adds each course occation into the events map, sorting them by datetime.
   * */
   void courseSorter(LinkedHashMap<String, dynamic> course) async {
-    await course.forEach((lectureTime, lectureInformation) async {
-      int year =
-          await DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime))
-              .year;
-      int month =
-          await DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime))
-              .month;
-      int day =
-          await DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime)).day;
+    course.forEach((lectureTime, lectureInformation) async {
+      int year = DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime)).year;
+      int month =  DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime)).month;
+      int day = DateTime.fromMillisecondsSinceEpoch(int.parse(lectureTime)).day;
       DateTime target = DateTime(year, month, day);
       if (events[target] == null) {
         events[target] = List<Lecture>();

@@ -227,11 +227,11 @@ class _ScheduleCalendarState extends State<ScheduleCalendar> {
 
   Future<Map<DateTime, List<Lecture>>> renderCalendar(List<dynamic> coursesToParse) async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    lightTheme = await localStorage.getBool('theme');
+    lightTheme = localStorage.getBool('theme');
 
     parser = CourseParser(rawData: coursesToParse);
 
-    await parser.parseRawData();
+    parser.parseRawData();
 
     return parser.events;
   }

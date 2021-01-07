@@ -10,7 +10,6 @@ import 'package:schedule_dva232/map/presentation/widgets/browsing_plan_display.d
 import 'package:schedule_dva232/map/presentation/widgets/widgets.dart';
 import 'package:schedule_dva232/generalPages/settings.dart';
 import 'package:schedule_dva232/notification/notifications.dart';
-import 'package:schedule_dva232/schedule/thisweek.dart';
 
 class BrowsingPage extends StatelessWidget {
   final String buildingToFind;

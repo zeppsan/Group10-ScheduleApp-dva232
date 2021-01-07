@@ -1,14 +1,9 @@
-
-import 'dart:convert';
 import 'package:schedule_dva232/globalNotification.dart' as global;
 import 'package:badges/badges.dart';
-import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'noteClass.dart';
 
 
 

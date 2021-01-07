@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
@@ -30,20 +29,19 @@ class Thisweek extends StatelessWidget {
       ),
       endDrawer: Settings(),
       body: Container(
-        child: fiveTopDays(),
+        child: FiveTopDays(),
       ),
       bottomNavigationBar: NavigationBarLoggedIn(),
     );
   }
 }
 
-class fiveTopDays extends StatefulWidget{
+class FiveTopDays extends StatefulWidget{
   @override
-  State<StatefulWidget> createState() => _fiveTopDaysState();
+  State<StatefulWidget> createState() => FiveTopDaysState();
 }
 
-class _fiveTopDaysState extends State<fiveTopDays> {
-  @override
+class FiveTopDaysState extends State<FiveTopDays> {
   Future _checkSchedule;
   Future _scheduleFetcher;
 
@@ -226,12 +224,12 @@ class _fiveTopDaysState extends State<fiveTopDays> {
 
 Future<Map<DateTime, List<Lecture>>> checkSchedule(context) async{
   SharedPreferences localStorage = await SharedPreferences.getInstance();
-  lightTheme = await localStorage.getBool('theme');
+  lightTheme = localStorage.getBool('theme');
 
   Map<DateTime, List<Lecture>> result;
 
   CourseParser parser = CourseParser(rawData: jsonDecode(localStorage.getString('rawSchedule')));
-  await parser.parseRawData();
+  parser.parseRawData();
   result = parser.events;
 
   return result;
@@ -242,7 +240,7 @@ Future<List<dynamic>> fetchNewSchedule(context)async{
   return nogotfint;
 }
 
-String getday(int loopPos) {
+getday(int loopPos) {
   var daynr = DateTime.now().weekday +loopPos;
 
   if (daynr == DateTime.now().weekday && daynr <6)

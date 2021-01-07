@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule_dva232/map/data_domain/models/room.dart';
 import 'package:schedule_dva232/map/presentation/searching_ploc/searching_logic.dart';
-import 'package:schedule_dva232/schedule/thisweek.dart';
 import 'location_animation_widget.dart';
 import 'search_bar_widget.dart';
 
