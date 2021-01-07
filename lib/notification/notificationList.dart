@@ -1,4 +1,4 @@
-
+/*
 import 'dart:convert';
 import 'package:schedule_dva232/globalNotification.dart' as global;
 import 'package:badges/badges.dart';
@@ -15,10 +15,11 @@ import 'noteClass.dart';
 class NotificationList extends StatefulWidget {
   OverlayEntry overlayEntry;
   final double appBarSize;
-  final bool hasData;
+  final bool loggedIn;
+  final bool lightTheme;
   
 
-  NotificationList({this.appBarSize, this.hasData});
+  NotificationList({this.appBarSize, this.loggedIn, this.lightTheme});
 
   @override
   _NotificationList createState() => _NotificationList();
@@ -48,11 +49,10 @@ class _NotificationList extends State<NotificationList>{
   }
 
   void closeDropDown(){
-
+    widget.overlayEntry.remove();
     setState(() {
       dropDownOpen = false;
     });
-    widget.overlayEntry.remove();
 
   }
 
@@ -78,9 +78,15 @@ class _NotificationList extends State<NotificationList>{
             case ConnectionState.done:
              // rawScheduleList = snapshot.data;
               //createNotes();
-              if(loggedIn && global.notificationList != null && global.numberOfItems > 0)
+              if(loggedIn && global.notificationList != null && global.notificationList.length > 0)
                 return Badge(
-                  badgeContent: Text(global.numberOfItems.toString()),
+                  badgeContent: Text(
+                    '${global.notificationList.length}',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+
+                  ),
                   badgeColor: Colors.red[900],
                   toAnimate: false,
                   animationType: BadgeAnimationType.scale,
@@ -139,7 +145,7 @@ class _NotificationList extends State<NotificationList>{
                 //if logged in, there are items in list, and number of "active" notifications are at least one
                 //build the list of notification cards
 
-                if(loggedIn && global.notificationList != null && global.numberOfItems > 0)
+                if(loggedIn && global.notificationList != null && global.notificationList.length > 0)
                   Padding(
                     padding: const EdgeInsets.only(top: 22.0),
                     child: Container(
@@ -160,50 +166,52 @@ class _NotificationList extends State<NotificationList>{
                         shrinkWrap: true,
                         itemCount: global.notificationList.length,
                         itemBuilder: (BuildContext context, int index){
-                          if(global.notificationList[index].show)
-                          return Card(
-                            color: (lightTheme) ? const Color(0xff2c1d33) : const Color(0xffeeb462),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max ,
-                              children: [
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 8.0, bottom: 6.0, right: 8.0),
+                            child: Card(
+                              //color: (lightTheme) ? const Color(0xff2c1d33) : const Color(0xffeeb462),
+                              color: global.notificationList[index].color,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max ,
+                                children: [
 
-                                ListTile(
+                                  ListTile(
 
-                                  title: Text(
-                                    '${global.notificationList[index].date.day}/${global.notificationList[index].date.month} '
-                                        '${global.notificationList[index].title}',
-                                    style: TextStyle(
-                                      color: (lightTheme) ? Colors.white : const Color(0xff2c1d33),
-                                      fontWeight: FontWeight.bold,
+                                    title: Text(
+                                      '${global.notificationList[index].date.day}/${global.notificationList[index].date.month} '
+                                          '${global.notificationList[index].title}',
+                                      style: TextStyle(
+                                        color: const Color(0xff2c1d33),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                        '${global.notificationList[index].content} \n ${global.notificationList[index].noteText}',
+                                        style: TextStyle(
+                                        color:  const Color(0xff2c1d33),
+                            ),),
+
+                                    trailing: IconButton(
+                                      onPressed: () {
+                                        global.notificationList.remove(global.notificationList[index]);
+
+                                        closeDropDown();
+                                        openDropDown();
+                                      },
+                                        icon: Icon(
+                                          Icons.check,
+                                          color: const Color(0xff2c1d33),
+                                        )
                                     ),
                                   ),
-                                  subtitle: Text(
-                                      '${global.notificationList[index].content} \n ${global.notificationList[index].noteText}',
-                                      style: TextStyle(
-                                      color: (lightTheme) ? Colors.white  : const Color(0xff2c1d33),
-                          ),),
-
-                                  trailing: IconButton(
-                                    onPressed: () {
-                                      global.notificationList[index].show = false;
-                                      global.numberOfItems--;
-                                      closeDropDown();
-                                      openDropDown();
-                                    },
-                                      icon: Icon(
-                                        Icons.check,
-                                        color: (lightTheme) ? Colors.white  : const Color(0xff2c1d33),
-                                      )
-                                  ),
-                                )
-                              ],
+                                 // SizedBox(height: 5),
+                                ],
+                              ),
                             ),
                           );
-                          else
-                            return Container();
                         },
                       ),
                     ),
@@ -251,11 +259,5 @@ class _NotificationList extends State<NotificationList>{
         }
     );
   }
+*/
 
-  Future getVariableValue() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    lightTheme = localStorage.getBool('theme');
-    loggedIn = localStorage.getBool('loggedIn');
-  }
-
-}

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 class Note{
   final String id;
   final String title;
@@ -5,8 +7,8 @@ class Note{
   final String courseCode;
   final DateTime date;
   final String noteText;
-  bool show = true;
+  final Color color;
   bool expired = false;
 
-  Note({this.title, this.content, this.courseCode, this.date, this.id, this.noteText});
+  Note({this.title, this.content, this.courseCode, this.date, this.id, this.noteText, this.color});
 }

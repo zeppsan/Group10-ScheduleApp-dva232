@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class AppTheme{
   AppTheme._();
   static final ThemeData lightTheme = ThemeData(
-    fontFamily: "Handlee",
+    fontFamily: "Roboto",
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
 
@@ -18,7 +18,7 @@ class AppTheme{
       ),
 
       textTheme: TextTheme(
-          headline6: TextStyle(color: const Color(0xff2c1d33), fontSize: 25)
+          headline6: TextStyle(color: const Color(0xff2c1d33), fontFamily: "Roboto", fontSize: 25)
       ),
     ),
 
@@ -48,7 +48,7 @@ class AppTheme{
     accentColor: const Color(0xff2c1d33),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),textStyle: TextStyle(color: Colors.white,fontFamily: "Handlee",inherit: false),
+      style: ElevatedButton.styleFrom(primary: const Color(0xff2c1d33),textStyle: TextStyle(color: Colors.white,fontFamily: "Roboto",inherit: false),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
 
@@ -73,7 +73,7 @@ class AppTheme{
   );
 
   static final ThemeData darkTheme = ThemeData(
-    fontFamily: "Handlee",
+      fontFamily: "Roboto",
     brightness: Brightness.dark,
     backgroundColor: const Color(0xff302933),
 
@@ -85,12 +85,12 @@ class AppTheme{
       ),
     centerTitle: true,
     textTheme: TextTheme(
-        headline6: TextStyle(color: const Color(0xffeeb462),fontSize: 25)
+        headline6: TextStyle(color: const Color(0xffeeb462), fontFamily: "Roboto", fontSize: 25)
     )
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
-     style: ElevatedButton.styleFrom(onPrimary: Color(0xff2c1d33), primary: const Color(0xffeeb462), textStyle: TextStyle(color: const Color(0xff2c1d33),inherit: false,fontFamily: "Handlee"),
+     style: ElevatedButton.styleFrom(onPrimary: Color(0xff2c1d33), primary: const Color(0xffeeb462), textStyle: TextStyle(color: const Color(0xff2c1d33),inherit: false, fontFamily: "Roboto"),
      shape: RoundedRectangleBorder(
        borderRadius: BorderRadius.circular(30.0),
      ),

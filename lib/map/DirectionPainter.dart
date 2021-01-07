@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:schedule_dva232/map/data_domain/models/coordinates.dart';
 
 // Help class to draw lines
@@ -16,7 +17,7 @@ class DirectionPainter extends CustomPainter {
     double pointY = direction[i].y;
 
     Paint paint = Paint()
-      ..color = Color(0xFF83fb91)
+      ..color = Colors.red[900]
       ..style = PaintingStyle.stroke
       ..strokeWidth = 10.0;
 

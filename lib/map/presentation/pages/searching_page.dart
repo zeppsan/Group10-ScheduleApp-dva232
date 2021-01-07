@@ -23,7 +23,7 @@ class SearchingPage extends StatelessWidget {
       resizeToAvoidBottomInset:false,
       appBar: AppBar(
         centerTitle: false,
-        title: Text('Map',style: TextStyle(fontFamily: "Handlee")),
+        title: Text('Map',style: TextStyle(fontFamily: "Roboto")),
         actions: [
           NotificationPage(appBarSize: AppBar().preferredSize.height),
 
@@ -71,6 +71,8 @@ class SearchingPage extends StatelessWidget {
                       return Column  (
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget> [
+                          SearchBarWidget(mode:'searching', roomToFind:state.room.name),
+                          SizedBox(height: 50,),
                           Expanded(child: BasicMapWidget(basicMapToShow: state.room.building.name)),
                           Align(
                             alignment:Alignment.centerRight,
