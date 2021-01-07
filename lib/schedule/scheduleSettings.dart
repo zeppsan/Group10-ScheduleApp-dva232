@@ -272,6 +272,7 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
         localStorage.setString('course_list', jsonEncode(courses));
         log(localStorage.getString('course_list'));
       } else {
+        activeButton = true;
         print("Status was : ${response.statusCode}");
         var test = AlertDialog(
           title: Text('Course does not exist...'),
