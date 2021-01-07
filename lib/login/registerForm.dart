@@ -219,7 +219,6 @@ class _RegisterForm extends State<RegisterForm> {
 
     if (response.statusCode == 400) {
       print("Status 400: Email taken");
-      //TODO: Error message to user
       setState(() {
         _error400 = true;
       });
