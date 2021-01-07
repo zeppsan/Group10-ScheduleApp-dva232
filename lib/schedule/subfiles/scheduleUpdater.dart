@@ -64,7 +64,7 @@ class ScheduleUpdater{
 
         /* RESPONSECODE 204 == NO UPDATE IS AVALIBLE */
         if(response.statusCode == 204){
-
+          print("I found no updates!");
           /* CHECK SO THAT A LOCAL COPY EXISTS, ELSE, DOWNLOAD */
           if(!localStorage.containsKey('rawSchedule')){
             /* NO SCHEDULE EXISTS. DOWNLOAD IT (SET BOOL AND PROCESS FURTHER DOWN)*/
@@ -76,6 +76,7 @@ class ScheduleUpdater{
         } else {
           /* SERVER FOUND AN UPDATE, DOWNLOAD IT. PROCESS FURTHER DOWN */
           localStorage.setBool('scheduleUpdated', true);
+          print("I found some updates!");
           needsUpdate = true;
         }
 
