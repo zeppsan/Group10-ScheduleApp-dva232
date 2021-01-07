@@ -28,10 +28,9 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Drawer(
         child: Column(
-
           children: [
             SizedBox(
-              height: 40.0,
+              height: 100.0,
             ),
             Image.asset('assets/logo/LogoBlackBorders.png', width: 80.0, height: 80.0),
             SizedBox(

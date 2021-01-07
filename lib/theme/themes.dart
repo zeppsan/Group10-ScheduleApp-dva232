@@ -12,16 +12,17 @@ class AppTheme{
 
     appBarTheme: AppBarTheme(
       color: const Color(0xffeeb462),
-      //titleTextStyle: TextStyle(fontFamily: "Handlee"),
       iconTheme: IconThemeData(
         color: const Color(0xff2c1d33),
       ),
+
 
       textTheme: TextTheme(
           headline6: TextStyle(color: const Color(0xff2c1d33), fontFamily: "Roboto", fontSize: 25)
       ),
     ),
 
+    canvasColor:Color(0xffeeb462) ,
     /* Calendar Styling */
 
 
@@ -88,6 +89,8 @@ class AppTheme{
         headline6: TextStyle(color: const Color(0xffeeb462), fontFamily: "Roboto", fontSize: 25)
     )
     ),
+
+    canvasColor: Color(0xff2c1d33),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
      style: ElevatedButton.styleFrom(onPrimary: Color(0xff2c1d33), primary: const Color(0xffeeb462), textStyle: TextStyle(color: const Color(0xff2c1d33),inherit: false, fontFamily: "Roboto"),
