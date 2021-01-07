@@ -19,6 +19,8 @@ class _RegisterForm extends State<RegisterForm> {
   var password;
   var passwordConfirmation;
   bool _passwordVisible;
+  bool _error400;
+  bool _error201;
 
   //Error messages
   String _emailEmpty = "Please enter an email";
@@ -34,6 +36,8 @@ class _RegisterForm extends State<RegisterForm> {
   @override
   void initState() {
     super.initState();
+    _error400 = false;
+    _error201 = false;
     _passwordVisible = false;
   }
 
@@ -61,6 +65,10 @@ class _RegisterForm extends State<RegisterForm> {
               email = emailValue;
               return null;
             },
+          ),
+          Visibility(
+            visible: _error400,
+            child: Text("Email taken", style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 15.0)),
           ),
           SizedBox(
             height: 10.0,
@@ -157,6 +165,10 @@ class _RegisterForm extends State<RegisterForm> {
               return null;
             },
           ),
+          Visibility(
+            visible: _error201,
+            child: Text("Registration complete", style: TextStyle(color: Colors.green, fontSize: 15.0),),
+          ),
           SizedBox(
             height: 20.0,
           ),
@@ -209,19 +221,12 @@ class _RegisterForm extends State<RegisterForm> {
       print("Status 400: Email taken");
       //TODO: Error message to user
       setState(() {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text("Email taken"),
-          duration: const Duration(seconds: 3),
-        ));
+        _error400 = true;
       });
     } else if (response.statusCode == 201) {
       print("Status 201: Registration complete");
-      //TODO: Message to user. Autofill the loginboxes?
       setState(() {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text("Registration complete"),
-          duration: const Duration(seconds: 3),
-        ));
+        _error201 = true;
         Navigator.pushReplacementNamed(context, "/");
       });
     }

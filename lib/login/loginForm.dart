@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart';
-import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 
 // Create a Form widget.
 class LoginForm extends StatefulWidget {
@@ -20,6 +19,8 @@ class _LoginForm extends State<LoginForm> {
   String password;
   bool _passwordVisible;
   bool _rememberMe;
+  bool _error422;
+  bool _error401;
 
   //Error messages
   String _emailEmpty = "Please enter an email";
@@ -31,6 +32,8 @@ class _LoginForm extends State<LoginForm> {
   @override
   void initState() {
     super.initState();
+    _error422 = false;
+    _error401 = false;
     _passwordVisible = false;
     _rememberMe = false;
   }
@@ -96,6 +99,14 @@ class _LoginForm extends State<LoginForm> {
               password = passwordValue;
               return null;
             },
+          ),
+          Visibility(
+            visible: _error422,
+            child: Text("Invalid email or password", style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 15.0)),
+          ),
+          Visibility(
+            visible: _error401,
+            child: Text("Unauthorized", style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 15.0),),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -187,21 +198,13 @@ class _LoginForm extends State<LoginForm> {
       }
     } else if (response.statusCode == 401) {
       print("Status 401: Unauthorized");
-      //TODO: Error message to user. Something wrong with the error code 401
       setState(() {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text("Unauthorized"),
-          duration: const Duration(seconds: 3),
-        ));
+        _error401 = true;
       });
     } else if (response.statusCode == 422) {
       print("Status 422: Invalid email or password");
-      //TODO: Error message to user
       setState(() {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text("Invalid email or password"),
-          duration: const Duration(seconds: 3),
-        ));
+        _error422 = true;
       });
     }
   }
