@@ -30,73 +30,38 @@ class _NotificationPage extends State<NotificationPage> {
     super.initState();
   }
 
-  void openDropDown(){
-
-    overlayEntry = overlayEntryBuilder();
-    Overlay.of(context).insert(overlayEntry);
-    setState(() {
-      dropDownOpen = true;
-    });
-  }
-
-  void closeDropDown(){
-    overlayEntry.remove();
-    setState(() {
-      dropDownOpen = false;
-    });
-
-  }
-
-  void manegeDropDown(){
-    if (dropDownOpen) {
-      print('closing dropdown');
-      closeDropDown();
-      dropDownOpen = false;
-    }
-    else {
-      print('open dropdown');
-      openDropDown();
-      dropDownOpen = true;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
+    Future scheduleFuture = ScheduleUpdater.getEvents(context);
     return FutureBuilder(
-        future: getVariableValue(),
+        future: scheduleFuture,
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              if(loggedIn)
-                return buildIconLoggedIn(context);
-              else
-                return buildIconLoggedOut(context);
+              if(snapshot.hasData){
+                print('has data');
+                return NotificationList(appBarSize: widget.appBarSize, hasData: true);
+              }
+              else {
+                print('no data');
+                return NotificationList(appBarSize: widget.appBarSize, hasData: false);
+              }
               break;
 
             default:
-              return buildIconLoggedOut(context);
+              return NotificationList(appBarSize: widget.appBarSize, hasData: false);
           }
         }
     );
   }
 
-  Future getVariableValue() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    lightTheme = localStorage.getBool('theme');
-    loggedIn = localStorage.getBool('loggedIn');
-    if(loggedIn == null){
-      loggedIn = false;
-    }
-
-    if(lightTheme == null){
-      lightTheme = true;
-    }
-  }
 
 
-  Widget buildIconLoggedIn(BuildContext context) {
+
+ /* Widget buildIcon(BuildContext context) {
     return FutureBuilder(
-        future: ScheduleUpdater.getEvents(context),
+        future: getVariableValue(),
         builder: (context, snapshot) {
           switch(snapshot.connectionState) {
             case ConnectionState.done:
@@ -150,9 +115,9 @@ class _NotificationPage extends State<NotificationPage> {
         manegeDropDown();
       },
     );
-  }
+  }*/
 
-  OverlayEntry overlayEntryBuilder() {
+ /* OverlayEntry overlayEntryBuilder() {
     return OverlayEntry(
         builder: (context){
           return Positioned(
@@ -286,5 +251,5 @@ class _NotificationPage extends State<NotificationPage> {
           );
         }
     );
-  }
+  }*/
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule_dva232/login/loginMain.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,72 +36,106 @@ class _SettingsState extends State<Settings> {
             SizedBox(
               height: 20.0,
             ),
-            FutureBuilder(
-              //Will change the button label depending on if the user is logged in or not
-              future: _loggedIn,
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.none:
-                    return Text('Something went wrong');
-                    break;
-                  case ConnectionState.active:
-                    return SizedBox(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
-                        child: Center(child: CircularProgressIndicator()));
-                    break;
-                  case ConnectionState.done:
-                    if (snapshot.data == true) {
-                      return loggedIn();
-                    } else {
-                      return notLoggedIn();
-                    }
-                    break;
-                  default:
-                    return Text("Unexpected error");
-                }
-              },
+            Divider(
+              thickness: 2,
             ),
-            ElevatedButton(
-              child: Text("Manage courses"),
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/scheduleSettings');
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Light theme"),
-                Switch(
-                  inactiveTrackColor: _darkModeSwitch ? _darkActive : _lightActive,
-                  activeColor: _darkModeSwitch ? _darkActive : _lightActive,
-                  inactiveThumbColor: _darkModeSwitch ? _darkActive : _lightActive,
-                  value: _darkModeSwitch,
-                  onChanged: (value) async {
-                    SharedPreferences localStorage =
-                    await SharedPreferences.getInstance();
-                    if (localStorage.getBool('theme')) {
-                      //if lightmode when change set to false to get darkmode
-                      localStorage.setBool('theme', false);
-                    } else {
-                      //if darkmode when change set to true to get lightmode
-                      localStorage.setBool('theme', true);
-                    }
-                    //Needed to make the switch select the right theme every time the drawer is used
-                    LoginMain.darkTheme = !LoginMain.darkTheme;
-                    //Change the theme
-                    getThemeManager(context).toggleDarkLightTheme();
+            Padding(
+              padding: const EdgeInsets.only(left: 30, right: 30),
+              child: Container(
+                //color: Colors.amber,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
 
-                    setState(() {
-                      _darkModeSwitch = value;
-                    });
-                  },
+                        Text("Light theme", style: TextStyle(fontSize: 15)),
+                        Switch(
+                          inactiveTrackColor: _darkModeSwitch ? _darkActive : _lightActive,
+                          activeColor: _darkModeSwitch ? _darkActive : _lightActive,
+                          inactiveThumbColor: _darkModeSwitch ? _darkActive : _lightActive,
+                          value: _darkModeSwitch,
+                          onChanged: (value) async {
+                            SharedPreferences localStorage =
+                            await SharedPreferences.getInstance();
+                            if (localStorage.getBool('theme')) {
+                              //if lightmode when change set to false to get darkmode
+                              localStorage.setBool('theme', false);
+                            } else {
+                              //if darkmode when change set to true to get lightmode
+                              localStorage.setBool('theme', true);
+                            }
+                            //Needed to make the switch select the right theme every time the drawer is used
+                            LoginMain.darkTheme = !LoginMain.darkTheme;
+                            //Change the theme
+                            getThemeManager(context).toggleDarkLightTheme();
+
+                            setState(() {
+                              _darkModeSwitch = value;
+                            });
+                          },
+                        ),
+                        Text("Dark theme", style: TextStyle(fontSize: 15)),
+                      ],
+                    ),
+                    Divider(),
+                    SizedBox(height: 10.0),
+
+                    FlatButton(
+                      //color: Colors.blue,
+                     // minWidth: 150,
+                      child: Row(
+                        children: [
+                          Text("Manage courses", style: TextStyle(fontSize: 16),),
+                          Expanded(child: SizedBox()),
+                          Icon(
+                            Icons.build_rounded,
+                            color: _darkModeSwitch ? _darkActive : _lightActive,
+                          ),
+                        ],
+
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/scheduleSettings');
+                      },
+                    ),
+
+                    FutureBuilder(
+                      //Will change the button label depending on if the user is logged in or not
+                      future: _loggedIn,
+                      builder: (context, snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.none:
+                            return Text('Something went wrong');
+                            break;
+                          case ConnectionState.active:
+                            return SizedBox(
+                                width: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width,
+                                child: Center(child: CircularProgressIndicator()));
+                            break;
+                          case ConnectionState.done:
+                            if (snapshot.data == true) {
+                              return loggedIn();
+                            } else {
+                              return notLoggedIn();
+                            }
+                            break;
+                          default:
+                            return Text("Unexpected error");
+                        }
+                      },
+                    ),
+                  ],
                 ),
-                Text("Dark theme"),
-              ],
+              ),
             ),
+
            /* ListTile(
               leading: Text("Dark theme"),
               trailing: Switch(
@@ -129,7 +164,7 @@ class _SettingsState extends State<Settings> {
             /*******************************************
              * Only for testing
              *******************************************/
-            SizedBox(
+          /*  SizedBox(
               height: 150.0,
             ),
             Text(
@@ -154,7 +189,7 @@ class _SettingsState extends State<Settings> {
               onPressed: () {
                 Navigator.pushReplacementNamed(context, '/');
               },
-            ),
+            ),*/
           ],
         ),
       );
@@ -169,35 +204,45 @@ class _SettingsState extends State<Settings> {
   }
 
   Widget loggedIn() {
-    return Column(
-      children: [
-        ElevatedButton(
-          child: Text("Logout"),
-          onPressed: () async {
-            SharedPreferences localStorage = await SharedPreferences
-                .getInstance();
-            await localStorage.remove('token');
-            await localStorage.remove('rawSchedule');
-            await localStorage.setBool('loggedIn', false);
-            //Push to home screen
-            Navigator.pushReplacementNamed(context, '/');
-          },
-        ),
-      ],
+    return FlatButton(
+      child: Row(
+        children: [
+          Text("Logout", style: TextStyle(fontSize: 16)),
+          Expanded(child: SizedBox()),
+          Icon(
+            Icons.logout,
+            color: _darkModeSwitch ? _darkActive : _lightActive,
+          ),
+        ],
+      ),
+      onPressed: () async {
+        SharedPreferences localStorage = await SharedPreferences
+            .getInstance();
+        await localStorage.remove('token');
+        await localStorage.remove('rawSchedule');
+        await localStorage.setBool('loggedIn', false);
+        //Push to home screen
+        Navigator.pushReplacementNamed(context, '/');
+      },
     );
   }
 
   Widget notLoggedIn() {
-    return Column(
-      children: [
-        ElevatedButton(
-          child: Text("Login"),
-          onPressed: () {
-            ///TODO: Change push
-            Navigator.pushReplacementNamed(context, '/');
-          },
-        ),
-      ],
+    return FlatButton(
+      child: Row(
+        children: [
+          Text("Login", style: TextStyle(fontSize: 16)),
+          Expanded(child: SizedBox()),
+          Icon(
+            Icons.login,
+            color: _darkModeSwitch ? _darkActive : _lightActive,
+          ),
+        ],
+      ),
+      onPressed: () {
+        ///TODO: Change push
+        Navigator.pushReplacementNamed(context, '/');
+      },
     );
   }
 }

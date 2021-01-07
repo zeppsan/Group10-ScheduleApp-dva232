@@ -40,7 +40,7 @@ Future showNotification(notificationPlugin, String text) async {
   //global.notificationList.forEach((element) async{
     await notificationPlugin.show(
         0,
-        '${global.notificationList.last.courseCode}',
+        'New Notification',
         '$text',
         platformChannel, payload: 'Default_Sound'
     );

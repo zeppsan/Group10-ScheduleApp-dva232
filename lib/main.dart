@@ -19,7 +19,7 @@ Future main() async {
 
 
   var cron = new Cron();
-  cron.schedule(Schedule.parse('* * * * *'), () async { // '00 6 * * *' schedule update checks once a day at 6.00am
+  cron.schedule(Schedule.parse('*/5 * * * *'), () async { // '00 6 * * *' schedule update checks once a day at 6.00am
     parseSchedule();
 
     Future.delayed(Duration(minutes: 1), () { // because the schedule update only runs once a day this can wait a while so all data is collected first
@@ -32,7 +32,7 @@ Future main() async {
                 '1',
                 'simpelTask',
                 inputData: {
-                  'string': '${global.notificationList.last.content} ${global.notificationList.last.noteText}'
+                  'string': '${global.notificationList.last.courseCode.toUpperCase()} ${global.notificationList.last.noteText}'
 
         });
       }
@@ -40,7 +40,6 @@ Future main() async {
       global.newItem = false;
       print(global.newItem);
     });
-
   });
 
 

@@ -21,7 +21,7 @@ import 'noteClass.dart';
 
     //check for changes in schedule
     CourseParser.searchForChanges();
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 10), () {
       updateCourseList = jsonDecode(localStorage.getString('scheduleUpdates'));
       print('inside checkforupdates');
       if(updateCourseList != null) {
@@ -89,7 +89,7 @@ import 'noteClass.dart';
 
     }
 
-    else if(daysApart == 10) { //10 days head
+    else if(daysApart == 8) { //10 days head
       noteText = '- last day for registration';
       id = 'lastday$courseCode${date.day.toString()}${date.month.toString()}'; //create an id with courseCode, moment and date
 

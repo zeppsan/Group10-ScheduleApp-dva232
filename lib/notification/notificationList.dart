@@ -1,4 +1,4 @@
-/*
+
 import 'dart:convert';
 import 'package:schedule_dva232/globalNotification.dart' as global;
 import 'package:badges/badges.dart';
@@ -15,17 +15,15 @@ import 'noteClass.dart';
 class NotificationList extends StatefulWidget {
   OverlayEntry overlayEntry;
   final double appBarSize;
-  final bool loggedIn;
-  final bool lightTheme;
-  
+  final bool hasData;
 
-  NotificationList({this.appBarSize, this.loggedIn, this.lightTheme});
+  NotificationList({this.appBarSize, this.hasData});
 
   @override
   _NotificationList createState() => _NotificationList();
 }
 
-class _NotificationList extends State<NotificationList>{
+class _NotificationList extends State<NotificationList> {
   bool dropDownOpen = false;
   bool lightTheme = true;
   bool loggedIn = false;
@@ -39,8 +37,7 @@ class _NotificationList extends State<NotificationList>{
     super.initState();
   }
 
-  void openDropDown(){
-
+  void openDropDown() {
     widget.overlayEntry = overlayEntryBuilder();
     Overlay.of(context).insert(widget.overlayEntry);
     setState(() {
@@ -48,15 +45,14 @@ class _NotificationList extends State<NotificationList>{
     });
   }
 
-  void closeDropDown(){
+  void closeDropDown() {
     widget.overlayEntry.remove();
     setState(() {
       dropDownOpen = false;
     });
-
   }
 
-  void manegeDropDown(){
+  void manegeDropDown() {
     if (dropDownOpen) {
       print('closing dropdown');
       closeDropDown();
@@ -74,11 +70,12 @@ class _NotificationList extends State<NotificationList>{
     return FutureBuilder(
         future: getVariableValue(),
         builder: (context, snapshot) {
-          switch(snapshot.connectionState) {
+          switch (snapshot.connectionState) {
             case ConnectionState.done:
-             // rawScheduleList = snapshot.data;
-              //createNotes();
-              if(loggedIn && global.notificationList != null && global.notificationList.length > 0)
+            // rawScheduleList = snapshot.data;
+            //createNotes();
+              if (loggedIn && global.notificationList != null &&
+                  global.notificationList.length > 0)
                 return Badge(
                   badgeContent: Text(
                     '${global.notificationList.length}',
@@ -119,25 +116,44 @@ class _NotificationList extends State<NotificationList>{
         });
   }
 
+  Future getVariableValue() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    lightTheme = localStorage.getBool('theme');
+    loggedIn = localStorage.getBool('loggedIn');
+    if (loggedIn == null) {
+      loggedIn = false;
+    }
+
+    if (lightTheme == null) {
+      lightTheme = true;
+    }
+  }
+
 
   OverlayEntry overlayEntryBuilder() {
     return OverlayEntry(
-        builder: (context){
+        builder: (context) {
           return Positioned(
             top: widget.appBarSize,
 
             child: Stack(
               children: [
                 GestureDetector(
-                  onTap:  () {
+                  onTap: () {
                     closeDropDown();
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(top: 22.0),
                     child: Container(
                       color: Colors.black.withOpacity(0.5),
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .height,
                     ),
                   ),
                 ),
@@ -145,29 +161,47 @@ class _NotificationList extends State<NotificationList>{
                 //if logged in, there are items in list, and number of "active" notifications are at least one
                 //build the list of notification cards
 
-                if(loggedIn && global.notificationList != null && global.notificationList.length > 0)
+                if(loggedIn && global.notificationList != null &&
+                    global.notificationList.length > 0)
                   Padding(
                     padding: const EdgeInsets.only(top: 22.0),
                     child: Container(
                       constraints: BoxConstraints(
-                        minWidth: MediaQuery.of(context).size.width,
-                        maxWidth: MediaQuery.of(context).size.width,
-                        minHeight: MediaQuery.of(context).size.height * 0.15,
-                        maxHeight: MediaQuery.of(context).size.height * 0.5,
+                        minWidth: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
+                        maxWidth: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
+                        minHeight: MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.15,
+                        maxHeight: MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.5,
                       ),
 
                       decoration: BoxDecoration(
-                        color: (lightTheme) ? const Color(0xffeeb462) : const Color(0xff2c1d33),
-                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5.0), bottomRight: Radius.circular(5.0) ),
+                        color: (lightTheme)
+                            ? const Color(0xffeeb462)
+                            : const Color(0xff2c1d33),
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(5.0),
+                            bottomRight: Radius.circular(5.0)),
 
                       ),
 
                       child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: global.notificationList.length,
-                        itemBuilder: (BuildContext context, int index){
+                        itemBuilder: (BuildContext context, int index) {
                           return Padding(
-                            padding: const EdgeInsets.only(left: 8.0, bottom: 6.0, right: 8.0),
+                            padding: const EdgeInsets.only(
+                                left: 8.0, bottom: 6.0, right: 8.0),
                             child: Card(
                               //color: (lightTheme) ? const Color(0xff2c1d33) : const Color(0xffeeb462),
                               color: global.notificationList[index].color,
@@ -175,39 +209,45 @@ class _NotificationList extends State<NotificationList>{
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Column(
-                                mainAxisSize: MainAxisSize.max ,
+                                mainAxisSize: MainAxisSize.max,
                                 children: [
 
                                   ListTile(
 
                                     title: Text(
-                                      '${global.notificationList[index].date.day}/${global.notificationList[index].date.month} '
-                                          '${global.notificationList[index].title}',
+                                      '${global.notificationList[index].date
+                                          .day}/${global.notificationList[index]
+                                          .date.month} '
+                                          '${global.notificationList[index]
+                                          .title}',
                                       style: TextStyle(
                                         color: const Color(0xff2c1d33),
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     subtitle: Text(
-                                        '${global.notificationList[index].content} \n ${global.notificationList[index].noteText}',
-                                        style: TextStyle(
-                                        color:  const Color(0xff2c1d33),
-                            ),),
+                                      '${global.notificationList[index]
+                                          .content} \n ${global
+                                          .notificationList[index].noteText}',
+                                      style: TextStyle(
+                                        color: const Color(0xff2c1d33),
+                                      ),),
 
                                     trailing: IconButton(
-                                      onPressed: () {
-                                        global.notificationList.remove(global.notificationList[index]);
+                                        onPressed: () {
+                                          global.notificationList.remove(
+                                              global.notificationList[index]);
 
-                                        closeDropDown();
-                                        openDropDown();
-                                      },
+                                          closeDropDown();
+                                          openDropDown();
+                                        },
                                         icon: Icon(
                                           Icons.check,
                                           color: const Color(0xff2c1d33),
                                         )
                                     ),
                                   ),
-                                 // SizedBox(height: 5),
+                                  // SizedBox(height: 5),
                                 ],
                               ),
                             ),
@@ -217,29 +257,43 @@ class _NotificationList extends State<NotificationList>{
                     ),
                   )
 
-                  //if not logged in or there are no notification yet
+                //if not logged in or there are no notification yet
                 //build this widget witch only contains a text-field
                 else
                   Material(
                     color: Colors.transparent,
                     child: Padding(
-                      padding: const EdgeInsets.only(top:22.0),
+                      padding: const EdgeInsets.only(top: 22.0),
                       child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.15,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.15,
 
                         decoration: BoxDecoration(
-                          color: (lightTheme)? const Color(0xffeeb462) : const Color(0xff2c1d33),
-                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5.0), bottomRight: Radius.circular(5.0) ),
+                          color: (lightTheme)
+                              ? const Color(0xffeeb462)
+                              : const Color(0xff2c1d33),
+                          borderRadius: BorderRadius.only(bottomLeft: Radius
+                              .circular(5.0), bottomRight: Radius.circular(
+                              5.0)),
 
                         ),
 
                         child: Center(
                           child: Text(
-                            loggedIn ? 'There are no new notifications' : 'Login to see notifications',
+                            loggedIn
+                                ? 'There are no new notifications'
+                                : 'Login to see notifications',
                             style: TextStyle(
                               fontSize: 18,
-                              color: (lightTheme) ? const Color(0xff2c1d33) : const Color(0xffeeb462),
+                              color: (lightTheme)
+                                  ? const Color(0xff2c1d33)
+                                  : const Color(0xffeeb462),
                             ),
 
                           ),
@@ -259,5 +313,5 @@ class _NotificationList extends State<NotificationList>{
         }
     );
   }
-*/
+}
 
