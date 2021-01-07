@@ -33,7 +33,7 @@ class _SettingsState extends State<Settings> {
             SizedBox(
               height: 40.0,
             ),
-            Image.asset('assets/logo/LogoLightTheme.png', width: 80.0, height: 80.0),
+            Image.asset('assets/logo/LogoBlackBorders.png', width: 80.0, height: 80.0),
             SizedBox(
               height: 20.0,
             ),
