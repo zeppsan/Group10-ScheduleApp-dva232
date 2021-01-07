@@ -19,7 +19,7 @@ Future main() async {
 
 
   var cron = new Cron();
-  cron.schedule(Schedule.parse('* * * * *'), () async { // '0 * * * *' schedule update checks once every hour
+  cron.schedule(Schedule.parse('* * * * *'), () async { // '00 6 * * *' schedule update checks once a day at 6.00am
     parseSchedule();
 
     Future.delayed(Duration(minutes: 1), () { // because the schedule update only runs once a day this can wait a while so all data is collected first

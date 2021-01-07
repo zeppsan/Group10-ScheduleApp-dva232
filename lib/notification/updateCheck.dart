@@ -16,6 +16,7 @@ import 'noteClass.dart';
 
 
   Future<void> parseSchedule() async{
+    //---> check if user is logged in before run this
     SharedPreferences localStorage = await SharedPreferences.getInstance();
 
     //check for changes in schedule

@@ -1,4 +1,4 @@
-
+/*
 import 'dart:convert';
 import 'package:schedule_dva232/globalNotification.dart' as global;
 import 'package:badges/badges.dart';
@@ -15,10 +15,11 @@ import 'noteClass.dart';
 class NotificationList extends StatefulWidget {
   OverlayEntry overlayEntry;
   final double appBarSize;
-  final bool hasData;
+  final bool loggedIn;
+  final bool lightTheme;
   
 
-  NotificationList({this.appBarSize, this.hasData});
+  NotificationList({this.appBarSize, this.loggedIn, this.lightTheme});
 
   @override
   _NotificationList createState() => _NotificationList();
@@ -258,11 +259,5 @@ class _NotificationList extends State<NotificationList>{
         }
     );
   }
+*/
 
-  Future getVariableValue() async {
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    lightTheme = localStorage.getBool('theme');
-    loggedIn = localStorage.getBool('loggedIn');
-  }
-
-}
