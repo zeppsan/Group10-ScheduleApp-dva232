@@ -84,7 +84,7 @@ class _NotificationList extends State<NotificationList> {
                   animationType: BadgeAnimationType.scale,
                   position: BadgePosition.topEnd(end: 5, top: 5),
                   child: IconButton(
-                    icon: Icon(Icons.notifications_rounded),
+                    icon: Icon(Icons.notifications_none_outlined),
                     onPressed: () {
                       manegeDropDown();
                     },
@@ -93,7 +93,7 @@ class _NotificationList extends State<NotificationList> {
 
               else
                 return IconButton(
-                  icon: Icon(Icons.notifications_rounded),
+                  icon: Icon(Icons.notifications_none_outlined),
                   onPressed: () {
                     manegeDropDown();
                   },
@@ -102,7 +102,7 @@ class _NotificationList extends State<NotificationList> {
 
             default:
               return IconButton(
-                icon: Icon(Icons.notifications_rounded),
+                icon: Icon(Icons.notifications_none_outlined),
                 onPressed: () {
                   manegeDropDown();
                 },
