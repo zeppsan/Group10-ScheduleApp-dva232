@@ -57,7 +57,7 @@ class _SettingsState extends State<Settings> {
                           Text("Manage courses", style: TextStyle(fontSize: 16),),
                           Expanded(child: SizedBox()),
                           Icon(
-                            Icons.build_rounded,
+                            Icons.build_outlined,
                             color: _darkModeSwitch ? _darkActive : _lightActive,
                           ),
                         ],
