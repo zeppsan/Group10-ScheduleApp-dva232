@@ -98,7 +98,7 @@ class _SettingsState extends State<Settings> {
                       },
                     ),
                     SizedBox(height: 20.0),
-                    Divider(),
+                    Divider(thickness: 1,),
                     SizedBox(height: 20,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
