@@ -32,12 +32,12 @@ class _SettingsState extends State<Settings> {
             SizedBox(
               height: 100.0,
             ),
-            Image.asset('assets/logo/LogoBlackBorders.png', width: 80.0, height: 80.0),
+            Image.asset('assets/logo/LogoBlackBorders.png', width: 120.0, height: 120.0),
             SizedBox(
-              height: 20.0,
+              height: 30.0,
             ),
             Divider(
-              thickness: 2,
+              thickness: 1,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 30, right: 30),
@@ -46,10 +46,9 @@ class _SettingsState extends State<Settings> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 10.0,
+                      height: 30.0,
                     ),
 
-                    SizedBox(height: 10.0),
                     FlatButton(
                       //color: Colors.blue,
                      // minWidth: 150,
@@ -100,7 +99,7 @@ class _SettingsState extends State<Settings> {
                     ),
                     SizedBox(height: 20.0),
                     Divider(),
-
+                    SizedBox(height: 20,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -218,7 +217,6 @@ class _SettingsState extends State<Settings> {
         ],
       ),
       onPressed: () {
-        ///TODO: Change push
         Navigator.pushReplacementNamed(context, '/');
       },
     );
