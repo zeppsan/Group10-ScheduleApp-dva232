@@ -5,7 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:schedule_dva232/schedule/subfiles/CourseParser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'notificationHandler.dart';
 
+/*
+*
+* Emelie Wallin
+*
+* */
 
 class NotificationList extends StatefulWidget {
   OverlayEntry overlayEntry;
@@ -24,6 +30,7 @@ class _NotificationList extends State<NotificationList> {
   bool loggedIn = false;
   double containerHeight = 0.0;
   Map<DateTime, List<Lecture>> rawScheduleList;
+  int badgeNumber;
 
 
   @override
@@ -71,24 +78,38 @@ class _NotificationList extends State<NotificationList> {
             //createNotes();
               if (loggedIn && global.notificationList != null &&
                   global.notificationList.length > 0)
-                return Badge(
-                  badgeContent: Text(
-                    '${global.notificationList.length}',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-
-                  ),
-                  badgeColor: Colors.red[900],
-                  toAnimate: false,
-                  animationType: BadgeAnimationType.scale,
-                  position: BadgePosition.topEnd(end: 5, top: 5),
-                  child: IconButton(
-                    icon: Icon(Icons.notifications_none_outlined),
-                    onPressed: () {
-                      manegeDropDown();
-                    },
-                  ),
+                return FutureBuilder(
+                  future: callbackDispatcher(),
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.done:
+                        return Badge(
+                          badgeContent: Text(
+                            '${global.notificationList.length}',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          badgeColor: Colors.red[900],
+                          toAnimate: false,
+                          animationType: BadgeAnimationType.scale,
+                          position: BadgePosition.topEnd(end: 5, top: 5),
+                          child: IconButton(
+                            icon: Icon(Icons.notifications_none_outlined),
+                            onPressed: () {
+                              manegeDropDown();
+                              },
+                          ),
+                        );
+                        break;
+                        default: return IconButton(
+                          icon: Icon(Icons.notifications_none_outlined),
+                          onPressed: () {
+                            manegeDropDown();
+                          },
+                        );
+                    }
+                  }
                 );
 
               else
@@ -126,6 +147,7 @@ class _NotificationList extends State<NotificationList> {
 
 
   OverlayEntry overlayEntryBuilder() {
+    print('${widget.appBarSize}');
     return OverlayEntry(
         builder: (context) {
           return Positioned(
@@ -141,14 +163,8 @@ class _NotificationList extends State<NotificationList> {
                     padding: const EdgeInsets.only(top: 22.0),
                     child: Container(
                       color: Colors.black.withOpacity(0.5),
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width,
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .height,
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
                     ),
                   ),
                 ),
@@ -162,22 +178,10 @@ class _NotificationList extends State<NotificationList> {
                     padding: const EdgeInsets.only(top: 22.0),
                     child: Container(
                       constraints: BoxConstraints(
-                        minWidth: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
-                        maxWidth: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
-                        minHeight: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.15,
-                        maxHeight: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.5,
+                        minWidth: MediaQuery.of(context).size.width,
+                        maxWidth: MediaQuery.of(context).size.width,
+                        minHeight: MediaQuery.of(context).size.height * 0.15,
+                        maxHeight: MediaQuery.of(context).size.height * 0.5,
                       ),
 
                       decoration: BoxDecoration(
@@ -194,11 +198,13 @@ class _NotificationList extends State<NotificationList> {
                         shrinkWrap: true,
                         itemCount: global.notificationList.length,
                         itemBuilder: (BuildContext context, int index) {
+                          print('create cars');
+
                           return Padding(
                             padding: const EdgeInsets.only(
                                 left: 8.0, bottom: 6.0, right: 8.0),
                             child: Card(
-                              //color: (lightTheme) ? const Color(0xff2c1d33) : const Color(0xffeeb462),
+
                               color: global.notificationList[index].color,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -260,14 +266,8 @@ class _NotificationList extends State<NotificationList> {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 22.0),
                       child: Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.15,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.15,
 
                         decoration: BoxDecoration(
                           color: (lightTheme)

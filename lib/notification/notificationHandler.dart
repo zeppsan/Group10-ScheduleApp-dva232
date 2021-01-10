@@ -1,23 +1,31 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
-import 'package:schedule_dva232/globalNotification.dart' as global;
 
-void callbackDispatcher() {
-  print('in callback');
-  Workmanager.executeTask((taskName, inputData) {
-    FlutterLocalNotificationsPlugin notificationPlugin = new FlutterLocalNotificationsPlugin();
+import '../globalNotification.dart';
 
-    //initialise settings for android and IOS separately
-    var androidSettings = new AndroidInitializationSettings('@mipmap/ic_launcher');
-    var iOSSettings = new IOSInitializationSettings();
+/*
+*
+* Emelie Wallin
+*
+* */
 
-    //initialise settings for both devices
-    var settings = new InitializationSettings(androidSettings, iOSSettings);
-    notificationPlugin.initialize(settings);
-    showNotification(notificationPlugin, inputData['string']);
+Future callbackDispatcher() async{
+   print('in callback');
+    Workmanager.executeTask((taskName, inputData) {
+     FlutterLocalNotificationsPlugin notificationPlugin = new FlutterLocalNotificationsPlugin();
 
-    return Future.value(true);
-  });
+     //initialise settings for android and IOS separately
+     var androidSettings = new AndroidInitializationSettings('@mipmap/ic_launcher');
+     var iOSSettings = new IOSInitializationSettings();
+
+     //initialise settings for both devices
+      var settings = new InitializationSettings(androidSettings, iOSSettings);
+      notificationPlugin.initialize(settings);
+      showNotification(notificationPlugin, inputData['string']);
+
+      return Future.value(true);
+   });
 }
 
 Future showNotification(notificationPlugin, String text) async {

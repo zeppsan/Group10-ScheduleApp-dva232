@@ -10,44 +10,57 @@ import 'package:schedule_dva232/globalNotification.dart' as global;
 
 import 'noteClass.dart';
 
+/*
+*
+* Emelie Wallin
+*
+* */
 
   Map<DateTime, List<Lecture>> rawSchedule = Map<DateTime, List<Lecture>>();
   List<dynamic> updateCourseList;
 
 
   Future<void> parseSchedule() async{
-    //---> check if user is logged in before run this
+    bool loggedIn;
     SharedPreferences localStorage = await SharedPreferences.getInstance();
+    loggedIn = localStorage.getBool('loggedIn');
+    if (loggedIn == null) {
+      loggedIn = false;
+    }
 
-    //check for changes in schedule
-    CourseParser.searchForChanges();
-    Future.delayed(Duration(seconds: 10), () {
-      updateCourseList = jsonDecode(localStorage.getString('scheduleUpdates'));
-      print('inside checkforupdates');
-      if(updateCourseList != null) {
-      // remove scheduleUpdates from localStorage to avoid duplicated data
-        localStorage.remove('scheduleUpdates');
-        print('list not null');
-        if (updateCourseList.isNotEmpty) {
-          print('list not empty');
+    if(loggedIn) {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
 
-          parseChanges();
+      //check for changes in schedule
+      CourseParser.searchForChanges();
+      Future.delayed(Duration(seconds: 10), () {
+        updateCourseList =
+            jsonDecode(localStorage.getString('scheduleUpdates'));
+        print('inside checkforupdates');
+        if (updateCourseList != null) {
+          // remove scheduleUpdates from localStorage to avoid duplicated data
+          localStorage.remove('scheduleUpdates');
+          print('list not null');
+          if (updateCourseList.isNotEmpty) {
+            print('list not empty');
+
+            parseChanges();
+          }
         }
-      }
-    });
+      });
 
 
+      //check for upcoming exams
+      CourseParser parser = CourseParser(
+          rawData: jsonDecode(localStorage.getString('rawSchedule')));
+      parser.parseRawData();
 
-    //check for upcoming exams
-    CourseParser parser = CourseParser(rawData: jsonDecode(localStorage.getString('rawSchedule')));
-    parser.parseRawData();
-
-    rawSchedule = parser.events;
-    Future.delayed(Duration(milliseconds: 10), () async{
-      findExam();
-      removeExpiredItems();
-    });
-
+      rawSchedule = parser.events;
+      Future.delayed(Duration(milliseconds: 10), () async {
+        findExam();
+        removeExpiredItems();
+      });
+    }
   }
 
   Future<void> getColor() async{
@@ -89,7 +102,7 @@ import 'noteClass.dart';
 
     }
 
-    else if(daysApart == 8) { //10 days head
+    else if(daysApart == 5) { //10 days head
       noteText = '- last day for registration';
       id = 'lastday$courseCode${date.day.toString()}${date.month.toString()}'; //create an id with courseCode, moment and date
 
@@ -134,7 +147,10 @@ import 'noteClass.dart';
 
   void parseChanges() async{
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    LinkedHashMap colors = jsonDecode(localStorage.getString('course_color'));
+    LinkedHashMap colors;
+    if(localStorage.containsKey('course_color')){
+      colors = jsonDecode(localStorage.getString('course_color'));
+    }
     Note newNote;
 
     String courseCode;

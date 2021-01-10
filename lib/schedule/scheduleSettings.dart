@@ -5,12 +5,14 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:schedule_dva232/notification/noteClass.dart';
 import 'package:schedule_dva232/notification/notifications.dart';
 import 'package:schedule_dva232/appComponents/topMenu.dart';
 import 'package:schedule_dva232/schedule/subfiles/colorPicker.dart';
 import 'package:schedule_dva232/schedule/thisweek.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:schedule_dva232/appComponents/bottomNavigationLoggedIn.dart';
+import '../globalNotification.dart';
 import 'subfiles/colorPicker.dart';
 import 'package:schedule_dva232/generalPages/settings.dart';
 
@@ -327,10 +329,13 @@ class _ScheduleSettingsState extends State<ScheduleSettings> {
       Map<dynamic, dynamic> list = new Map<dynamic, dynamic>();
       list[courseName] = color.value.toString();
       localStorage.setString('course_color', jsonEncode(list));
+      updateColorNotifications(color, courseName);
+
     } else {
       Map<dynamic, dynamic> list = await jsonDecode(localStorage.getString('course_color'));
       list[courseName] = color.value.toString();
       localStorage.setString('course_color', jsonEncode(list));
+      updateColorNotifications(color, courseName);
     }
   }
 

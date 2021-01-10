@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:schedule_dva232/notification/notificationList.dart';
 import 'package:schedule_dva232/schedule/subfiles/scheduleUpdater.dart';
 
-
+/*
+*
+* Emelie Wallin
+*
+* */
 
 class NotificationPage extends StatefulWidget {
   final double appBarSize;
