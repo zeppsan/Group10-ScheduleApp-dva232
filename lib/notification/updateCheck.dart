@@ -102,7 +102,7 @@ import 'noteClass.dart';
 
     }
 
-    else if(daysApart == 5) { //10 days head
+    else if(daysApart == 10) { //10 days head
       noteText = '- last day for registration';
       id = 'lastday$courseCode${date.day.toString()}${date.month.toString()}'; //create an id with courseCode, moment and date
 
